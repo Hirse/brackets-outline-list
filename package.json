@@ -1,0 +1,19 @@
+{
+    "name": "hirse.outline-list",
+    "version": "0.1",
+    "title": "Brackets Outline List",
+    "description": "Displays a list of the functions or definitions in the currently opened document. Works with JavaScript, CSS, SCSS, LESS and PHP. Now with Icons!",
+    "engines": {
+        "brackets": ">=0.44.0"
+    },
+    "homepage": "https://github.com/Hirse/brackets-outline-list",
+    "author": "Jan Pilzer (https://github.com/Hirse)",
+    "license": "MIT",
+    "keywords": ["outline"],
+    "i18n": ["en", "de"],
+    "package-i18n": {
+        "de": {
+            "description": "Zeigt eine Liste der Funktionen oder Definitionen im geöffneten Dokument. Unterstützt JavaScript, CSS, SCSS, LESS und PHP. Jetzt auch mit Icons!"
+        }
+    }
+}

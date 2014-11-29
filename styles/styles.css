@@ -1,0 +1,138 @@
+@font-face {
+    font-family: "Ionicons";
+    src: url("icons/ionicons-1.5.2.svg#Ionicons") format("svg");
+}
+
+
+/* ==== Toolbar Icon ==== */
+
+#outline-toolbar-icon {
+    background-image: url(icons/icon.svg);
+}
+
+#outline-toolbar-icon.enabled {
+    background-position: 0 -24px;
+}
+
+
+/* ==== Outline List ==== */
+
+#outline {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    color: #adb9bd;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.outline-sidebar {
+    margin-bottom: 40px;
+    max-height: 75%;
+}
+
+.outline-main {
+    background-color: #47484b;
+    bottom: 0;
+    max-width: 45%;
+    padding-bottom: 40px;
+    position: absolute;
+    right: 30px;
+    top: 0;
+}
+
+#outline-header {
+    font-size: 13px;
+    padding: 8px 0 9px 12px;
+}
+
+#outline-list {
+    height: 100%;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+#outline-list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.outline-entry {
+    color: #ffffff;
+    padding-left: 27px;
+}
+
+
+/* ==== Language Specific Entries ==== */
+
+
+/* JavaScript */
+.outline-entry-js-arg {
+    color: #adb9bd;
+}
+
+.outline-entry-js {
+    padding-left: 12px;
+}
+
+.outline-entry-js:before {
+    display: inline-block;
+    font-family: Ionicons;
+    margin-right: 3px;
+    text-align: center;
+    width: 12px;
+}
+
+.outline-entry-js-private:before {
+    color: #229bf4;
+    content: "\f200";
+}
+
+.outline-entry-js-public:before {
+    color: #9bf422;
+    content: "\f276";
+}
+
+.outline-entry-js-unnamed:before {
+    color: #f47b22;
+    content: "\3bb";
+    font-family: sans-serif;
+}
+
+
+/* CSS */
+.outline-entry-css {
+    padding-left: 12px;
+}
+
+.outline-entry-css:before {
+    display: inline-block;
+    font-family: Ionicons;
+    margin-right: 3px;
+    text-align: center;
+    width: 12px;
+}
+
+.outline-entry-css-tag:before {
+    color: #f47b22;
+    content: "\f271";
+}
+
+.outline-entry-css-id:before {
+    color: #9bf422;
+    content: "\f219";
+}
+
+.outline-entry-css-class:before {
+    color: #229bf4;
+    content: "\f20b";
+}
+
+.outline-entry-css-at-rules:before {
+    color: #f4229b;
+    content: "\f10f";
+}
+
+
+/* PHP */
+.outline-entry-php-arg {
+    color: #adb9bd;
+}

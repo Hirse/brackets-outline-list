@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="48px">
+    <style type="text/css">
+        .outline {
+            fill: none;
+            stroke-width: 2px;
+            stroke: #bbbbbb;
+        }
+        .disabled {
+            fill: #bbbbbb;
+        }
+        .enabled {
+            fill: #78b2f2;
+        }
+        .enabled .outline {
+            stroke: #78b2f2;
+        }
+    </style>
+    <g class="disabled">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" class="outline" />
+        <rect x="4" y="4" width="16" height="2" />
+        <rect x="5" y="8" width="8" height="2" rx="1" ry="1" />
+        <rect x="8" y="11" width="8" height="2" rx="1" ry="1" />
+        <rect x="10" y="14" width="8" height="2" rx="1" ry="1" />
+        <rect x="5" y="17" width="8" height="2" rx="1" ry="1" />
+    </g>
+    <g class="enabled" transform="translate(0, 24)">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" class="outline" />
+        <rect x="4" y="4" width="16" height="2" />
+        <rect x="5" y="8" width="8" height="2" rx="1" ry="1" />
+        <rect x="8" y="11" width="8" height="2" rx="1" ry="1" />
+        <rect x="10" y="14" width="8" height="2" rx="1" ry="1" />
+        <rect x="5" y="17" width="8" height="2" rx="1" ry="1" />
+    </g>
+</svg>
