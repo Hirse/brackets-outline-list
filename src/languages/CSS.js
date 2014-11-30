@@ -8,6 +8,7 @@ define(function (require, exports, module) {
             "#": "id",
             ".": "class",
             "@": "at-rules",
+            "[": "attribute"
         };
         return " outline-entry-css-" + (classes[name[0]] || "tag");
     }
@@ -29,8 +30,8 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {Array}   lines         Array that contains the lines of text.
-     * @returns {Array}   List of outline entries.
+     * @param   {Array} lines Array that contains the lines of text.
+     * @returns {Array} List of outline entries.
      */
     function getOutlineList(lines) {
         var regex =  /([^\r\n,{}]+)((?=[^}]*\{)|\s*\{)/g;
@@ -46,7 +47,18 @@ define(function (require, exports, module) {
         return result;
     }
 
+    function compare(a, b) {
+        if (a.name > b.name) {
+            return 1;
+        }
+        if (a.name < b.name) {
+            return -1;
+        }
+        return 0;
+    }
+
     module.exports = {
-        getOutlineList: getOutlineList
+        getOutlineList: getOutlineList,
+        compare: compare
     };
 });

@@ -9,6 +9,7 @@ define(function (require, exports, module) {
     var DocumentManager     = brackets.getModule("document/DocumentManager");
     var EditorManager       = brackets.getModule("editor/EditorManager");
     var PreferencesManager  = brackets.getModule("preferences/PreferencesManager");
+    var AppInit             = brackets.getModule("utils/AppInit");
     var ExtensionUtils      = brackets.getModule("utils/ExtensionUtils");
     var Resizer             = brackets.getModule("utils/Resizer");
 
@@ -18,12 +19,13 @@ define(function (require, exports, module) {
 
     var prefix = "hirse.outline";
     var prefs = PreferencesManager.getExtensionPrefs(prefix);
+
     var languages = {
         JavaScript: require("src/languages/JavaScript"),
-        CSS: require("src/languages/CSS"),
-        SCSS: require("src/languages/CSS"),
-        LESS: require("src/languages/CSS"),
-        PHP: require("src/languages/PHP")
+        CSS:        require("src/languages/CSS"),
+        SCSS:       require("src/languages/CSS"),
+        LESS:       require("src/languages/CSS"),
+        PHP:        require("src/languages/PHP")
     };
 
     function goToLine(event) {
@@ -49,7 +51,7 @@ define(function (require, exports, module) {
         var list = lang.getOutlineList(lines, prefs.get("args"), prefs.get("unnamed"));
 
         if (prefs.get("sort")) {
-            list.sort();
+            list.sort(lang.compare);
         }
 
         list.forEach(function (entry) {
@@ -86,18 +88,22 @@ define(function (require, exports, module) {
 
         $("#outline-toolbar-icon").addClass("enabled");
 
+        var toolbarPx = $("#main-toolbar:visible").width() || 0;
+
         if (sidebar) {
             $("#sidebar").append($outline);
-            $(".content").css("right", "30px");
+            $(".content").css("right",  + toolbarPx + "px");
             Resizer.makeResizable($outline, "vert", "top", 75);
         } else {
+            $outline.css("right", toolbarPx + "px");
             $(".main-view").append($outline);
             Resizer.makeResizable($outline, "horz", "left", 150);
             var onResize = function () {
-                $(".content").css("right", $outline.width() + 30 + "px");
+                $(".content").css("right", ($outline.width() || 150) + toolbarPx + "px");
             };
             onResize();
             $outline.on("panelResizeUpdate", onResize);
+            AppInit.appReady(onResize);
         }
 
         $(EditorManager).on("activeEditorChange", updateOutline);
@@ -108,7 +114,7 @@ define(function (require, exports, module) {
 
     function removeOutline() {
         $("#outline").remove();
-        $(".content").css("right", "30px");
+        $(".content").css("right", ($("#main-toolbar:visible").width() || 0) + "px");
         $("#outline-toolbar-icon").removeClass("enabled");
         $(EditorManager).off("activeEditorChange");
         $(DocumentManager).off("documentSaved");
@@ -161,7 +167,7 @@ define(function (require, exports, module) {
             }
         }, sort: {
             type: "boolean",
-            value: true,
+            value: false,
             commandAction: updateOutline
         }
     };
@@ -172,7 +178,8 @@ define(function (require, exports, module) {
         prefs.definePreference(key, definition.type, definition.value);
         if (definition.commandAction) {
             var commandName = prefix + "." + key;
-            var command = CommmandManager.register(Strings["COMMAND_" + key.toUpperCase()], commandName, function () {
+            var commandString = Strings["COMMAND_" + key.toUpperCase()];
+            var command = CommmandManager.register(commandString, commandName, function () {
                 applyCommand(key, definition.commandAction);
             });
             command.setChecked(prefs.get(key));

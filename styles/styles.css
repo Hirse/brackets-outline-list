@@ -34,7 +34,6 @@
     max-width: 45%;
     padding-bottom: 40px;
     position: absolute;
-    right: 30px;
     top: 0;
 }
 
@@ -129,6 +128,11 @@
 .outline-entry-css-at-rules:before {
     color: #f4229b;
     content: "\f10f";
+}
+
+.outline-entry-css-attribute:before {
+    color: #f4e422;
+    content: "\f2aa";
 }
 
 

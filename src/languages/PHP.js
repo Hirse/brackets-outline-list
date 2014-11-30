@@ -55,7 +55,24 @@ define(function (require, exports, module) {
         return result;
     }
 
+    function compare(a, b) {
+        if (b.name === "function") {
+            return 1;
+        }
+        if (a.name === "function") {
+            return -1;
+        }
+        if (a.name > b.name) {
+            return 1;
+        }
+        if (a.name < b.name) {
+            return -1;
+        }
+        return 0;
+    }
+
     module.exports = {
-        getOutlineList: getOutlineList
+        getOutlineList: getOutlineList,
+        compare: compare
     };
 });
