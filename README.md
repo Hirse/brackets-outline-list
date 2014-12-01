@@ -1,6 +1,6 @@
 Brackets Outline List
 ==============
-Brackets Extension to display a list of the functions or definitions in the currently opened document. Settings for parameters and anonymous functions. Works with JavaScript, CSS, SCSS, LESS and PHP.
+Brackets Extension to display a list of the functions or definitions in the currently opened document. Settings for parameters and anonymous functions. Works with JavaScript, CoffeeScript, CSS, SCSS, LESS and PHP.
 
 Thanks to [crabcode](https://github.com/crabcode) for his groundwork on this project. Original project repo here: [Brackets-Outline](https://github.com/crabcode/brackets-outline)
 
@@ -22,6 +22,7 @@ Features
 * Toggle function arguments
 * Supported languages:
     * JavaScript
+    * CoffeeScript
     * CSS, SCSS, LESS
     * PHP
 

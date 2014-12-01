@@ -22,6 +22,7 @@ define(function (require, exports, module) {
 
     var languages = {
         JavaScript: require("src/languages/JavaScript"),
+        CoffeeScript: require("src/languages/CoffeeScript"),
         CSS:        require("src/languages/CSS"),
         SCSS:       require("src/languages/CSS"),
         LESS:       require("src/languages/CSS"),
@@ -92,7 +93,7 @@ define(function (require, exports, module) {
 
         if (sidebar) {
             $("#sidebar").append($outline);
-            $(".content").css("right",  + toolbarPx + "px");
+            $(".content").css("right", toolbarPx + "px");
             Resizer.makeResizable($outline, "vert", "top", 75);
         } else {
             $outline.css("right", toolbarPx + "px");

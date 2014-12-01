@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.2.0- 2014-12-01
+### Added
+- CofeeScript Support
+
 ## 0.1.1 - 2014-11-30
 ### Added
 - CSS Icon for Attribute Selectors
