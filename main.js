@@ -117,8 +117,8 @@ define(function (require, exports, module) {
         $("#outline").remove();
         $(".content").css("right", ($("#main-toolbar:visible").width() || 0) + "px");
         $("#outline-toolbar-icon").removeClass("enabled");
-        $(EditorManager).off("activeEditorChange");
-        $(DocumentManager).off("documentSaved");
+        $(EditorManager).off("activeEditorChange", updateOutline);
+        $(DocumentManager).off("documentSaved", updateOutline);
     }
 
     function togglePref(key) {
