@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.2.1 - 2014-12-02
 ### Fixed
-- Detaching global Event Handlers makes other Extensions unusable (see #3, #6)
+- Detaching global Event Handlers makes other Extensions unusable (see #3, #4)
 
 ## 0.2.0 - 2014-12-01
 ### Added
