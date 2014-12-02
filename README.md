@@ -18,6 +18,7 @@ Features
 * Jump to declaration from outline list
 * Show Outline List in the sidebar or next to the toolbar
 * Differentiate between types easily by showing different icons
+* Toggle sorting of Outline List
 * Toggle anonymous function
 * Toggle function arguments
 * Supported languages:
