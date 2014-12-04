@@ -24,7 +24,7 @@ define(function (require, exports, module) {
             name: name,
             line: line,
             ch: ch,
-            classes: "outline-entry-coffee" + _getVisibilityClass(name),
+            classes: "outline-entry-coffee outline-entry-icon" + _getVisibilityClass(name),
             $html: $elements
         };
     }

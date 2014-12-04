@@ -1,8 +1,8 @@
 {
     "name": "hirse.outline-list",
-    "version": "0.2.1",
+    "version": "0.3.0",
     "title": "Brackets Outline List",
-    "description": "Displays a list of the functions or definitions in the currently opened document. Works with JavaScript, CoffeeScript, CSS, SCSS, LESS and PHP. Now with Icons!",
+    "description": "Displays a list of the functions or definitions in the currently opened document. Works with JavaScript, CoffeeScript, CSS, SCSS, LESS, Markdown and PHP. Now with Icons!",
     "engines": {
         "brackets": ">=0.44.0"
     },
@@ -13,7 +13,7 @@
     "i18n": ["en", "de"],
     "package-i18n": {
         "de": {
-            "description": "Zeigt eine Liste der Funktionen oder Definitionen im geöffneten Dokument. Unterstützt JavaScript, CoffeeScript, CSS, SCSS, LESS und PHP. Jetzt auch mit Icons!"
+            "description": "Zeigt eine Liste der Funktionen oder Definitionen im geöffneten Dokument. Unterstützt JavaScript, CoffeeScript, CSS, SCSS, LESS, Markdown und PHP. Jetzt auch mit Icons!"
         }
     }
 }

@@ -3,51 +3,52 @@
 define(function (require, exports, module) {
     "use strict";
 
-    function _getTypeClass(name) {
-        var classes = {
-            "#": "id",
-            ".": "class",
-            "@": "at-rules",
-            "[": "attribute"
-        };
-        return " outline-entry-css-" + (classes[name[0]] || "tag");
+    function _getLevelClass(level) {
+        return " outline-entry-md-" + level.length;
     }
 
-    function _createListEntry(name, line, ch) {
+    function _createListEntry(name, level, line, ch) {
         var $elements = [];
         var $name = $(document.createElement("span"));
-        var typeClass = _getTypeClass(name);
+        $name.addClass("outline-entry-md-name");
         $name.text(name);
         $elements.push($name);
         return {
             name: name,
             line: line,
             ch: ch,
-            classes: "outline-entry-css outline-entry-icon" + typeClass,
+            classes: "outline-entry-md" + _getLevelClass(level),
             $html: $elements
         };
     }
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {Array} lines Array that contains the lines of text.
-     * @returns {Array} List of outline entries.
+     * @param   {Array}   lines         Array that contains the lines of text.
+     * @returns {Array}   List of outline entries.
      */
     function getOutlineList(lines) {
-        var regex =  /([^\r\n,{}]+)((?=[^}]*\{)|\s*\{)/g;
+        var regex = /^(#+)\s*(.+)/g;
         var result = [];
         lines.forEach(function (line, index) {
             var match = regex.exec(line);
             while (match !== null) {
-                var name = match[1].trim();
-                result.push(_createListEntry(name, index, line.length));
+                var name = (match[2] || match[3]).trim();
+                var level = (match[1] || match[4]).trim();
                 match = regex.exec(line);
+                result.push(_createListEntry(name, level, index, line.length));
             }
         });
         return result;
     }
 
     function compare(a, b) {
+        if (b.name === "function") {
+            return -1;
+        }
+        if (a.name === "function") {
+            return 1;
+        }
         if (a.name > b.name) {
             return 1;
         }

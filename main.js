@@ -26,7 +26,8 @@ define(function (require, exports, module) {
         CSS:        require("src/languages/CSS"),
         SCSS:       require("src/languages/CSS"),
         LESS:       require("src/languages/CSS"),
-        PHP:        require("src/languages/PHP")
+        PHP:        require("src/languages/PHP"),
+        Markdown:   require("src/languages/Markdown"),
     };
 
     function goToLine(event) {
@@ -37,17 +38,19 @@ define(function (require, exports, module) {
 
     function updateOutline() {
         var doc = DocumentManager.getCurrentDocument();
-
-        $("#outline-list ul").empty();
-
-        if (doc === null) {
+        if (!doc) {
+            hideOutline();
             return;
         }
 
         var lang = languages[doc.getLanguage().getName()];
         if (!lang) {
+            hideOutline();
             return;
         }
+
+        showOutline();
+
         var lines = doc.getText(false).split("\n");
         var list = lang.getOutlineList(lines, prefs.get("args"), prefs.get("unnamed"));
 
@@ -68,7 +71,12 @@ define(function (require, exports, module) {
         });
     }
 
-    function loadOutline() {
+    function showOutline() {
+        if ($("#outline").length) {
+            $("#outline-list ul").empty();
+            return;
+        }
+
         var sidebar = prefs.get("sidebar");
 
         var $outline = $(document.createElement("div"));
@@ -87,15 +95,11 @@ define(function (require, exports, module) {
 
         $outline.append($outlineHeader, $outlineList);
 
-        $("#outline-toolbar-icon").addClass("enabled");
-
-        var toolbarPx = $("#main-toolbar:visible").width() || 0;
-
         if (sidebar) {
             $("#sidebar").append($outline);
-            $(".content").css("right", toolbarPx + "px");
             Resizer.makeResizable($outline, "vert", "top", 75);
         } else {
+            var toolbarPx = $("#main-toolbar:visible").width() || 0;
             $outline.css("right", toolbarPx + "px");
             $(".main-view").append($outline);
             Resizer.makeResizable($outline, "horz", "left", 150);
@@ -106,16 +110,22 @@ define(function (require, exports, module) {
             $outline.on("panelResizeUpdate", onResize);
             AppInit.appReady(onResize);
         }
+    }
 
+    function hideOutline() {
+        $("#outline").remove();
+        $(".content").css("right", ($("#main-toolbar:visible").width() || 0) + "px");
+    }
+
+    function enableOutline() {
+        $("#outline-toolbar-icon").addClass("enabled");
         $(EditorManager).on("activeEditorChange", updateOutline);
         $(DocumentManager).on("documentSaved", updateOutline);
-
         updateOutline();
     }
 
-    function removeOutline() {
-        $("#outline").remove();
-        $(".content").css("right", ($("#main-toolbar:visible").width() || 0) + "px");
+    function disableOutline() {
+        hideOutline();
         $("#outline-toolbar-icon").removeClass("enabled");
         $(EditorManager).off("activeEditorChange", updateOutline);
         $(DocumentManager).off("documentSaved", updateOutline);
@@ -130,9 +140,9 @@ define(function (require, exports, module) {
 
     function toggleEnabled() {
         if (togglePref("enabled")) {
-            loadOutline();
+            enableOutline();
         } else {
-            removeOutline();
+            disableOutline();
         }
     }
 
@@ -163,8 +173,8 @@ define(function (require, exports, module) {
             type: "boolean",
             value: true,
             commandAction: function () {
-                removeOutline();
-                loadOutline();
+                hideOutline();
+                updateOutline();
             }
         }, sort: {
             type: "boolean",
@@ -197,6 +207,6 @@ define(function (require, exports, module) {
         .appendTo($("#main-toolbar .buttons"));
 
     if (prefs.get("enabled")) {
-        loadOutline();
+        enableOutline();
     }
 });

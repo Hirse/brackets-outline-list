@@ -59,6 +59,18 @@
     padding-left: 27px;
 }
 
+.outline-entry-icon {
+    padding-left: 12px;
+}
+
+.outline-entry-icon:before {
+    display: inline-block;
+    font-family: Ionicons;
+    margin-right: 3px;
+    text-align: center;
+    width: 12px;
+}
+
 
 /* ==== Language Specific Entries ==== */
 
@@ -66,18 +78,6 @@
 /* JavaScript */
 .outline-entry-js-arg {
     color: #adb9bd;
-}
-
-.outline-entry-js {
-    padding-left: 12px;
-}
-
-.outline-entry-js:before {
-    display: inline-block;
-    font-family: Ionicons;
-    margin-right: 3px;
-    text-align: center;
-    width: 12px;
 }
 
 .outline-entry-js-private:before {
@@ -102,18 +102,6 @@
     color: #adb9bd;
 }
 
-.outline-entry-coffee {
-    padding-left: 12px;
-}
-
-.outline-entry-coffee:before {
-    display: inline-block;
-    font-family: Ionicons;
-    margin-right: 3px;
-    text-align: center;
-    width: 12px;
-}
-
 .outline-entry-coffee-private:before {
     color: #229bf4;
     content: "\f200";
@@ -132,18 +120,6 @@
 
 
 /* CSS */
-.outline-entry-css {
-    padding-left: 12px;
-}
-
-.outline-entry-css:before {
-    display: inline-block;
-    font-family: Ionicons;
-    margin-right: 3px;
-    text-align: center;
-    width: 12px;
-}
-
 .outline-entry-css-tag:before {
     color: #f47b22;
     content: "\f271";
@@ -173,4 +149,41 @@
 /* PHP */
 .outline-entry-php-arg {
     color: #adb9bd;
+}
+
+/* Markdown */
+.outline-entry-md {
+    padding-left: 12px;
+}
+
+.outline-entry-md:before {
+    color: #b94700;
+    display: inline;
+    font-family: Ionicons;
+    margin-right: 3px;
+    text-shadow: none;
+}
+
+.outline-entry-md-1:before {
+    content: "#";
+}
+
+.outline-entry-md-2:before {
+    content: "##";
+}
+
+.outline-entry-md-3:before {
+    content: "###";
+}
+
+.outline-entry-md-4:before {
+    content: "####";
+}
+
+.outline-entry-md-5:before {
+    content: "#####";
+}
+
+.outline-entry-md-6:before {
+    content: "######";
 }
