@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.3.1 - 2014-12-05
+### Changed
+- Better detection for PHP
+- Visibility Icons for PHP
+
 ## 0.3.0 - 2014-12-04
 ### Added
 - Markdown Support

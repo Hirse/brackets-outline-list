@@ -151,6 +151,28 @@
     color: #adb9bd;
 }
 
+.outline-entry-php-private:before {
+    color: #229bf4;
+    content: "\f200";
+}
+
+.outline-entry-php-protected:before {
+    color: #4ab9ae;
+    content: "\f219";
+}
+
+.outline-entry-php-public:before {
+    color: #9bf422;
+    content: "\f276";
+}
+
+.outline-entry-php-unnamed:before {
+    color: #f47b22;
+    content: "\3bb";
+    font-family: sans-serif;
+}
+
+
 /* Markdown */
 .outline-entry-md {
     padding-left: 12px;
