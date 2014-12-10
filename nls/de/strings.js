@@ -1,12 +1,15 @@
 /* global define */
 
 define({
-    COMMAND_ARGS: "Outline: Argumente anzeigen",
-    COMMAND_SIDEBAR: "Outline: In der Seitenleise anzeigen",
-    COMMAND_SORT: "Outline: Liste sortieren",
-    COMMAND_UNNAMED: "Outline: Anonyme Funktionen anzeigen",
+    HEADER_TITLE: "Outline",
 
     TOOLBAR_ICON_TOOLTIP: "Outline umschalten",
 
-    HEADER_TITLE: "Outline"
+    BUTTON_SETTINGS: "Outline konfigurieren",
+    BUTTON_MOVE: "Outline Position ändern",
+    BUTTON_CLOSE: "Outline schließen",
+
+    COMMAND_SORT: "Liste sortieren",
+    COMMAND_UNNAMED: "Anonyme Funktionen anzeigen",
+    COMMAND_ARGS: "Argumente anzeigen"
 });

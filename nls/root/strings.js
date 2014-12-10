@@ -1,12 +1,15 @@
 /* global define */
 
 define({
-    COMMAND_ARGS: "Outline: Show Arguments",
-    COMMAND_SIDEBAR: "Outline: In Sidebar",
-    COMMAND_SORT: "Outline: Sort Functions",
-    COMMAND_UNNAMED: "Outline: Show Unnamed Functions",
+    HEADER_TITLE: "Outline",
 
     TOOLBAR_ICON_TOOLTIP: "Toggle Outline",
 
-    HEADER_TITLE: "Outline"
+    BUTTON_SETTINGS: "Configure Outline",
+    BUTTON_MOVE: "Toggle Outline Position",
+    BUTTON_CLOSE: "Close Outline",
+
+    COMMAND_SORT: "Sort Functions",
+    COMMAND_UNNAMED: "Show Unnamed Functions",
+    COMMAND_ARGS: "Show Arguments"
 });

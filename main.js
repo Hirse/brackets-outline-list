@@ -1,34 +1,49 @@
-/* global define, brackets */
+/* global define, brackets, Mustache */
 
 define(function (require, exports, module) {
     "use strict";
 
-    var _                   = brackets.getModule("thirdparty/lodash");
-    var CommmandManager     = brackets.getModule("command/CommandManager");
-    var Menus               = brackets.getModule("command/Menus");
-    var DocumentManager     = brackets.getModule("document/DocumentManager");
-    var EditorManager       = brackets.getModule("editor/EditorManager");
-    var PreferencesManager  = brackets.getModule("preferences/PreferencesManager");
-    var AppInit             = brackets.getModule("utils/AppInit");
-    var ExtensionUtils      = brackets.getModule("utils/ExtensionUtils");
-    var Resizer             = brackets.getModule("utils/Resizer");
+    var CommmandManager = brackets.getModule("command/CommandManager");
+    var Menus           = brackets.getModule("command/Menus");
+    var DocumentManager = brackets.getModule("document/DocumentManager");
+    var EditorManager   = brackets.getModule("editor/EditorManager");
+    var Resizer         = brackets.getModule("utils/Resizer");
+    var AppInit         = brackets.getModule("utils/AppInit");
+    var ExtensionUtils  = brackets.getModule("utils/ExtensionUtils");
+    var _               = brackets.getModule("thirdparty/lodash");
 
-    var Strings             = require("strings");
+    var Strings         = require("strings");
+    var prefs           = require("src/Preferences");
+    var ListTemplate    = require("text!templates/outline.html");
 
     ExtensionUtils.loadStyleSheet(module, "styles/styles.css");
 
     var prefix = "hirse.outline";
-    var prefs = PreferencesManager.getExtensionPrefs(prefix);
 
     var languages = {
-        JavaScript: require("src/languages/JavaScript"),
-        CoffeeScript: require("src/languages/CoffeeScript"),
-        CSS:        require("src/languages/CSS"),
-        SCSS:       require("src/languages/CSS"),
-        LESS:       require("src/languages/CSS"),
-        PHP:        require("src/languages/PHP"),
-        Markdown:   require("src/languages/Markdown"),
+        JavaScript:     require("src/languages/JavaScript"),
+        CoffeeScript:   require("src/languages/CoffeeScript"),
+        CSS:            require("src/languages/CSS"),
+        SCSS:           require("src/languages/CSS"),
+        LESS:           require("src/languages/CSS"),
+        PHP:            require("src/languages/PHP"),
+        Markdown:       require("src/languages/Markdown"),
     };
+
+    function getOutline() {
+        var $outline = Mustache.render(ListTemplate, {
+            Strings: Strings
+        });
+        $outline = $($outline);
+
+        $outline.on("click", "#outline-close", toggleEnabled);
+        $outline.on("click", "#outline-move", function () {
+            hideOutline();
+            prefs.togglePref("sidebar");
+            updateOutline();
+        });
+        return $outline;
+    }
 
     function goToLine(event) {
         var currentEditor = EditorManager.getActiveEditor();
@@ -71,50 +86,37 @@ define(function (require, exports, module) {
         });
     }
 
+    function onResize() {
+        var toolbarPx = $("#main-toolbar:visible").width() || 0;
+        $(".content").css("right", ($("#outline").width() || 0) + toolbarPx + "px");
+    }
+
     function showOutline() {
+        var $outline = getOutline();
         if ($("#outline").length) {
             $("#outline-list ul").empty();
             return;
         }
 
-        var sidebar = prefs.get("sidebar");
-
-        var $outline = $(document.createElement("div"));
-        $outline.attr("id", "outline");
-        $outline.addClass(function () {
-            return sidebar ? "outline-sidebar" : "outline-main quiet-scrollbars";
-        });
-
-        var $outlineHeader = $(document.createElement("div"));
-        $outlineHeader.attr("id", "outline-header");
-        $outlineHeader.text(Strings.HEADER_TITLE);
-
-        var $outlineList = $(document.createElement("div"));
-        $outlineList.attr("id", "outline-list");
-        $outlineList.append($(document.createElement("ul")));
-
-        $outline.append($outlineHeader, $outlineList);
-
-        if (sidebar) {
+        if (prefs.get("sidebar")) {
             $("#sidebar").append($outline);
+            $("#outline").addClass("outline-sidebar");
             Resizer.makeResizable($outline, "vert", "top", 75);
         } else {
             var toolbarPx = $("#main-toolbar:visible").width() || 0;
-            $outline.css("right", toolbarPx + "px");
             $(".main-view").append($outline);
+            $("#outline").css("right", toolbarPx + "px");
+            $("#outline").addClass("outline-main quiet-scrollbars");
             Resizer.makeResizable($outline, "horz", "left", 150);
-            var onResize = function () {
-                $(".content").css("right", ($outline.width() || 150) + toolbarPx + "px");
-            };
-            onResize();
             $outline.on("panelResizeUpdate", onResize);
-            AppInit.appReady(onResize);
+            onResize();
         }
+        Menus.ContextMenu.assignContextMenuToSelector("#outline-settings", settingsMenu);
     }
 
     function hideOutline() {
         $("#outline").remove();
-        $(".content").css("right", ($("#main-toolbar:visible").width() || 0) + "px");
+        onResize();
     }
 
     function enableOutline() {
@@ -131,74 +133,30 @@ define(function (require, exports, module) {
         $(DocumentManager).off("documentSaved", updateOutline);
     }
 
-    function togglePref(key) {
-        var state = prefs.get(key);
-        prefs.set(key, !state);
-        prefs.save();
-        return !state;
-    }
-
     function toggleEnabled() {
-        if (togglePref("enabled")) {
+        if (prefs.togglePref("enabled")) {
             enableOutline();
         } else {
             disableOutline();
         }
     }
 
-    function applyCommand(key, action) {
-        var command = CommmandManager.get(prefix + "." + key);
-        var checked = togglePref(key);
-        command.setChecked(checked);
-        if (prefs.get("enabled")) {
-            action();
-        }
-    }
 
-    var menu = Menus.getMenu(Menus.AppMenuBar.VIEW_MENU);
-    var defaultPreferences = {
-        enabled: {
-            type: "boolean",
-            value: false,
-            icon: true
-        }, unnamed: {
-            type: "boolean",
-            value: true,
-            commandAction: updateOutline
-        }, args: {
-            type: "boolean",
-            value: true,
-            commandAction: updateOutline
-        }, sidebar: {
-            type: "boolean",
-            value: true,
-            commandAction: function () {
-                hideOutline();
-                updateOutline();
-            }
-        }, sort: {
-            type: "boolean",
-            value: false,
-            commandAction: updateOutline
-        }
-    };
-
-    menu.addMenuDivider();
-
-    _.each(defaultPreferences, function (definition, key) {
-        prefs.definePreference(key, definition.type, definition.value);
-        if (definition.commandAction) {
-            var commandName = prefix + "." + key;
-            var commandString = Strings["COMMAND_" + key.toUpperCase()];
-            var command = CommmandManager.register(commandString, commandName, function () {
-                applyCommand(key, definition.commandAction);
-            });
-            command.setChecked(prefs.get(key));
-            menu.addMenuItem(commandName);
-        }
+    /* Create Settings Context Menu */
+    var settingsMenu = Menus.registerContextMenu("hirse-outline-context-menu");
+    _.each(prefs.getSettings(), function (status, key) {
+        var commandName = prefix + "." + key;
+        var commandString = Strings["COMMAND_" + key.toUpperCase()];
+        var command = CommmandManager.register(commandString, commandName, function () {
+            var checked = prefs.togglePref(commandName.split(".")[2]);
+            command.setChecked(checked);
+            updateOutline();
+        });
+        command.setChecked(status);
+        settingsMenu.addMenuItem(command);
     });
-    prefs.save();
 
+    /* Create Toolbar Icon */
     $(document.createElement("a"))
         .attr("id", "outline-toolbar-icon")
         .attr("href", "#")
@@ -206,6 +164,7 @@ define(function (require, exports, module) {
         .on("click", toggleEnabled)
         .appendTo($("#main-toolbar .buttons"));
 
+    AppInit.appReady(onResize);
     if (prefs.get("enabled")) {
         enableOutline();
     }

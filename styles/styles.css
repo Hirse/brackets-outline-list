@@ -40,6 +40,35 @@
 #outline-header {
     font-size: 13px;
     padding: 8px 0 9px 12px;
+    position: relative;
+}
+
+.outline-button {
+    background-color: transparent;
+    background-origin: content-box;
+    background-repeat: no-repeat;
+    box-sizing: content-box;
+    font-size: 12px;
+    height: 13px;
+    padding: 4px 6px;
+    position: absolute;
+    top: 7px;
+    width: 13px;
+}
+
+#outline-settings {
+    background-image: url("icons/settings.svg");
+    right: 56px;
+}
+
+#outline-move {
+    background-image: url("icons/move.svg");
+    right: 30px;
+}
+
+#outline-close {
+    background-image: url("icons/close.svg");
+    right: 4px;
 }
 
 #outline-list {
