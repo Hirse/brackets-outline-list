@@ -28,6 +28,9 @@ define(function (require, exports, module) {
         LESS:           require("src/languages/CSS"),
         PHP:            require("src/languages/PHP"),
         Markdown:       require("src/languages/Markdown"),
+        XML:            require("src/languages/XML"),
+        HTML:           require("src/languages/XML"),
+        SVG:            require("src/languages/XML")
     };
 
     function getOutline() {
@@ -69,7 +72,7 @@ define(function (require, exports, module) {
         var lines = doc.getText(false).split("\n");
         var list = lang.getOutlineList(lines, prefs.get("args"), prefs.get("unnamed"));
 
-        if (prefs.get("sort")) {
+        if (prefs.get("sort") && lang.compare) {
             list.sort(lang.compare);
         }
 

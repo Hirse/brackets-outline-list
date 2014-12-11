@@ -238,3 +238,14 @@
 .outline-entry-md-6:before {
     content: "######";
 }
+
+.outline-entry-xml-id,
+.outline-entry-xml-class {
+    color: #adb9bd;
+}
+
+.outline-entry-xml-indent:before {
+    color: #adb9bd;
+    content: attr(data-indent);
+    font-family: Ionicons;
+}
