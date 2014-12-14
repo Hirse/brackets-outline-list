@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.4.1 - 2014-12-14
+### Fixed
+- Detect PHP functions with referenced parameters (see #16)
+
+
 ## 0.4.0 - 2014-12-11
 ### Changed
 - New Settings UI (Imitating Brackets Working Set Design)
