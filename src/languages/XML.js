@@ -55,9 +55,9 @@ define(function (require, exports, module) {
     function getOutlineList(lines, showArguments) {
         var regex;
         if (showArguments) {
-            regex = /(\s*)<(\w+)[ (>)](.*(id|class)=[""]([\w- ]+)[""])?/g;
+            regex = /^(\s*)<(\w+)[ (>)](.*(id|class)=[""]([\w- ]+)[""])?/g;
         } else {
-            regex = /(\s*)<(\w+)[ (>)]/g;
+            regex = /^(\s*)<(\w+)[ (>)]/g;
         }
         var result = [];
         lines.forEach(function (line, index) {
