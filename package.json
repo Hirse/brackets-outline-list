@@ -10,10 +10,13 @@
     "author": "Jan Pilzer (https://github.com/Hirse)",
     "license": "MIT",
     "keywords": ["outline"],
-    "i18n": ["en", "de"],
+    "i18n": ["en", "de", "fr"],
     "package-i18n": {
         "de": {
             "description": "Zeigt eine Liste der Funktionen oder Definitionen im geöffneten Dokument. Unterstützt JavaScript, CoffeeScript, CSS, SCSS, LESS, Markdown und PHP. Jetzt auch mit Icons!"
+        },
+        "fr": {
+            "description": "Affiche une liste des fonctions ou définition du document ouvert actuellement. Fonctionne avec JavaScript CoffeeScript, CSS, SCSS, LESS, Markdown et PHP. Maintenant, avec des icônes !"
         }
     }
 }
