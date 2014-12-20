@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.4.3 - 2014-12-20
+### Added
+- French Translation, thanks to [__@cedced19__](https://github.com/cedced19)
+
+
 ## 0.4.2 - 2014-12-15
 ### Changed
 - Remove HMTL elements from the outline that are not in the beginning of the line (see #12)

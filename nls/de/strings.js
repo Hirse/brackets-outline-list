@@ -13,3 +13,5 @@ define({
     COMMAND_UNNAMED: "Anonyme Funktionen anzeigen",
     COMMAND_ARGS: "Argumente anzeigen"
 });
+
+/* Last translated for 41a691e45e34f3ebde20bc5e3fdca8014871490d */

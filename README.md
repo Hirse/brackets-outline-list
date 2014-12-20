@@ -15,7 +15,7 @@ Screenshots
 Features
 -------
 * List Functions or Definitions in the current document
-* Jump to declaration from outline list
+* Jump to declaration from the Outline List
 * Show Outline List in the sidebar or next to the toolbar
 * Differentiate between types easily by showing different icons
 * Toggle sorting of Outline List
