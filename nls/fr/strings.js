@@ -13,3 +13,5 @@ define({
     COMMAND_UNNAMED: "Monter les fonctions anonymess",
     COMMAND_ARGS: "Montrer les paramètres"
 });
+
+/* Last translated for 41a691e45e34f3ebde20bc5e3fdca8014871490d */
