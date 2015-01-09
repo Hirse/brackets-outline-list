@@ -21,16 +21,17 @@ define(function (require, exports, module) {
     var prefix = "hirse.outline";
 
     var languages = {
-        JavaScript:     require("src/languages/JavaScript"),
-        CoffeeScript:   require("src/languages/CoffeeScript"),
-        CSS:            require("src/languages/CSS"),
-        SCSS:           require("src/languages/CSS"),
-        LESS:           require("src/languages/CSS"),
-        PHP:            require("src/languages/PHP"),
-        Markdown:       require("src/languages/Markdown"),
-        XML:            require("src/languages/XML"),
-        HTML:           require("src/languages/XML"),
-        SVG:            require("src/languages/XML")
+        JavaScript:             require("src/languages/JavaScript"),
+        CoffeeScript:           require("src/languages/CoffeeScript"),
+        CSS:                    require("src/languages/CSS"),
+        SCSS:                   require("src/languages/CSS"),
+        LESS:                   require("src/languages/CSS"),
+        PHP:                    require("src/languages/PHP"),
+        Markdown:               require("src/languages/Markdown"),
+        "Markdown (GitHub)":    require("src/languages/Markdown"),
+        XML:                    require("src/languages/XML"),
+        HTML:                   require("src/languages/XML"),
+        SVG:                    require("src/languages/XML")
     };
 
     function getOutline() {
