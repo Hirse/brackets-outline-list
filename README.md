@@ -26,7 +26,7 @@ Features
     * CoffeeScript
     * CSS, SCSS, LESS
     * XML, HTML, SVG (hierarchical based on indentation)
-    * Markdown (atx only)
+    * Markdown, GitHub-Flavored-Markdown (atx-style headings only)
     * PHP
 
 

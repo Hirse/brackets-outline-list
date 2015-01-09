@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.4.4 - 2015-01-09
+### Changed
+- Updated Ionicons to version 2.0.0
+
+
 ## 0.4.3 - 2014-12-20
 ### Added
 - French Translation, thanks to [__@cedced19__](https://github.com/cedced19)
