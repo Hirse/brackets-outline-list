@@ -32,7 +32,7 @@ define(function (require, exports, module) {
      * @returns {Array}   List of outline entries.
      */
     function getOutlineList(lines, showArguments, showUnnamed) {
-        var regex = /((\w*)\s*[=:]\s*)?((public|protected|private)\s*)?function(\s*|\s+\w*\s*)(\([\w,\s&$='"\\]*\))/g;
+        var regex = /((\w*)\s*[=:]\s*)?((public|protected|private)\s*)?function(\s*|\s+\w*\s*)(\([\w,\s&$='"\\()]*\))/g;
         var result = [];
         lines.forEach(function (line, index) {
             var match = regex.exec(line);
