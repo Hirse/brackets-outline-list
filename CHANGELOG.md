@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.4.6 - 2015-01-30
+### Changed
+- Improved method detection for CoffeeScript, thanks to [__@giovannicalo__](https://github.com/giovannicalo)
+
+
 ## 0.4.5 - 2015-01-21
 ### Fixed
 - Recognize PHP functions with default values for parameter that involve parens. (see [#21](https://github.com/Hirse/brackets-outline-list/issues/21)).
