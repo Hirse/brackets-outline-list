@@ -55,7 +55,7 @@ define(function (require, exports, module) {
     function getOutlineList(lines, showArguments) {
         var regex;
         if (showArguments) {
-            regex = /^([\t ]*)<([a-zA-Z:_][a-zA-Z0-9:_\-\.]*)( (.*(id|class)=(["'])([\w\- ]+)\6)?.*)?>/g;
+            regex = /^([\t ]*)<([a-zA-Z:_][a-zA-Z0-9:_\-\.]*)(?: (?:(?:(?:"(?:(?:\\")|[^\n\r"])*")|(?:'(?:(?:\\')|[^\n\r'])*')|[^\n\r<>"'])*(id|class)=(["'])([\w\- ]+)\4)?.*)?>/g;
         } else {
             regex = /^([\t ]*)<([a-zA-Z:_][a-zA-Z0-9:_\-\.]*).*>/g;
         }
@@ -65,8 +65,8 @@ define(function (require, exports, module) {
             while (match !== null) {
                 var whitespace = match[1];
                 var name = match[2].trim();
-                var type = (match[5] || "").trim();
-                var args = (match[7] || "").trim();
+                var type = (match[3] || "").trim();
+                var args = (match[5] || "").trim();
                 var entry = _createListEntry(name, type, args, _getIndentationLevel(whitespace));
                 entry.line = index;
                 entry.ch = line.length;
