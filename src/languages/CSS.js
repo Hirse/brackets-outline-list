@@ -36,6 +36,7 @@ define(function (require, exports, module) {
     function getOutlineList(lines) {
         var regex =  /([^\r\n,{}]+)((?=[^}]*\{)|\s*\{)/g;
         var result = [];
+        lines = lines.join("\n").replace(/(\n*)\{/g, "{$1").split("\n");
         lines.forEach(function (line, index) {
             var match = regex.exec(line);
             while (match !== null) {

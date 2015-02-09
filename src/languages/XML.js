@@ -23,7 +23,7 @@ define(function (require, exports, module) {
             var typechar = type == "id" ? "#" : ".";
             var $arguments = $(document.createElement("span"));
             $arguments.addClass("outline-entry-xml-" + type);
-            $arguments.text(" " + typechar + args);
+            $arguments.text(" " + typechar + args.replace(/ /g, " " + typechar));
             $elements.push($arguments);
         }
         return {
@@ -42,7 +42,7 @@ define(function (require, exports, module) {
         for (var i = 0; i < indentSize; i++) {
             tmpSpaces += " ";
         }
-        whitespace.replace(/\t/, tmpSpaces);
+        whitespace = whitespace.replace(/\t/g, tmpSpaces);
         return (whitespace.length / indentSize) | 0;
     }
 
@@ -55,9 +55,9 @@ define(function (require, exports, module) {
     function getOutlineList(lines, showArguments) {
         var regex;
         if (showArguments) {
-            regex = /^(\s*)<(\w+)[ (>)](.*(id|class)=[""]([\w- ]+)[""])?/g;
+            regex = /^([\t ]*)<([a-zA-Z:_][a-zA-Z0-9:_\-\.]*)(?: (?:(?:(?:"(?:(?:\\")|[^\n\r"])*")|(?:'(?:(?:\\')|[^\n\r'])*')|[^\n\r<>"'])*(id|class)=(["'])([\w\- ]+)\4)?.*)?>/g;
         } else {
-            regex = /^(\s*)<(\w+)[ (>)]/g;
+            regex = /^([\t ]*)<([a-zA-Z:_][a-zA-Z0-9:_\-\.]*).*>/g;
         }
         var result = [];
         lines.forEach(function (line, index) {
@@ -65,7 +65,7 @@ define(function (require, exports, module) {
             while (match !== null) {
                 var whitespace = match[1];
                 var name = match[2].trim();
-                var type = (match[4] || "").trim();
+                var type = (match[3] || "").trim();
                 var args = (match[5] || "").trim();
                 var entry = _createListEntry(name, type, args, _getIndentationLevel(whitespace));
                 entry.line = index;
