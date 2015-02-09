@@ -50,7 +50,7 @@ define(function (require, exports, module) {
         for (var i = 0; i < indentSize; i++) {
             tmpSpaces += " ";
         }
-        whitespace.replace(/\t/, tmpSpaces);
+        whitespace = whitespace.replace(/\t/g, tmpSpaces);
         return (whitespace.length / indentSize) | 0;
     }
 
