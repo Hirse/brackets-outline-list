@@ -5,25 +5,33 @@ define(function (require, exports, module) {
 
     var Editor = brackets.getModule("editor/Editor").Editor;
 
-    function _createListEntry(name, type, args, indent) {
+    function _createListEntry(namespace, name, type, args, indent) {
         var $elements = [];
-        var $name = $(document.createElement("span"));
-        $name.addClass("outline-entry-xml-name");
-        $name.text(name);
         if (indent) {
-            $name.addClass("outline-entry-xml-indent");
+            var $indentation = $(document.createElement("span"));
+            $indentation.addClass("outline-entry-xml-indent");
             var interpunct = "";
             for (var i = 0; i < indent; i++) {
                 interpunct += "·";
             }
-            $name.attr("data-indent", interpunct);
+            $indentation.text(interpunct);
+            $elements.push($indentation);
         }
+        if (namespace) {
+            var $namespace = $(document.createElement("span"));
+            $namespace.addClass("outline-entry-xml-namespace");
+            $namespace.text(namespace);
+            $elements.push($namespace);
+        }
+        var $name = $(document.createElement("span"));
+        $name.addClass("outline-entry-xml-name");
+        $name.text(name);
         $elements.push($name);
         if (type && args) {
             var typechar = type == "id" ? "#" : ".";
             var $arguments = $(document.createElement("span"));
             $arguments.addClass("outline-entry-xml-" + type);
-            $arguments.text(" " + typechar + args);
+            $arguments.text(" " + typechar + args.replace(/\s+/g, " " + typechar));
             $elements.push($arguments);
         }
         return {
@@ -34,7 +42,7 @@ define(function (require, exports, module) {
     }
 
     function _getIndentationLevel(whitespace) {
-        if (whitespace === undefined) {
+        if (!whitespace) {
             return 0;
         }
         var indentSize = Editor.getUseTabChar() ? Editor.getTabSize() : Editor.getSpaceUnits();
@@ -53,21 +61,17 @@ define(function (require, exports, module) {
      * @returns {Array}   List of outline entries.
      */
     function getOutlineList(lines, showArguments) {
-        var regex;
-        if (showArguments) {
-            regex = /^(\s*)<(\w+)[ (>)](.*(id|class)=[""]([\w- ]+)[""])?/g;
-        } else {
-            regex = /^(\s*)<(\w+)[ (>)]/g;
-        }
+        var regex = /^(\s*)<([\w]+:)?([\w.-]+)[ >](?:.*?(id|class)=["']([\w- ]+)["'])?/g;
         var result = [];
         lines.forEach(function (line, index) {
             var match = regex.exec(line);
             while (match !== null) {
                 var whitespace = match[1];
-                var name = match[2].trim();
+                var namespace = showArguments ? (match[2] || "").trim() : "";
+                var name = match[3].trim();
                 var type = (match[4] || "").trim();
-                var args = (match[5] || "").trim();
-                var entry = _createListEntry(name, type, args, _getIndentationLevel(whitespace));
+                var args = showArguments ? (match[5] || "").trim() : "";
+                var entry = _createListEntry(namespace, name, type, args, _getIndentationLevel(whitespace));
                 entry.line = index;
                 entry.ch = line.length;
                 result.push(entry);
