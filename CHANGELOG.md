@@ -1,6 +1,16 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.5.0 - 2015-02-10
+### Added
+- Support for XML namespaces
+- Hiding Animation in Sidebar mode to reduce missclicking
+
+### Fixed
+- Recognize CSS declarations where the open brace is on the next line (see [#5](https://github.com/Hirse/brackets-outline-list/issues/5)), thanks to [__@giovannicalo__](https://github.com/giovannicalo)
+- Outline Indentation for XML files that use tabs for indentation, thanks to [__@giovannicalo__](https://github.com/giovannicalo)
+- Assigning correct id or classes to XML elements in outline
+
 ## 0.4.6 - 2015-01-30
 ### Changed
 - Improved method detection for CoffeeScript, thanks to [__@giovannicalo__](https://github.com/giovannicalo)

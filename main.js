@@ -42,9 +42,10 @@ define(function (require, exports, module) {
 
         $outline.on("click", "#outline-close", toggleEnabled);
         $outline.on("click", "#outline-move", function () {
-            hideOutline();
-            prefs.togglePref("sidebar");
-            updateOutline();
+            hideOutline(function () {
+                prefs.togglePref("sidebar");
+                updateOutline();
+            });
         });
         return $outline;
     }
@@ -96,12 +97,12 @@ define(function (require, exports, module) {
     }
 
     function showOutline() {
-        var $outline = getOutline();
         if ($("#outline").length) {
             $("#outline-list ul").empty();
             return;
         }
 
+        var $outline = getOutline();
         if (prefs.get("sidebar")) {
             $("#sidebar").append($outline);
             $("#outline").addClass("outline-sidebar");
@@ -118,9 +119,22 @@ define(function (require, exports, module) {
         Menus.ContextMenu.assignContextMenuToSelector("#outline-settings", settingsMenu);
     }
 
-    function hideOutline() {
-        $("#outline").remove();
-        onResize();
+    function hideOutline(onHideCompleted) {
+        if (prefs.get("sidebar")) {
+            $("#outline").slideUp(function () {
+                $(this).remove();
+                onResize();
+                if (onHideCompleted) {
+                    onHideCompleted();
+                }
+            });
+        } else {
+            $("#outline").remove();
+            onResize();
+            if (onHideCompleted) {
+                onHideCompleted();
+            }
+        }
     }
 
     function enableOutline() {
