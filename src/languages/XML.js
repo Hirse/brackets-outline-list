@@ -61,7 +61,7 @@ define(function (require, exports, module) {
      * @returns {Array}   List of outline entries.
      */
     function getOutlineList(lines, showArguments) {
-        var regex = /^(\s*)<([\w]+:)?([\w.-]+)[ >](?:.*?(id|class)=["']([\w- ]+)["'])?/g;
+        var regex = /^(\s*)<([\w]+:)?([\w.:-]+)(?:[^>]*?(id|class)=["']([\w- ]+)["'])?/g;
         var result = [];
         lines.forEach(function (line, index) {
             var match = regex.exec(line);

@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.5.1 - 2015-02-13
+### Fixed
+- Actually use translated strings
+- Match correct properties to XML elements if multiple elements in one line
+
+
 ## 0.5.0 - 2015-02-10
 ### Added
 - Support for XML namespaces

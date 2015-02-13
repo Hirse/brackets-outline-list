@@ -1,6 +1,6 @@
 {
     "name": "hirse.outline-list",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "title": "Brackets Outline List",
     "description": "Displays a list of the functions or definitions in the currently opened document. Works with JavaScript, CoffeeScript, CSS, SCSS, LESS, XML, HTML, SVG, Markdown and PHP. Now with Icons!",
     "engines": {
