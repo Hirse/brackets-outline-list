@@ -1,10 +1,10 @@
-/* global define */
-
 define(function (require, exports, module) {
     "use strict";
 
+    var unnamedPlaceholder = "function";
+
     function _getVisibilityClass(name) {
-        if (name === "function") {
+        if (name === unnamedPlaceholder) {
             return " outline-entry-js-unnamed";
         }
         return " outline-entry-js-" + (name[0] === "_" ? "private" : "public");
@@ -29,6 +29,13 @@ define(function (require, exports, module) {
         };
     }
 
+    function _surroundArgs(args) {
+        if (args[0] !== "(") {
+            args = "(" + args + ")";
+        }
+        return args;
+    }
+
     /**
      * Create the entry list of functions language dependent.
      * @param   {Array}   lines         Array that contains the lines of text.
@@ -37,22 +44,17 @@ define(function (require, exports, module) {
      * @returns {Array}   List of outline entries.
      */
     function getOutlineList(lines, showArguments, showUnnamed) {
-        var regex;
-        if (showArguments) {
-            regex = /((\w*)\s*[=:]\s*)?function(\s*|\s+\w*\s*)(\([\w,\s,\$,\_]*\))/g;
-        } else {
-            regex = /((\w*)\s*[=:]\s*)?function(\s*|\s+\w*\s*)()\(/g;
-        }
+        var regex = /(?:(?:([\w$]+)\s*[=:]\s*)?\bfunction(\s+[\w$]+)?\s*(\([\w$,\s]*\))|(\([\w$,\s]*\)|[\w$]+)\s*=>)/g;
         var result = [];
         lines.forEach(function (line, index) {
             var match = regex.exec(line);
             while (match !== null) {
-                var name = (match[3].trim() || match[2] || "").trim();
-                var args = (match[4] || "");
+                var name = (match[1] || match[2] || "").trim();
+                var args = showArguments ? _surroundArgs(match[3] || match[4]) : "";
                 match = regex.exec(line);
                 if (name.length === 0) {
                     if (showUnnamed) {
-                        name = "function";
+                        name = unnamedPlaceholder;
                     } else {
                         continue;
                     }
@@ -64,10 +66,10 @@ define(function (require, exports, module) {
     }
 
     function compare(a, b) {
-        if (b.name === "function") {
+        if (b.name === unnamedPlaceholder) {
             return -1;
         }
-        if (a.name === "function") {
+        if (a.name === unnamedPlaceholder) {
             return 1;
         }
         if (a.name > b.name) {

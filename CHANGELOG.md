@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.?
+### Added
+- Support for arrow functions in JavaScript
+
+
 ## 0.5.1 - 2015-02-13
 ### Fixed
 - Actually use translated strings
