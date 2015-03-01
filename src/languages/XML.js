@@ -9,7 +9,7 @@ define(function (require, exports, module) {
         var $elements = [];
         if (indent) {
             var $indentation = $(document.createElement("span"));
-            $indentation.addClass("outline-entry-xml-indent");
+            $indentation.addClass("outline-entry-indent");
             var interpunct = "";
             for (var i = 0; i < indent; i++) {
                 interpunct += "·";
@@ -24,7 +24,7 @@ define(function (require, exports, module) {
             $elements.push($namespace);
         }
         var $name = $(document.createElement("span"));
-        $name.addClass("outline-entry-xml-name");
+        $name.addClass("outline-entry-name");
         $name.text(name);
         $elements.push($name);
         if (type && args) {

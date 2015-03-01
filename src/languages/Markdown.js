@@ -10,7 +10,7 @@ define(function (require, exports, module) {
     function _createListEntry(name, level, line, ch) {
         var $elements = [];
         var $name = $(document.createElement("span"));
-        $name.addClass("outline-entry-md-name");
+        $name.addClass("outline-entry-name");
         $name.text(name);
         $elements.push($name);
         return {

@@ -9,17 +9,18 @@ define(function (require, exports, module) {
     function createListEntry(name, args, vis, line, ch) {
         var $elements = [];
         var $name = $(document.createElement("span"));
+        $name.addClass("outline-entry-name");
         $name.text(name);
         $elements.push($name);
         var $arguments = $(document.createElement("span"));
-        $arguments.addClass("outline-entry-php-arg");
+        $arguments.addClass("outline-entry-arg");
         $arguments.text(args);
         $elements.push($arguments);
         return {
             name: name,
             line: line,
             ch: ch,
-            classes: "outline-entry-php outline-entry-icon outline-entry-php-" + vis,
+            classes: "outline-entry-php outline-entry-icon outline-entry-" + vis,
             $html: $elements
         };
     }

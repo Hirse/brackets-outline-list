@@ -5,19 +5,19 @@ define(function (require, exports, module) {
 
     function _getVisibilityClass(name) {
         if (name === unnamedPlaceholder) {
-            return " outline-entry-coffee-unnamed";
+            return " outline-entry-unnamed";
         }
-        return " outline-entry-coffee-" + (name[0] === "_" ? "private" : "public");
+        return " outline-entry-" + (name[0] === "_" ? "private" : "public");
     }
 
     function _createListEntry(name, args, line, ch) {
         var $elements = [];
         var $name = $(document.createElement("span"));
-        $name.addClass("outline-entry-coffee-name");
+        $name.addClass("outline-entry-name");
         $name.text(name);
         $elements.push($name);
         var $arguments = $(document.createElement("span"));
-        $arguments.addClass("outline-entry-coffee-arg");
+        $arguments.addClass("outline-entry-arg");
         $arguments.text(args);
         $elements.push($arguments);
         return {

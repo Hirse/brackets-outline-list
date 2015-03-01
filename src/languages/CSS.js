@@ -17,6 +17,7 @@ define(function (require, exports, module) {
         var $elements = [];
         var $name = $(document.createElement("span"));
         var typeClass = _getTypeClass(name);
+        $name.addClass("outline-entry-name");
         $name.text(name);
         $elements.push($name);
         return {
