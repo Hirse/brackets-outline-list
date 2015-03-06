@@ -139,16 +139,16 @@ define(function (require, exports, module) {
 
     function enableOutline() {
         $("#outline-toolbar-icon").addClass("enabled");
-        $(EditorManager).on("activeEditorChange", updateOutline);
-        $(DocumentManager).on("documentSaved", updateOutline);
+        EditorManager.on("activeEditorChange", updateOutline);
+        DocumentManager.on("documentSaved", updateOutline);
         updateOutline();
     }
 
     function disableOutline() {
         hideOutline();
         $("#outline-toolbar-icon").removeClass("enabled");
-        $(EditorManager).off("activeEditorChange", updateOutline);
-        $(DocumentManager).off("documentSaved", updateOutline);
+        EditorManager.off("activeEditorChange", updateOutline);
+        DocumentManager.off("documentSaved", updateOutline);
     }
 
     function toggleEnabled() {
