@@ -33,14 +33,14 @@ define(function (require, exports, module) {
      * @returns {Array}   List of outline entries.
      */
     function getOutlineList(lines, showArguments, showUnnamed) {
-        var regex = /((\w*)\s*[=:]\s*)?((public|protected|private)\s*)?function(\s*|\s+\w*\s*)(\([\w,\s&$='"\\()]*\))/g;
+        var regex = /(?:([\w$]+)\s*[=:]\s*)?(public|protected|private)?\s*function(\s+[\w&]+)?\s*(\([\w,\s&$='"\\()]*\))/g;
         var result = [];
         lines.forEach(function (line, index) {
             var match = regex.exec(line);
             while (match !== null) {
-                var vis = match[4] || defaultVisibilty;
-                var name = (match[5] || "").trim();
-                var args = showArguments ? match[6] : "";
+                var name = (match[1] || match[3] || "").trim();
+                var vis = match[2] || defaultVisibilty;
+                var args = showArguments ? match[4] : "";
                 match = regex.exec(line);
                 if (name.length === 0) {
                     if (showUnnamed) {
