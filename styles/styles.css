@@ -148,6 +148,12 @@
     font-family: sans-serif;
 }
 
+.outline-entry-js.outline-entry-generator:before {
+    color: #f4229b;
+    content: "\f43d";
+    font-family: Ionicons;
+}
+
 
 /* CoffeeScript */
 .outline-entry-coffee.outline-entry-private:before {
