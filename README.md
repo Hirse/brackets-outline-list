@@ -6,10 +6,10 @@ Thanks to [crabcode](https://github.com/crabcode) for his groundwork on this pro
 
 Screenshots
 -------
-![JavaScript Outline](https://raw.githubusercontent.com/Hirse/brackets-outline-list/master/screenshots/outline.png)
+![JavaScript Outline](https://raw.githubusercontent.com/Hirse/brackets-outline-list/master/screenshots/outline.png)  
 *Outline for JavaScript*
 
-![CSS Outline](https://raw.githubusercontent.com/Hirse/brackets-outline-list/master/screenshots/outline-sidebar.png)
+![CSS Outline](https://raw.githubusercontent.com/Hirse/brackets-outline-list/master/screenshots/outline-sidebar.png)  
 *Outline for CSS, HTML and Markdown in the Sidebar*
 
 Features
@@ -32,7 +32,9 @@ Features
 
 Installation
 -------
-To install the latest release of this extension use the built-in Brackets Extension Manager which downloads the extension from the [extension registry](https://brackets-registry.aboutweb.com/).
+To install the latest _release_ of this extension use the built-in Brackets Extension Manager which downloads the extension from the [extension registry](https://brackets-registry.aboutweb.com/).
+
+To install the latest _commit_ of this extension use the built-in Brackets Extension Manager which has a function to `Install from URL...` using this link: https://github.com/Hirse/brackets-outline-list/archive/master.zip.
 
 
 License
