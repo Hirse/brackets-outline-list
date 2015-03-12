@@ -27,10 +27,12 @@ define(function (require, exports, module) {
         SCSS:                   require("src/languages/CSS"),
         LESS:                   require("src/languages/CSS"),
         PHP:                    require("src/languages/PHP"),
+        Ruby:                   require("src/languages/Ruby"),
         Markdown:               require("src/languages/Markdown"),
         "Markdown (GitHub)":    require("src/languages/Markdown"),
         XML:                    require("src/languages/XML"),
         HTML:                   require("src/languages/XML"),
+        "Embedded Ruby":        require("src/languages/XML"),
         SVG:                    require("src/languages/XML")
     };
 
