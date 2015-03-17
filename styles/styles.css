@@ -20,6 +20,11 @@
     background-position: 0 -24px;
 }
 
+.outline-entry.active {
+  background: #0F1114;
+  font-weight: 700;
+}
+
 
 /* ==== Outline List ==== */
 
