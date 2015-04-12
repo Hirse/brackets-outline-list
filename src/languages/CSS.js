@@ -31,13 +31,13 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {Array} lines Array that contains the lines of text.
+     * @param   {Array} text Documents text with normalized line endings.
      * @returns {Array} List of outline entries.
      */
-    function getOutlineList(lines) {
+    function getOutlineList(text) {
+        var lines = text.replace(/(\n*)\{/g, "{$1").split("\n");
         var regex =  /([^\r\n,{}]+)((?=[^}]*\{)|\s*\{)/g;
         var result = [];
-        lines = lines.join("\n").replace(/(\n*)\{/g, "{$1").split("\n");
         lines.forEach(function (line, index) {
             var match = regex.exec(line);
             while (match !== null) {

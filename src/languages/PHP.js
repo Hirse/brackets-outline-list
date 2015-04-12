@@ -27,12 +27,13 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {Array}   lines         Array that contains the lines of text.
+     * @param   {Array}   text          Documents text with normalized line endings.
      * @param   {Boolean} showArguments args Preference.
      * @param   {Boolean} showUnnamed   unnamed Preference.
      * @returns {Array}   List of outline entries.
      */
-    function getOutlineList(lines, showArguments, showUnnamed) {
+    function getOutlineList(text, showArguments, showUnnamed) {
+        var lines = text.split("\n");
         var regex = /((\w*)\s*[=:]\s*)?((public|protected|private)\s*)?function(\s*|\s+\w*\s*)(\([\w,\s&$='"\\()]*\))/g;
         var result = [];
         lines.forEach(function (line, index) {

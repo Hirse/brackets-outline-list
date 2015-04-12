@@ -56,11 +56,12 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {Array}   lines         Array that contains the lines of text.
+     * @param   {Array}   text          Documents text with normalized line endings.
      * @param   {Boolean} showArguments args Preference.
      * @returns {Array}   List of outline entries.
      */
-    function getOutlineList(lines, showArguments) {
+    function getOutlineList(text, showArguments) {
+        var lines = text.split("\n");
         var regex = /^(\s*)<([\w]+:)?([\w.:-]+)(?:[^>]*?(id|class)=["']([\w- ]+)["'])?/g;
         var result = [];
         lines.forEach(function (line, index) {

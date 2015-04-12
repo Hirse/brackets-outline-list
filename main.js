@@ -71,8 +71,7 @@ define(function (require, exports, module) {
 
         showOutline();
 
-        var lines = doc.getText(false).split("\n");
-        var list = lang.getOutlineList(lines, prefs.get("args"), prefs.get("unnamed"));
+        var list = lang.getOutlineList(doc.getText(), prefs.get("args"), prefs.get("unnamed"));
 
         if (prefs.get("sort") && lang.compare) {
             list.sort(lang.compare);
