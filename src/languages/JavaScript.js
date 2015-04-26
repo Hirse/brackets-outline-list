@@ -3,14 +3,20 @@ define(function (require, exports, module) {
 
     var unnamedPlaceholder = "function";
 
-    function _getVisibilityClass(name) {
-        if (name === unnamedPlaceholder) {
-            return " outline-entry-unnamed";
+    function _getVisibilityClass(name, isGenerator) {
+        var visClass = "";
+        if (isGenerator) {
+            visClass = " outline-entry-generator";
         }
-        return " outline-entry-" + (name[0] === "_" ? "private" : "public");
+        if (name === unnamedPlaceholder) {
+            visClass += " outline-entry-unnamed";
+        } else {
+            visClass += " outline-entry-" + (name[0] === "_" ? "private" : "public");
+        }
+        return visClass;
     }
 
-    function _createListEntry(name, args, line, ch) {
+    function _createListEntry(name, isGenerator, args, line, ch) {
         var $elements = [];
         var $name = $(document.createElement("span"));
         $name.addClass("outline-entry-name");
@@ -24,7 +30,7 @@ define(function (require, exports, module) {
             name: name,
             line: line,
             ch: ch,
-            classes: "outline-entry-js outline-entry-icon" + _getVisibilityClass(name),
+            classes: "outline-entry-js outline-entry-icon" + _getVisibilityClass(name, isGenerator),
             $html: $elements
         };
     }
@@ -45,13 +51,14 @@ define(function (require, exports, module) {
      */
     function getOutlineList(text, showArguments, showUnnamed) {
         var lines = text.replace(/\)((?:[^\S\n]*\n)+)\s*\{/g, "){$1").split("\n");
-        var regex = /(?:(?:([\w$]+)\s*[=:]\s*)?\bfunction(\s+[\w$]+)?\s*(\([\w$,\s]*\))|(\([\w$,\s]*\)|[\w$]+)\s*=>)/g;
+        var regex = /(?:(?:([\w$]+)\s*[=:]\s*)?\bfunction(\*)?(\s+[\w$]+)?\s*(\([\w$,\s]*\))|(\([\w$,\s]*\)|[\w$]+)\s*=>)/g;
         var result = [];
         lines.forEach(function (line, index) {
             var match = regex.exec(line);
             while (match !== null) {
-                var name = (match[1] || match[2] || "").trim();
-                var args = showArguments ? _surroundArgs(match[3] || match[4]) : "";
+                var name = (match[1] || match[3] || "").trim();
+                var isGenerator = match[2] === "*";
+                var args = showArguments ? _surroundArgs(match[4] || match[5]) : "";
                 match = regex.exec(line);
                 if (name.length === 0) {
                     if (showUnnamed) {
@@ -60,7 +67,7 @@ define(function (require, exports, module) {
                         continue;
                     }
                 }
-                result.push(_createListEntry(name, args, index, line.length));
+                result.push(_createListEntry(name, isGenerator, args, index, line.length));
             }
         });
         return result;

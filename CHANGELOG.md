@@ -1,9 +1,20 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
-## 0.?
+## Unreleased
 ### Added
 - Support for arrow functions in JavaScript
+- Support for ES6 generator functions in JavaScript
+- Detect PHP &-functions
+- Detect static functions in PHP
+
+### Fixed
+- Allow all characters in PHP function arguments
+- Skip CSS lines with more than 1000 characters
+
+### Changed
+- Update to Brackets 1.2 API
 
 
 ## 0.5.1 - 2015-02-13

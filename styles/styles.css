@@ -105,6 +105,7 @@
 .outline-entry-icon:before {
     display: inline-block;
     font-family: Ionicons;
+    font-style: normal;
     margin-right: 3px;
     text-align: center;
     width: 12px;
@@ -146,6 +147,12 @@
     color: #f47b22;
     content: "\3bb";
     font-family: sans-serif;
+}
+
+.outline-entry-js.outline-entry-generator:before {
+    color: #f4229b;
+    content: "\f43d";
+    font-family: Ionicons;
 }
 
 
@@ -214,6 +221,10 @@
     color: #f47b22;
     content: "\3bb";
     font-family: sans-serif;
+}
+
+.outline-entry-php.outline-entry-static {
+    font-style: italic;
 }
 
 

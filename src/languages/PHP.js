@@ -6,7 +6,7 @@ define(function (require, exports, module) {
     var defaultVisibilty = "public";
     var unnamedPlaceholder = "function";
 
-    function createListEntry(name, args, vis, line, ch) {
+    function createListEntry(name, args, vis, isStatic, line, ch) {
         var $elements = [];
         var $name = $(document.createElement("span"));
         $name.addClass("outline-entry-name");
@@ -16,11 +16,15 @@ define(function (require, exports, module) {
         $arguments.addClass("outline-entry-arg");
         $arguments.text(args);
         $elements.push($arguments);
+        var classes = "outline-entry-php outline-entry-icon outline-entry-" + vis;
+        if (isStatic) {
+            classes += " outline-entry-static";
+        }
         return {
             name: name,
             line: line,
             ch: ch,
-            classes: "outline-entry-php outline-entry-icon outline-entry-" + vis,
+            classes: classes,
             $html: $elements
         };
     }
@@ -34,14 +38,15 @@ define(function (require, exports, module) {
      */
     function getOutlineList(text, showArguments, showUnnamed) {
         var lines = text.split("\n");
-        var regex = /((\w*)\s*[=:]\s*)?((public|protected|private)\s*)?function(\s*|\s+\w*\s*)(\([\w,\s&$='"\\()]*\))/g;
+        var regex = /(?:([\w$]+)\s*[=:]\s*)?(public|protected|private)?\s*(static)?\s*function(?:\s+(?:&\s*)?([\w]+))?\s*(\(.*\))/g;
         var result = [];
         lines.forEach(function (line, index) {
             var match = regex.exec(line);
             while (match !== null) {
-                var vis = match[4] || defaultVisibilty;
-                var name = (match[5] || "").trim();
-                var args = showArguments ? match[6] : "";
+                var name = (match[1] || match[4] || "").trim();
+                var vis = match[2] || defaultVisibilty;
+                var isStatic = match[3] === "static";
+                var args = showArguments ? match[5] : "";
                 match = regex.exec(line);
                 if (name.length === 0) {
                     if (showUnnamed) {
@@ -51,7 +56,7 @@ define(function (require, exports, module) {
                         continue;
                     }
                 }
-                result.push(createListEntry(name, args, vis, index, line.length));
+                result.push(createListEntry(name, args, vis, isStatic, index, line.length));
             }
         });
         return result;
