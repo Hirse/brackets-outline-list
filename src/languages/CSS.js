@@ -39,6 +39,9 @@ define(function (require, exports, module) {
         var regex =  /([^\r\n,{}]+)((?=[^}]*\{)|\s*\{)/g;
         var result = [];
         lines.forEach(function (line, index) {
+            if (line.length > 1000) {
+                return;
+            }
             var match = regex.exec(line);
             while (match !== null) {
                 var name = match[1].trim();
