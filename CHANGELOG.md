@@ -8,6 +8,7 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 - Support for ES6 generator functions in JavaScript
 - Detect PHP &-functions
 - Detect static functions in PHP
+- Japanese translation
 
 ### Fixed
 - Allow all characters in PHP function arguments

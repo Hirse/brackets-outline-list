@@ -13,3 +13,5 @@ define({
     COMMAND_UNNAMED: "無名関数を表示",
     COMMAND_ARGS: "引数を表示"
 });
+
+/* Last translated for 339a8c473edd03187835046cde1b32dbcab441d1 */
