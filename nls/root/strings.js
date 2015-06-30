@@ -1,5 +1,3 @@
-/* global define */
-
 define({
     HEADER_TITLE: "Outline",
 

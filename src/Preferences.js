@@ -1,5 +1,3 @@
-/* global define, brackets */
-
 define(function (require, exports, module) {
     "use strict";
 
