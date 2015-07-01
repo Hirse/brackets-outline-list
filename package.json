@@ -10,13 +10,16 @@
     "author": "Jan Pilzer (https://github.com/Hirse)",
     "license": "MIT",
     "keywords": ["outline", "JavaScript", "CoffeeScript", "CSS", "SCSS", "XML", "HTML", "SVG", "Markdown", "PHP"],
-    "i18n": ["en", "de", "fr"],
+    "i18n": ["en", "de", "fr", "ja"],
     "package-i18n": {
         "de": {
             "description": "Zeigt eine Liste der Funktionen oder Definitionen im geöffneten Dokument. Unterstützt JavaScript, CoffeeScript, CSS, SCSS, LESS, XML, HTML, SVG, Markdown und PHP. Jetzt auch mit Icons!"
         },
         "fr": {
             "description": "Affiche une liste des fonctions ou définition du document ouvert actuellement. Fonctionne avec JavaScript CoffeeScript, CSS, SCSS, LESS, XML, HTML, SVG, Markdown et PHP. Maintenant, avec des icônes!"
+        },
+        "ja": {
+            "description": "現在開いているドキュメントの関数または定義の一覧を表示する。JavaScript, CoffeeScript, CSS, SCSS, LESS, XML, HTML, SVG, Markdown と PHP に対応。アイコン付き!"
         }
     }
 }
