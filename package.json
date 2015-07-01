@@ -17,6 +17,9 @@
         },
         "fr": {
             "description": "Affiche une liste des fonctions ou définition du document ouvert actuellement. Fonctionne avec JavaScript CoffeeScript, CSS, SCSS, LESS, XML, HTML, SVG, Markdown et PHP. Maintenant, avec des icônes!"
+        },
+        "ja": {
+            "description": "現在開いているドキュメントの関数または定義の一覧を表示する。JavaScript, CoffeeScript, CSS, SCSS, LESS, XML, HTML, SVG, Markdown と PHP に対応。アイコン付き!"
         }
     }
 }
