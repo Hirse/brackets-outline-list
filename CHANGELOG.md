@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 
-## Unreleased
+## 0.6.0 - 2015-07-02
 ### Added
 - Support for arrow functions in JavaScript (see [#28](https://github.com/Hirse/brackets-outline-list/issues/28))
 - Support for ES6 generator functions in JavaScript (see [#32](https://github.com/Hirse/brackets-outline-list/issues/32))
