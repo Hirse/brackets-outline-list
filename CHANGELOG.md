@@ -17,6 +17,7 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Update to Brackets 1.2 API
+- Updated Ionicons to version 2.0.1
 
 
 ## 0.5.1 - 2015-02-13
