@@ -1,18 +1,19 @@
 # Change Log
-All notable changes to this project will be documented in this file.
+All notable changes to this project will be documented in this file.  
 This project tries to adhere to [Semantic Versioning](http://semver.org/).
+
 
 ## Unreleased
 ### Added
-- Support for arrow functions in JavaScript
-- Support for ES6 generator functions in JavaScript
-- Detect PHP &-functions
-- Detect static functions in PHP
-- Japanese translation
+- Support for arrow functions in JavaScript (see [#28](https://github.com/Hirse/brackets-outline-list/issues/28))
+- Support for ES6 generator functions in JavaScript (see [#32](https://github.com/Hirse/brackets-outline-list/issues/32))
+- Detect PHP &-functions (see [#31](https://github.com/Hirse/brackets-outline-list/issues/31))
+- Detect static functions in PHP (see [#33](https://github.com/Hirse/brackets-outline-list/issues/33))
+- Japanese translation, thanks to [__@nishioka__](https://github.com/nishioka)
 
 ### Fixed
-- Allow all characters in PHP function arguments
-- Skip CSS lines with more than 1000 characters
+- Allow all characters in PHP function arguments (see [#33](https://github.com/Hirse/brackets-outline-list/issues/33))
+- Skip CSS lines with more than 1000 characters (see [#37](https://github.com/Hirse/brackets-outline-list/issues/37))
 
 ### Changed
 - Update to Brackets 1.2 API
@@ -33,6 +34,7 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 - Recognize CSS declarations where the open brace is on the next line (see [#5](https://github.com/Hirse/brackets-outline-list/issues/5)), thanks to [__@giovannicalo__](https://github.com/giovannicalo)
 - Outline Indentation for XML files that use tabs for indentation, thanks to [__@giovannicalo__](https://github.com/giovannicalo)
 - Assigning correct id or classes to XML elements in outline
+
 
 ## 0.4.6 - 2015-01-30
 ### Changed
@@ -56,12 +58,12 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 ## 0.4.2 - 2014-12-15
 ### Changed
-- Remove HMTL elements from the outline that are not in the beginning of the line (see #12)
+- Remove HMTL elements from the outline that are not in the beginning of the line (see [#12](https://github.com/Hirse/brackets-outline-list/issues/12))
 
 
 ## 0.4.1 - 2014-12-14
 ### Fixed
-- Detect PHP functions with referenced parameters (see #16)
+- Detect PHP functions with referenced parameters (see [#16](https://github.com/Hirse/brackets-outline-list/issues/16))
 
 
 ## 0.4.0 - 2014-12-11
@@ -83,12 +85,12 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 - Markdown Support
 
 ### Changed
-- Auto-hide Outline Pane for unsupported languages (see #10)
+- Auto-hide Outline Pane for unsupported languages (see [#10](https://github.com/Hirse/brackets-outline-list/issues/10))
 
 
 ## 0.2.1 - 2014-12-02
 ### Fixed
-- Detaching global Event Handlers makes other Extensions unusable (see #3, #4)
+- Detaching global Event Handlers makes other Extensions unusable (see [#3](https://github.com/Hirse/brackets-outline-list/issues/3), [#4](https://github.com/Hirse/brackets-outline-list/issues/4))
 
 
 ## 0.2.0 - 2014-12-01
@@ -104,5 +106,5 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 - Sorting disabled by default
 
 ### Fixed
-- Collision with [Extensions Toolbar Reposition](https://github.com/dnbard/extensions-toolbar) (see #1)
+- Collision with [Extensions Toolbar Reposition](https://github.com/dnbard/extensions-toolbar) (see [#1](https://github.com/Hirse/brackets-outline-list/issues/1))
 - Sorting of Functions now works as intended
