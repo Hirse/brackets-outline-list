@@ -24,12 +24,14 @@ define(function (require, exports, module) {
         CSS:                    require("src/languages/CSS"),
         SCSS:                   require("src/languages/CSS"),
         LESS:                   require("src/languages/CSS"),
+        Stylus:                 require("src/languages/Stylus"),
         PHP:                    require("src/languages/PHP"),
         Markdown:               require("src/languages/Markdown"),
         "Markdown (GitHub)":    require("src/languages/Markdown"),
         XML:                    require("src/languages/XML"),
         HTML:                   require("src/languages/XML"),
-        SVG:                    require("src/languages/XML")
+        SVG:                    require("src/languages/XML"),
+        Jade:                   require("src/languages/Jade")
     };
 
     function getOutline() {
