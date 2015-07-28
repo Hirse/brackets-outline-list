@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 
+## 0.7.0 - 2015-07-28
+### Added
+- Names and Descriptions for preferences
+
+### Changed
+- Requires Brackets 1.4
+- Reduced Toolbar Icon size to fit design guide
+
+
 ## 0.6.0 - 2015-07-02
 ### Added
 - Support for arrow functions in JavaScript (see [#28](https://github.com/Hirse/brackets-outline-list/issues/28))
