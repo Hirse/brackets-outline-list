@@ -1,3 +1,5 @@
+/* global define, brackets, Mustache */
+
 define(function (require, exports, module) {
     "use strict";
 
@@ -32,6 +34,39 @@ define(function (require, exports, module) {
         SVG:                    require("src/languages/XML")
     };
 
+    var editor_lines = 0;
+
+    var onKeyActivity = function ($event, editor, event) {
+      selectCurrentFunction(editor);
+    }
+    
+    var onCursorActivity = function ($event, editor) {
+      selectCurrentFunction(editor);
+    }
+    
+    function selectCurrentFunction(editor) {
+      var pos = editor.getCursorPos();
+      
+      if (editor_lines != editor.getLastVisibleLine())
+      {
+        console.log('changed');
+        createList();
+      }
+      editor_lines = editor.getLastVisibleLine();
+
+      var remove_entries = $("#outline-list ul li");
+      remove_entries.removeClass('active');
+      
+      var entry = $("#outline-list ul li").filter(function() {
+        var id = $(this)[0].id;
+        var splitted = id.split('_');
+        var line_start = splitted[splitted.length-2];
+        var line_eind = splitted[splitted.length-1];
+        return line_start <= pos.line && line_eind >= pos.line;
+      });
+      entry.addClass('active');
+    }
+  
     function getOutline() {
         var $outline = Mustache.render(ListTemplate, {
             Strings: Strings
@@ -55,6 +90,18 @@ define(function (require, exports, module) {
     }
 
     function updateOutline() {
+      
+        var currentEditor = EditorManager.getActiveEditor();
+        $(currentEditor).on('keyup', onKeyActivity);
+        $(currentEditor).on('cursorActivity', onCursorActivity);
+        $(currentEditor).on('cursorActivity', onCursorActivity);
+      
+        showOutline();
+
+        createList();
+    }
+  
+    function createList() { 
         var doc = DocumentManager.getCurrentDocument();
         if (!doc) {
             hideOutline();
@@ -67,24 +114,36 @@ define(function (require, exports, module) {
             return;
         }
 
-        showOutline();
-
-        var list = lang.getOutlineList(doc.getText(), prefs.get("args"), prefs.get("unnamed"));
+        var lines = doc.getText(false).split("\n");
+        var list = lang.getOutlineList(lines, prefs.get("args"), prefs.get("unnamed"));
 
         if (prefs.get("sort") && lang.compare) {
             list.sort(lang.compare);
         }
 
+        list.reverse();
+
+        var last_line = 999999999;
+        list.forEach(function (entry) {
+            entry.end_line = last_line;
+            last_line = entry.line - 1;
+        });
+
+        list.reverse();
+      
+        $("#outline-list ul li").remove();
         list.forEach(function (entry) {
             var $entry = $(document.createElement("li"));
             $entry.addClass("outline-entry");
             $entry.addClass(entry.classes);
             $entry.append(entry.$html);
+            $entry[0].id = 'outline_line_' + entry.line + '_' + entry.end_line;
             $entry.click({
                 line: entry.line,
                 ch: entry.ch
             }, goToLine);
             $("#outline-list ul").append($entry);
+            last_line = entry.line;
         });
     }
 
@@ -138,6 +197,7 @@ define(function (require, exports, module) {
         $("#outline-toolbar-icon").addClass("enabled");
         EditorManager.on("activeEditorChange", updateOutline);
         DocumentManager.on("documentSaved", updateOutline);
+      
         updateOutline();
     }
 
