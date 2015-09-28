@@ -20,6 +20,10 @@
     background-position: 0 -24px;
 }
 
+.outline-entry.active {
+  background: #0F1114;
+  font-weight: 700;
+}
 
 /* ==== Outline List ==== */
 
@@ -136,6 +140,15 @@
 .outline-entry-js.outline-entry-private:before {
     color: #229bf4;
     content: "\f200";
+}
+
+.outline-entry-js.outline-entry-region:before {
+    color: #adb9bd;
+    content: " / /";
+}
+
+.outline-entry-js.outline-entry-region {
+    color: #adb9bd;
 }
 
 .outline-entry-js.outline-entry-public:before {
