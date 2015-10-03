@@ -155,8 +155,21 @@
     font-family: Ionicons;
 }
 
+
 /* Haxe */
-.outline-entry-hx.outline-entry-private:before {
+.outline-entry-hx.outline-entry-class:before {
+    color: #f4229b;
+    content: "\f318" !important;
+    font-family: Ionicons;
+}
+
+.outline-entry-hx.outline-entry-unnamed:before {
+    color: #f47b22 !important;
+    content: "\3bb" !important;
+    font-family: sans-serif;
+}
+
+.outline-entry-hx.outline-entry-private:not(.outline-entry-class):before {
     color: #229bf4;
     content: "\f200";
 }
@@ -171,24 +184,12 @@
 }
 
 .outline-entry-hx.outline-entry-public:before {
-    color: #9bf422;
+    color: #9bf422 !important;
     content: "\f276";
-}
-
-.outline-entry-hx.outline-entry-unnamed:before {
-    color: #f47b22;
-    content: "\3bb";
-    font-family: sans-serif;
 }
 
 .outline-entry-hx.outline-entry-static {
     font-style: italic;
-}
-
-.outline-entry-hx.outline-entry-constructor:before {
-    color: #f4229b;
-    content: "\f318";
-    font-family: Ionicons;
 }
 
 /* CoffeeScript */
