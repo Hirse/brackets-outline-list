@@ -25,6 +25,7 @@ define(function (require, exports, module) {
         SCSS:                   require("src/languages/CSS"),
         LESS:                   require("src/languages/CSS"),
         PHP:                    require("src/languages/PHP"),
+        Python:                 require("src/languages/Python"),
         Markdown:               require("src/languages/Markdown"),
         "Markdown (GitHub)":    require("src/languages/Markdown"),
         XML:                    require("src/languages/XML"),

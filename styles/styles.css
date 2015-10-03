@@ -228,6 +228,28 @@
 }
 
 
+/* Python */
+.outline-entry-python.outline-entry-class:before {
+    color: #f4e422;
+    content: "\f3a0";
+}
+
+.outline-entry-python.outline-entry-private:before {
+    color: #229bf4;
+    content: "\f200";
+}
+
+.outline-entry-python.outline-entry-protected:before {
+    color: #4ab9ae;
+    content: "\f219";
+}
+
+.outline-entry-python.outline-entry-public:before {
+    color: #9bf422;
+    content: "\f276";
+}
+
+
 /* Markdown */
 .outline-entry-md {
     padding-left: 12px;
