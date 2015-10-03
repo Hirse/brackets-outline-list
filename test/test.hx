@@ -48,11 +48,13 @@ class foo extends bar implements baz {
         return new T("foo");
     }
 
-    /*
-    * function new () 
+    /* commented out function oops() {
+    * commented out function uhoh<T> () {
+    *
     */
 
     // ignore this comment with the word class in it
+    // and this commented function()
 
 
 }
