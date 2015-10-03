@@ -169,6 +169,43 @@
 }
 
 
+/* Haxe */
+.outline-entry-hx.outline-entry-private:before {
+    color: #229bf4;
+    content: "\f200";
+}
+
+.outline-entry-hx.outline-entry-region:before {
+    color: #adb9bd;
+    content: " / /";
+}
+
+.outline-entry-hx.outline-entry-region {
+    color: #adb9bd;
+}
+
+.outline-entry-hx.outline-entry-public:before {
+    color: #9bf422;
+    content: "\f276";
+}
+
+.outline-entry-hx.outline-entry-unnamed:before {
+    color: #f47b22;
+    content: "\3bb";
+    font-family: sans-serif;
+}
+
+.outline-entry-hx.outline-entry-static {
+    font-style: italic;
+}
+
+.outline-entry-hx.outline-entry-constructor:before {
+    color: #f4229b;
+    content: "\f318";
+    font-family: Ionicons;
+}
+
+
 /* CoffeeScript */
 .outline-entry-coffee.outline-entry-private:before {
     color: #229bf4;
