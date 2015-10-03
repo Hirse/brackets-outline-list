@@ -1,23 +1,25 @@
-package test;
+package foo;
+import haxe.foo;
 
-class Test {
+class foo extends bar implements baz {
+    typedef foo {}
+    interface foo {}
     
-    var world : String = "World";
-    
-    static function main() {
-        var lambda = function () {
-        }
-    }
-    public function new() {
-        Hello(world);
+    function new(){
     }
     
-    function Hello(name:String) {
-        trace("Hello " + name + "!");
+    //region foo
+    //endregion
+    var foo = function () {}
+    function () {
     }
-    
-    public function HelloPublic(name:String) {
-        trace("Hello " + name + "!");
-    }
-    
+    var foo = function(bar:Baz) {}
+    function foo(bar:Baz) {}
+    override function foo(bar:Baz) {}
+    static function foo() {}
+    private function foo() {}
+    public function foo() {}
+    public static function foo() {}
+    private static function foo() {}
+    var foo:Bar = "baz";
 }
