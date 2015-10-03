@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 
+## Unreleased
+### Added
+- Python Support
+- Jade Support
+- Stylus Support
+
+
 ## 0.7.0 - 2015-07-28
 ### Added
 - Names and Descriptions for preferences
