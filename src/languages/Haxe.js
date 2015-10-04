@@ -61,7 +61,7 @@ define(function (require, exports, module) {
      */
     function getOutlineList(text, showArguments, showUnnamed) {
         var lines = text.replace(/\)((?:[^\S\n]*\n)+)\s*\{/g, "){$1").split("\n");
-        var regex = /(?:([\w$]+)\s*[=:]\s*)?\s*(?:(public|private)?\s+)?\s*(?:(static)?\s+)?\s*(?:function(?:\s+(?:&\s*)?([\w]+(?:\s*\<.*\>)))?\s*(\(.*\))|(?:(class|interface|typedef)\s+)\s*([\w]+(?:\s*\<.*\>)))|\/\/\s*(region)\s*(.*)/g;
+        var regex = /(?:([\w$]+)\s*[=:]\s*)?\s*(?:(public|private)?\s+)?\s*(?:(static)?\s+)?\s*(?:function(?:\s+(?:&\s*)?([\w]+(?:\s*\<.*\>)?))?\s*(\(.*\))|(?:(class|interface|typedef)\s+)\s*([\w]+(?:\s*\<.*\>)?))|\/\/\s*(region)\s*(.*)/g;
         var result = [];
         lines.forEach(function (line, index) {
             var match = regex.exec(line);
