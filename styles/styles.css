@@ -201,6 +201,33 @@
 }
 
 
+/* Stylus */
+.outline-entry-stylus-tag:before {
+    color: #f47b22;
+    content: "\f271";
+}
+
+.outline-entry-stylus-id:before {
+    color: #9bf422;
+    content: "\f219";
+}
+
+.outline-entry-stylus-class:before {
+    color: #229bf4;
+    content: "\f20b";
+}
+
+.outline-entry-stylus-at-rules:before {
+    color: #f4229b;
+    content: "\f10f";
+}
+
+.outline-entry-stylus-attribute:before {
+    color: #f4e422;
+    content: "\f2aa";
+}
+
+
 /* PHP */
 .outline-entry-php.outline-entry-private:before {
     color: #229bf4;
@@ -225,6 +252,28 @@
 
 .outline-entry-php.outline-entry-static {
     font-style: italic;
+}
+
+
+/* Python */
+.outline-entry-python.outline-entry-class:before {
+    color: #f4e422;
+    content: "\f3a0";
+}
+
+.outline-entry-python.outline-entry-private:before {
+    color: #229bf4;
+    content: "\f200";
+}
+
+.outline-entry-python.outline-entry-protected:before {
+    color: #4ab9ae;
+    content: "\f219";
+}
+
+.outline-entry-python.outline-entry-public:before {
+    color: #9bf422;
+    content: "\f276";
 }
 
 

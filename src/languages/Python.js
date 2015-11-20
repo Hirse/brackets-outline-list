@@ -1,17 +1,28 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var unnamedPlaceholder = "→";
-
-    function _getVisibilityClass(name) {
-        if (name === unnamedPlaceholder) {
-            return " outline-entry-unnamed";
+    function _getVisibilityClass(name, type) {
+        var visClass = "outline-entry-";
+        if (type === "class") {
+            visClass += "class";
+        } else if (name.indexOf("__") === 0) {
+            visClass += "private";
+        } else if (name.indexOf("_") === 0) {
+            visClass += "protected";
+        } else {
+            visClass += "public";
         }
-        return " outline-entry-" + (name[0] === "_" ? "private" : "public");
+        return visClass;
     }
 
-    function _createListEntry(name, args, line, ch) {
+    function _createListEntry(name, type, args, isIndented) {
         var $elements = [];
+        if (isIndented) {
+            var $indentation = $(document.createElement("span"));
+            $indentation.addClass("outline-entry-indent");
+            $indentation.text("·");
+            $elements.push($indentation);
+        }
         var $name = $(document.createElement("span"));
         $name.addClass("outline-entry-name");
         $name.text(name);
@@ -22,9 +33,7 @@ define(function (require, exports, module) {
         $elements.push($arguments);
         return {
             name: name,
-            line: line,
-            ch: ch,
-            classes: "outline-entry-coffee outline-entry-icon" + _getVisibilityClass(name),
+            classes: "outline-entry-python outline-entry-icon " + _getVisibilityClass(name, type),
             $html: $elements
         };
     }
@@ -33,39 +42,30 @@ define(function (require, exports, module) {
      * Create the entry list of functions language dependent.
      * @param   {Array}   text          Documents text with normalized line endings.
      * @param   {Boolean} showArguments args Preference.
-     * @param   {Boolean} showUnnamed   unnamed Preference.
      * @returns {Array}   List of outline entries.
      */
-    function getOutlineList(text, showArguments, showUnnamed) {
+    function getOutlineList(text, showArguments) {
         var lines = text.split("\n");
-        var regex = /(([\w\$]*)?\s*(?:=|:))?\s*(\([\w\$@,.'"= ]*\))?\s*(?:->|=>)/g;
+        var regex = /^([ \t]*)(class|def) (\w+)(\([\w, ]*\))?:$/g;
         var result = [];
         lines.forEach(function (line, index) {
             var match = regex.exec(line);
             while (match !== null) {
-                var name = (match[2] || "").trim();
-                var args = showArguments ? (match[3] || "()") : "";
+                var isIndented = Boolean(match[1]);
+                var type = match[2];
+                var name = match[3];
+                var args = showArguments ? (match[4] || "").trim() : "";
+                var entry = _createListEntry(name, type, args, isIndented);
+                entry.line = index;
+                entry.ch = line.length;
+                result.push(entry);
                 match = regex.exec(line);
-                if (name.length === 0) {
-                    if (showUnnamed) {
-                        name = unnamedPlaceholder;
-                    } else {
-                        continue;
-                    }
-                }
-                result.push(_createListEntry(name, args, index, line.length));
             }
         });
         return result;
     }
 
     function compare(a, b) {
-        if (b.name === unnamedPlaceholder) {
-            return -1;
-        }
-        if (a.name === unnamedPlaceholder) {
-            return 1;
-        }
         if (a.name > b.name) {
             return 1;
         }

@@ -1,0 +1,30 @@
+{
+    "camelcase": false,
+    "curly": true,
+    "forin": true,
+    "freeze": true,
+    "immed": true,
+    "indent": 4,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "noempty": true,
+    "nonbsp": true,
+    "quotmark": true,
+    "undef": true,
+    "unused": true,
+    "strict": false,
+    "trailing": true,
+
+    "globalstrict": false,
+
+    "browser": true,
+    "jquery": true,
+
+    "globals": {
+        "define": false,
+        "brackets": false,
+        "Mustache": false,
+        "module": false
+    }
+}

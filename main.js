@@ -1,5 +1,3 @@
-/* global define, brackets, Mustache */
-
 define(function (require, exports, module) {
     "use strict";
 
@@ -26,14 +24,17 @@ define(function (require, exports, module) {
         CSS:                    require("src/languages/CSS"),
         SCSS:                   require("src/languages/CSS"),
         LESS:                   require("src/languages/CSS"),
+        Stylus:                 require("src/languages/Stylus"),
         PHP:                    require("src/languages/PHP"),
         Ruby:                   require("src/languages/Ruby"),
+        Python:                 require("src/languages/Python"),
         Markdown:               require("src/languages/Markdown"),
         "Markdown (GitHub)":    require("src/languages/Markdown"),
         XML:                    require("src/languages/XML"),
         HTML:                   require("src/languages/XML"),
         "Embedded Ruby":        require("src/languages/XML"),
-        SVG:                    require("src/languages/XML")
+        SVG:                    require("src/languages/XML"),
+        Jade:                   require("src/languages/Jade")
     };
 
     function getOutline() {
@@ -73,8 +74,7 @@ define(function (require, exports, module) {
 
         showOutline();
 
-        var lines = doc.getText(false).split("\n");
-        var list = lang.getOutlineList(lines, prefs.get("args"), prefs.get("unnamed"));
+        var list = lang.getOutlineList(doc.getText(), prefs.get("args"), prefs.get("unnamed"));
 
         if (prefs.get("sort") && lang.compare) {
             list.sort(lang.compare);
