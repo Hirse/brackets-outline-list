@@ -3,6 +3,7 @@ define(function (require, exports, module) {
         root: true,
         de: true,
         fr: true,
-        ja: true
+        ja: true,
+		es: true
     };
 });
