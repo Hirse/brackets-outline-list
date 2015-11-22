@@ -4,6 +4,6 @@ define(function (require, exports, module) {
         de: true,
         fr: true,
         ja: true,
-	es: true
+        es: true
     };
 });
