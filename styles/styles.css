@@ -314,6 +314,16 @@
     content: "######";
 }
 
+/* JavaScript */
+.outline-entry-ruby.outline-entry-private:before {
+    color: #229bf4;
+    content: "\f200";
+}
+
+.outline-entry-ruby.outline-entry-public:before {
+    color: #9bf422;
+    content: "\f276";
+}
 
 /* XML */
 .outline-entry-xml-namespace,

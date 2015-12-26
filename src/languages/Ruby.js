@@ -6,18 +6,18 @@ define(function (require, exports, module) {
     function _createListEntry(name, args, vis, line, ch) {
         var $elements = [];
         var $name = $(document.createElement("span"));
-        $name.addClass("outline-entry-ruby-name");
+        $name.addClass("outline-entry-name");
         $name.text(name);
         $elements.push($name);
         var $arguments = $(document.createElement("span"));
-        $arguments.addClass("outline-entry-ruby-arg");
+        $arguments.addClass("outline-entry-arg");
         $arguments.text(args);
         $elements.push($arguments);
         return {
             name: name,
             line: line,
             ch: ch,
-            classes: "outline-entry-ruby outline-entry-icon outline-entry-ruby-" + vis,
+            classes: "outline-entry-ruby outline-entry-icon outline-entry-" + vis,
             $html: $elements
         };
     }
@@ -67,7 +67,7 @@ define(function (require, exports, module) {
             }
                         
             if (name.length !== 0) {
-              result.push(_createListEntry(name, args, vis, index, 0));
+              result.push(_createListEntry(name, args, vis, index, line.length));
             }            
           } 
         });
