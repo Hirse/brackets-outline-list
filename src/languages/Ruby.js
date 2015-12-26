@@ -29,7 +29,8 @@ define(function (require, exports, module) {
      * @param   {Boolean} showUnnamed   unnamed Preference.
      * @returns {Array}   List of outline entries.
      */
-    function getOutlineList(lines, showArguments, showUnnamed) {
+    function getOutlineList(text, showArguments, showUnnamed) {
+        var lines = text.replace(/\)((?:[^\S\n]*\n)+)\s*\{/g, "){$1").split("\n");
         var regexMethod = /\s*def\s+(\w*[.\w*]+\??)\s*(\([\w,\s,\$,\_="]*\))?/g;
         var regexMethodClass = /\s*(class\s+<<\s+self)\s*/g;
         var regexMethodPrivate = /\s*private\s*/g;
