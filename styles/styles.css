@@ -314,7 +314,7 @@
     content: "######";
 }
 
-/* JavaScript */
+/* Ruby */
 .outline-entry-ruby.outline-entry-private:before {
     color: #229bf4;
     content: "\f200";

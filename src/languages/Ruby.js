@@ -38,38 +38,38 @@ define(function (require, exports, module) {
         var isClassMethod = false;
         var isPrivateMethod = false;
         lines.forEach(function (line, index) {
-          var matchMethodClass = regexMethodClass.exec(line);
-          if (matchMethodClass !== null) {
-            isClassMethod = true;
-          }
-          
-          var matchMethodPrivate = regexMethodPrivate.exec(line);
-          if (matchMethodPrivate !== null) {
-            isPrivateMethod = true;
-          }
-          
-          var matchMethod = regexMethod.exec(line);
-          if (matchMethod !== null) {
-            var name = matchMethod[1].trim();
-            var args = (matchMethod[2] || "");
-            var vis = "public";
-            if (isClassMethod || name.indexOf("self.") === 0) {
-              if (name.indexOf("self.") === 0) { name = name.slice(5); }
-              if (name[0] === "_") {
-                vis = "class-method-false-private"
-              } else {
-                vis = "class-method";
-              }
-            } else if (isPrivateMethod) {
-                vis = "private";
-            } else if (name[0] === "_") {
-              vis = "false-private";
+            var matchMethodClass = regexMethodClass.exec(line);
+            if (matchMethodClass !== null) {
+                isClassMethod = true;
             }
-                        
-            if (name.length !== 0) {
-              result.push(_createListEntry(name, args, vis, index, line.length));
-            }            
-          } 
+
+            var matchMethodPrivate = regexMethodPrivate.exec(line);
+            if (matchMethodPrivate !== null) {
+                isPrivateMethod = true;
+            }
+
+            var matchMethod = regexMethod.exec(line);
+            if (matchMethod !== null) {
+                var name = matchMethod[1].trim();
+                var args = (matchMethod[2] || "");
+                var vis = "public";
+                if (isClassMethod || name.indexOf("self.") === 0) {
+                    if (name.indexOf("self.") === 0) { name = name.slice(5); }
+                    if (name[0] === "_") {
+                        vis = "class-method-false-private"
+                    } else {
+                        vis = "class-method";
+                    }
+                } else if (isPrivateMethod) {
+                    vis = "private";
+                } else if (name[0] === "_") {
+                    vis = "false-private";
+                }
+
+                if (name.length !== 0) {
+                    result.push(_createListEntry(name, args, vis, index, line.length));
+                }            
+            } 
         });
         return result;
     }
