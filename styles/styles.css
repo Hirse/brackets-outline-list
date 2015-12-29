@@ -316,32 +316,27 @@
 
 /* Ruby */
 
-.outline-entry-ruby-arg {
+.outline-entry-ruby.outline-entry-ruby-arg {
     color: #adb9bd;
 }
 
-.outline-entry-ruby-private:before {
+.outline-entry-ruby.outline-entry-private:before {
     color: #f01749;
     content: "\f200";
 }
 
-.outline-entry-ruby-false-private:before {
+.outline-entry-ruby.outline-entry-false-private:before {
     color: #f5a11a;
     content: "\f200";
 }
 
-.outline-entry-ruby-class-method:before {
+.outline-entry-ruby.outline-entry-class-method:before {
     color: #229bf4;
     content: "\f276";
 }
 
-.outline-entry-ruby-class-method-false-private:before {
+.outline-entry-ruby.outline-entry-class-method-false-private:before {
     color: #f5a11a;
-    content: "\f276";
-}
-
-.outline-entry-ruby-public:before {
-    color: #9bf422;
     content: "\f276";
 }
 
