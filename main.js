@@ -20,6 +20,7 @@ define(function (require, exports, module) {
 
     var languages = {
         JavaScript:             require("src/languages/JavaScript"),
+        Haxe:                   require("src/languages/Haxe"),
         CoffeeScript:           require("src/languages/CoffeeScript"),
         CSS:                    require("src/languages/CSS"),
         SCSS:                   require("src/languages/CSS"),
