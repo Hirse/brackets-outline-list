@@ -314,6 +314,41 @@
     content: "######";
 }
 
+/* Ruby */
+
+.outline-entry-ruby.outline-entry-ruby-arg {
+    color: #adb9bd;
+}
+
+.outline-entry-ruby.outline-entry-private:before {
+    color: #f01749;
+    content: "\f200";
+}
+
+.outline-entry-ruby.outline-entry-false-private:before {
+    color: #f5a11a;
+    content: "\f200";
+}
+
+.outline-entry-ruby.outline-entry-class-method:before {
+    color: #229bf4;
+    content: "\f276";
+}
+
+.outline-entry-ruby.outline-entry-class-method-false-private:before {
+    color: #f5a11a;
+    content: "\f276";
+}
+
+.outline-entry-ruby.outline-entry-private:before {
+    color: #229bf4;
+    content: "\f200";
+}
+
+.outline-entry-ruby.outline-entry-public:before {
+    color: #9bf422;
+    content: "\f276";
+}
 
 /* XML */
 .outline-entry-xml-namespace,

@@ -26,11 +26,13 @@ define(function (require, exports, module) {
         LESS:                   require("src/languages/CSS"),
         Stylus:                 require("src/languages/Stylus"),
         PHP:                    require("src/languages/PHP"),
+        Ruby:                   require("src/languages/Ruby"),
         Python:                 require("src/languages/Python"),
         Markdown:               require("src/languages/Markdown"),
         "Markdown (GitHub)":    require("src/languages/Markdown"),
         XML:                    require("src/languages/XML"),
         HTML:                   require("src/languages/XML"),
+        "Embedded Ruby":        require("src/languages/XML"),
         SVG:                    require("src/languages/XML"),
         Jade:                   require("src/languages/Jade")
     };
