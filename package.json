@@ -26,7 +26,8 @@
     "en",
     "de",
     "fr",
-    "ja"
+    "ja",
+    "es"
   ],
   "package-i18n": {
     "de": {
@@ -37,7 +38,10 @@
     },
     "ja": {
       "description": "現在開いているドキュメントの関数または定義の一覧を表示する。JavaScript, CoffeeScript, CSS, SCSS, LESS, XML, HTML, SVG, Markdown と PHP に対応。アイコン付き!"
-    }
+    },
+    "es": {
+      "description": "Muestra una lista con las funciones o definiciones del documento actualmente abierto. Funciona con JavaScript, CoffeeScript, CSS, SCSS, LESS, XML, HTML, SVG, Markdown y PHP. ¡Ahora con iconos!"
+	}
   },
   "devDependencies": {
     "grunt": "^0.4.5",
