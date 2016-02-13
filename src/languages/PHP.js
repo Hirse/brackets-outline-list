@@ -1,6 +1,7 @@
 define(function (require, exports, module) {
     "use strict";
   
+    // use lexer from thirdparty.
     var Lexer = require('thirdparty/lex/lexer');
 
     var defaultVisibilty = "public";
@@ -29,17 +30,25 @@ define(function (require, exports, module) {
         };
     }
     
+    /**
+     * Parse the source and extract the code structure.
+     * 
+     * @param   {Array} source the source code.
+     * @returns {Array} the code structure.
+     */
     function parse(source) {
         var lexer, literal, ns, line, peek, pop, results, state, ignored;
-        line = 0;
-        ns = [];
-        literal = true;
-        state = [];
+        line = 0; // line number.
+        ns = []; // the namespace array.
+        literal = true; // check if it's in literal area.
+        state = []; // the state array.
+        // helper function to peek an item from an array.
         peek = function(a) {
             if (a.length > 0) {
                 return a[a.length - 1];
             }
         };
+        // helper function to pop an item from an array.
         pop = function(a) {
             if (a.length > 0) {
                 return a.pop();
@@ -48,11 +57,19 @@ define(function (require, exports, module) {
         results = [];
         ignored = function () {};
         lexer = new Lexer;
-        lexer.addRule(/\<\?(php)?/, function() {
+        lexer
+        // when it encounters `<?php` structure, turn off literal mode. 
+        .addRule(/\<\?(php)?/, function() {
             literal = false;
-        }).addRule(/\?\>/, function() {
+        })
+        // when it encounters `?>` structure, turn on literal mode.
+        .addRule(/\?\>/, function() {
             literal = true;
-        }).addRule(/function/, function(w) {
+        })
+        // when it encounters `function` and literal mode is off, 
+        // 1. push 'function' into state array;
+        // 2. push a function structure in result.
+        .addRule(/function/, function(w) {
             if (!literal) {
                 state.push('function');
                 results.push({
@@ -64,7 +81,11 @@ define(function (require, exports, module) {
                     line: line
                 });
             }
-        }).addRule(/class/, function(w) {
+        })
+        // when it encounters `class` and literal mode is off.
+        // 1. push 'class' into state array.
+        // 2. create a class structure into results array.
+        .addRule(/class/, function(w) {
             if (!literal) {
                 state.push('class');
                 results.push({
@@ -76,22 +97,28 @@ define(function (require, exports, module) {
                     line: line
                 });
             }
-        }).addRule(/\$[a-zA-Z_]+/, function(w) {
+        })
+        // if it's a variable and it's in function args semantics, push it into args array.
+        .addRule(/\$[a-zA-Z_]+/, function(w) {
             if (peek(state) === 'args') {
                 peek(results).args.push(w);
             }
-        }).addRule(/[a-zA-Z_]+/, function(w) {
+        })
+        // check if it's an identity term.
+        .addRule(/[a-zA-Z_]+/, function(w) {
             var ref;
             if (!literal) {
                 switch(peek(state)) {
                     case 'function':
                         ns.push(w);
                         ref = peek(results);
+                        // if it's in name space scope.
                         if (ns.length > 1) {
                             ref.name += '::' + w;
                         } else {
                             ref.name = w;
                         }
+                        // TODO: all function are assumed to be public.
                         ref.modifier = 'public';
                         break;
                     case 'class':
@@ -101,7 +128,9 @@ define(function (require, exports, module) {
                         break;
                 }
           }
-        }).addRule(/\(/, function () {
+        })
+        // check if it's in function definition, turn on args mode.
+        .addRule(/\(/, function () {
             if (peek(state) === 'function') {
                 var ref = peek(results);
                 if (!ref || ref.type !== 'function') {
@@ -117,11 +146,15 @@ define(function (require, exports, module) {
                 }
                 state.push('args');
             }
-        }).addRule(/\)/, function () {
+        })
+        // turn off args mode.
+        .addRule(/\)/, function () {
             if (peek(state) === 'args') {
                 state.pop();
             }
-        }).addRule(/{/, function(w) {
+        })
+        // start function/class body definition or scoped code structure.
+        .addRule(/{/, function(w) {
           var prefix, ref;
           if (!literal) {
             if ((ref = peek(state)) === 'function' || ref === 'class') {
@@ -131,7 +164,9 @@ define(function (require, exports, module) {
               state.push('start');
             }
           }
-        }).addRule(/}/, function(w) {
+        })
+        // pop name from namespace array if it's in a namespace.
+        .addRule(/}/, function(w) {
             var s;
             if (!literal && state.length > 0) {
                 s = state.pop().split(':')[0];
@@ -139,10 +174,15 @@ define(function (require, exports, module) {
                     ns.pop();
                 }
             }
-        }).addRule(/./, ignored).addRule(/\n/, function () {
+        })
+        // other terms are ignored.
+        .addRule(/./, ignored)
+        // line number increases.
+        .addRule(/\n/, function () {
             line += 1;
         });
         lexer.setInput(source);
+        // parse the code to the end of the source.
         while (lexer.index < source.length - 1) {
             lexer.lex();
         }
@@ -157,9 +197,13 @@ define(function (require, exports, module) {
      * @returns {Array}   List of outline entries.
      */
     function getOutlineList(text, showArguments, showUnnamed) {
-        return parse(text).filter(function (it) {
+        return parse(text)
+        // ignore the classes definition.
+        .filter(function (it) {
             return it.type === 'function';
-        }).map(function (it) {
+        })
+        // map code structure to html item.
+        .map(function (it) {
             return createListEntry(
                 it.name,
                 '(' + it.args.join(',') + ')',
