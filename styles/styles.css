@@ -392,3 +392,13 @@
 .outline-entry-xml-class {
     color: #adb9bd;
 }
+
+.outline-entry-indent.open:before {
+  content: "\f30f";
+  font-family: Ionicons;
+}
+
+.outline-entry-indent.closed:before {
+  content: "\f366";
+  font-family: Ionicons;
+}

@@ -85,6 +85,7 @@ define(function (require, exports, module) {
             var $entry = $(document.createElement("li"));
             $entry.addClass("outline-entry");
             $entry.addClass(entry.classes);
+            $entry.attr("id", entry.id);
             $entry.append(entry.$html);
             $entry.click({
                 line: entry.line,
