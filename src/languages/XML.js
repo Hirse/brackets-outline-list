@@ -15,23 +15,7 @@ define(function (require, exports, module) {
                 .text(interpunct)
                 .attr("data-indent", indent)
                 .click(function(){
-                    // Collapse the child nodes when this node is clicked.
-                    var indentElementParent = $(this).parent();
-                    var nextParent = indentElementParent.next();
-                    // Look at all subsequent nodes with a greater indent than the current node
-                    // to see if they should be hidden or shown.
-                    while (Number(nextParent.children(".outline-entry-indent").attr("data-indent")) > indent ){
-                        if(nextParent.attr("data-closed-by") === indentElementParent[0].id){
-                            nextParent.removeAttr("data-closed-by");
-                            indentElementParent.children(".outline-entry-indent.closed").addClass("open").removeClass("closed");
-                            nextParent.show();
-                        } else if(nextParent.attr("data-closed-by") === undefined) {
-                            nextParent.attr("data-closed-by", indentElementParent[0].id);
-                            indentElementParent.children(".outline-entry-indent.open").addClass("closed").removeClass("open");
-                            nextParent.hide();
-                        }
-                        nextParent = nextParent.next();
-                    }
+                    _controlCollapse(this, indent);
                 });
             $elements.push($indentation);
         }
@@ -59,11 +43,31 @@ define(function (require, exports, module) {
         };
     }
 
+    function _controlCollapse(el, indent) {
+        // Collapse the child nodes when this node is clicked.
+        var indentElementParent = $(el).parent();
+        var nextParent = indentElementParent.next();
+        // Look at all subsequent nodes with a greater indent than the current node
+        // to see if they should be hidden or shown.
+        while (Number(nextParent.children(".outline-entry-indent").attr("data-indent")) > indent ){
+            if(nextParent.attr("data-closed-by") === indentElementParent[0].id){
+                nextParent.removeAttr("data-closed-by");
+                indentElementParent.children(".outline-entry-indent.closed").addClass("open").removeClass("closed");
+                nextParent.show();
+            } else if(nextParent.attr("data-closed-by") === undefined) {
+                nextParent.attr("data-closed-by", indentElementParent[0].id);
+                indentElementParent.children(".outline-entry-indent.open").addClass("closed").removeClass("open");
+                nextParent.hide();
+            }
+            nextParent = nextParent.next();
+        }
+    }
+
     function _getIndentationLevel(whitespace) {
         if (!whitespace) {
             return 0;
         }
-				return whitespace.length;
+        return whitespace.length;
     }
 
     /**
@@ -80,7 +84,7 @@ define(function (require, exports, module) {
         lines.forEach(function (line, index) {
             var match = regex.exec(line);
             while (match !== null) {
-                idCounter = idCounter + 1;
+                idCounter += 1;
                 var whitespace = match[1];
                 var namespace = showArguments ? (match[2] || "").trim() : "";
                 var name = match[3].trim();

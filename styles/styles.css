@@ -394,11 +394,11 @@
 }
 
 .outline-entry-indent.open:before {
-  content: "\f30f";
-  font-family: Ionicons;
+    content: "\f30f";
+    font-family: Ionicons;
 }
 
 .outline-entry-indent.closed:before {
-  content: "\f366";
-  font-family: Ionicons;
+    content: "\f366";
+    font-family: Ionicons;
 }
