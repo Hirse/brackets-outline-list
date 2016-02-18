@@ -67,7 +67,13 @@ define(function (require, exports, module) {
         if (!whitespace) {
             return 0;
         }
-        return whitespace.length;
+        var indentSize = Editor.getUseTabChar() ? Editor.getTabSize() : Editor.getSpaceUnits();
+        var tmpSpaces = "";
+        for (var i = 0; i < indentSize; i++) {
+            tmpSpaces += " ";
+        }
+        whitespace = whitespace.replace(/\t/g, tmpSpaces);
+        return (whitespace.length / indentSize) | 0;
     }
 
     /**
