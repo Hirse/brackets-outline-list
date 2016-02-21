@@ -4,4 +4,3 @@ class myClass {
         return;
     }
 }
-
