@@ -1,10 +1,12 @@
 define(function (require, exports, module) {
     "use strict";
 
+    /* beautify preserve:start *//* eslint-disable no-multi-spaces */
     var _                   = brackets.getModule("thirdparty/lodash");
     var PreferencesManager  = brackets.getModule("preferences/PreferencesManager");
 
     var Strings             = require("../strings");
+    /* eslint-enable no-multi-spaces *//* beautify preserve:end */
 
     var prefix = "hirse.outline";
     var prefs = PreferencesManager.getExtensionPrefs(prefix);

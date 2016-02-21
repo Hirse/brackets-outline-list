@@ -24,12 +24,10 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {Array}   lines         Array that contains the lines of text.
-     * @param   {Boolean} showArguments args Preference.
-     * @param   {Boolean} showUnnamed   unnamed Preference.
-     * @returns {Array}   List of outline entries.
+     * @param   {string} text Documents text with normalized line endings.
+     * @returns {Array}  List of outline entries.
      */
-    function getOutlineList(text, showArguments, showUnnamed) {
+    function getOutlineList(text) {
         var lines = text.replace(/\)((?:[^\S\n]*\n)+)\s*\{/g, "){$1").split("\n");
         var regexMethod = /\s*def\s+(\w*[.\w*]+\??)\s*(\([\w,\s,\$,\_="]*\))?/g;
         var regexMethodClass = /\s*(class\s+<<\s+self)\s*/g;
@@ -51,12 +49,14 @@ define(function (require, exports, module) {
             var matchMethod = regexMethod.exec(line);
             if (matchMethod !== null) {
                 var name = matchMethod[1].trim();
-                var args = (matchMethod[2] || "");
+                var args = matchMethod[2] || "";
                 var vis = "public";
                 if (isClassMethod || name.indexOf("self.") === 0) {
-                    if (name.indexOf("self.") === 0) { name = name.slice(5); }
+                    if (name.indexOf("self.") === 0) {
+                        name = name.slice(5);
+                    }
                     if (name[0] === "_") {
-                        vis = "class-method-false-private"
+                        vis = "class-method-false-private";
                     } else {
                         vis = "class-method";
                     }
@@ -68,8 +68,8 @@ define(function (require, exports, module) {
 
                 if (name.length !== 0) {
                     result.push(_createListEntry(name, args, vis, index, line.length));
-                }            
-            } 
+                }
+            }
         });
         return result;
     }

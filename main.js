@@ -1,6 +1,8 @@
+/* eslint-disable no-use-before-define */
 define(function (require, exports, module) {
     "use strict";
 
+    /* beautify preserve:start *//* eslint-disable no-multi-spaces */
     var CommmandManager = brackets.getModule("command/CommandManager");
     var Menus           = brackets.getModule("command/Menus");
     var DocumentManager = brackets.getModule("document/DocumentManager");
@@ -13,11 +15,13 @@ define(function (require, exports, module) {
     var Strings         = require("strings");
     var prefs           = require("src/Preferences");
     var ListTemplate    = require("text!templates/outline.html");
+    /* eslint-enable no-multi-spaces *//* beautify preserve:end */
 
     ExtensionUtils.loadStyleSheet(module, "styles/styles.css");
 
     var prefix = "hirse.outline";
 
+    /* beautify preserve:start *//* eslint-disable key-spacing */
     var languages = {
         JavaScript:             require("src/languages/JavaScript"),
         Haxe:                   require("src/languages/Haxe"),
@@ -37,6 +41,7 @@ define(function (require, exports, module) {
         SVG:                    require("src/languages/XML"),
         Jade:                   require("src/languages/Jade")
     };
+    /* eslint-enable key-spacing *//* beautify preserve:end */
 
     function getOutline() {
         var $outline = Mustache.render(ListTemplate, {

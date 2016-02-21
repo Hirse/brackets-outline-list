@@ -1,0 +1,13 @@
+{
+    "language": {
+        "javascript": {
+            "linting.prefer": [
+                "ESLint"
+            ],
+            "linting.usePreferredOnly": true
+        }
+    },
+    "language.fileNames": {
+        ".eslintrc": "yaml"
+    }
+}

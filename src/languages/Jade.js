@@ -36,7 +36,7 @@ define(function (require, exports, module) {
             tmpSpaces += " ";
         }
         whitespace = whitespace.replace(/\t/g, tmpSpaces);
-        return (whitespace.length / indentSize) | 0;
+        return whitespace.length / indentSize | 0;
     }
 
     /**

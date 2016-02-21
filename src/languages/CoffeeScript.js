@@ -44,7 +44,7 @@ define(function (require, exports, module) {
             var match = regex.exec(line);
             while (match !== null) {
                 var name = (match[2] || "").trim();
-                var args = showArguments ? (match[3] || "()") : "";
+                var args = showArguments ? match[3] || "()" : "";
                 match = regex.exec(line);
                 if (name.length === 0) {
                     if (showUnnamed) {

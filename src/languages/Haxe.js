@@ -7,18 +7,16 @@ define(function (require, exports, module) {
         var visClass = "";
         if (isRegion) {
             visClass += " outline-entry-region";
-        }
-        else {
+        } else {
             if (isStatic) {
                 visClass = " outline-entry-static";
             }
             if (name === unnamedPlaceholder) {
                 visClass += " outline-entry-unnamed";
-            }
-            else {
+            } else {
                 visClass += " outline-entry-" + (isPrivate ? "private" : "public");
             }
-            if (type!="") {
+            if (type !== "") {
                 visClass += " outline-entry-class";
             }
         }
@@ -71,7 +69,7 @@ define(function (require, exports, module) {
                 var isStatic = match[3] === "static";
                 var isPrivate = !(match[2] === "public");
                 var type = (match[6] || "").trim();
-                var args = showArguments&&match[5] ? _surroundArgs(match[5]) : "";
+                var args = showArguments && match[5] ? _surroundArgs(match[5]) : "";
                 match = regex.exec(line);
                 if (name.length === 0) {
                     if (showUnnamed) {

@@ -26,7 +26,7 @@ define(function (require, exports, module) {
         $name.text(name);
         $elements.push($name);
         if (type && args) {
-            var typechar = type == "id" ? "#" : ".";
+            var typechar = type === "id" ? "#" : ".";
             var $arguments = $(document.createElement("span"));
             $arguments.addClass("outline-entry-xml-" + type);
             $arguments.text(" " + typechar + args.replace(/\s+/g, " " + typechar));
@@ -49,7 +49,7 @@ define(function (require, exports, module) {
             tmpSpaces += " ";
         }
         whitespace = whitespace.replace(/\t/g, tmpSpaces);
-        return (whitespace.length / indentSize) | 0;
+        return whitespace.length / indentSize | 0;
     }
 
     /**
