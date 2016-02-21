@@ -77,7 +77,8 @@ function Lexer(defunct) {
             if (index < input.length) {
                 if (this.reject) {
                     remove = 0;
-                    var token = defunct.call(this, input.charAt(this.index++));
+//                    var token = defunct.call(this, input.charAt(this.index++));
+                    var token = defunct.call(this, input.charCodeAt(this.index++));
                     if (typeof token !== "undefined") {
                         if (Object.prototype.toString.call(token) === "[object Array]") {
                             tokens = token.slice(1);
