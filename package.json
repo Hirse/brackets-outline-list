@@ -41,10 +41,22 @@
     },
     "es": {
       "description": "Muestra una lista con las funciones o definiciones del documento actualmente abierto. Funciona con JavaScript, CoffeeScript, CSS, SCSS, LESS, XML, HTML, SVG, Markdown y PHP. ¡Ahora con iconos!"
-	}
+    }
   },
   "devDependencies": {
+    "eslint": "^2.2.0",
     "grunt": "^0.4.5",
-    "grunt-contrib-compress": "^0.13.0"
+    "grunt-contrib-compress": "^1.0.0",
+    "grunt-eslint": "^18.0.0",
+    "grunt-karma": "^0.12.1",
+    "karma": "^0.13.21",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-jasmine": "^0.3.7",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-requirejs": "^0.2.5",
+    "text": "github:requirejs/text"
+  },
+  "scripts": {
+    "test": "grunt test"
   }
 }

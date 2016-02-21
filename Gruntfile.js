@@ -1,3 +1,5 @@
+/* global module */
+
 module.exports = function (grunt) {
     "use strict";
 
@@ -14,6 +16,7 @@ module.exports = function (grunt) {
                             "src/**",
                             "styles/**",
                             "templates/*",
+                            "thirdparty/*",
                             "CHANGELOG.md",
                             "LICENSE",
                             "main.js",
@@ -24,12 +27,33 @@ module.exports = function (grunt) {
                     }
                 ]
             }
+        },
+        karma: {
+            ci: {
+                configFile: "karma.conf.js",
+                singleRun: true,
+                browsers: ["PhantomJS"]
+            }
+        },
+        eslint: {
+            target: [
+                "**/*.js",
+                "!thirdparty/**/*.js",
+                "!node_modules/**/*.js"
+            ]
         }
     });
 
     grunt.loadNpmTasks("grunt-contrib-compress");
+    grunt.loadNpmTasks("grunt-eslint");
+    grunt.loadNpmTasks("grunt-karma");
 
     grunt.registerTask("default", [
         "compress"
+    ]);
+
+    grunt.registerTask("test", [
+        "eslint",
+        "karma:ci"
     ]);
 };
