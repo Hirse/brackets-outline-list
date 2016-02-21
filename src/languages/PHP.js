@@ -30,10 +30,11 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {Array} text Documents text with normalized line endings.
-     * @returns {Array} List of outline entries.
+     * @param   {Array}   text          Documents text with normalized line endings.
+     * @param   {Boolean} showArguments args Preference.
+     * @returns {Array}   List of outline entries.
      */
-    function getOutlineList(text) {
+    function getOutlineList(text, showArguments) {
         return Lexer.parse(text)
             // ignore the classes definition.
             .filter(function (it) {
@@ -43,7 +44,7 @@ define(function (require, exports, module) {
             .map(function (it) {
                 return createListEntry(
                     it.name,
-                    "(" + it.args.join(",") + ")",
+                    showArguments ? "(" + it.args.join(", ") + ")" : "",
                     it.modifier,
                     it.isStatic,
                     it.line,
