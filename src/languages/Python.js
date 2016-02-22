@@ -1,6 +1,13 @@
 define(function (require, exports, module) {
     "use strict";
 
+    /**
+     * Get the visibility class based on the function name and type.
+     * @private
+     * @param   {string} name List entry name.
+     * @param   {string} type List entry type.
+     * @returns {string} CSS visibility class.
+     */
     function _getVisibilityClass(name, type) {
         var visClass = "outline-entry-";
         if (type === "class") {
@@ -15,6 +22,15 @@ define(function (require, exports, module) {
         return visClass;
     }
 
+    /**
+     * Create the HTML list entry.
+     * @private
+     * @param   {string}  name       List entry name.
+     * @param   {string}  type       List entry type.
+     * @param   {string}  args       Arguments as single string.
+     * @param   {boolean} isIndented Flag if the entry is indented.
+     * @returns {object}  Entry object with an $html property.
+     */
     function _createListEntry(name, type, args, isIndented) {
         var $elements = [];
         if (isIndented) {
@@ -40,9 +56,9 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {Array}   text          Documents text with normalized line endings.
-     * @param   {Boolean} showArguments args Preference.
-     * @returns {Array}   List of outline entries.
+     * @param   {string}   text          Documents text with normalized line endings.
+     * @param   {boolean}  showArguments args Preference.
+     * @returns {object[]} List of outline entries.
      */
     function getOutlineList(text, showArguments) {
         var lines = text.split("\n");
@@ -65,6 +81,12 @@ define(function (require, exports, module) {
         return result;
     }
 
+    /**
+     * Compare two list entries.
+     * @param   {object} a First list entry object.
+     * @param   {object} b Second list entry object.
+     * @returns {number} Comparison result.
+     */
     function compare(a, b) {
         if (a.name > b.name) {
             return 1;

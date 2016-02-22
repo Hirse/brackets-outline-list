@@ -1,6 +1,12 @@
 define(function (require, exports, module) {
     "use strict";
 
+    /**
+     * Get the type class based on the the function name.
+     * @private
+     * @param   {string} name List entry name.
+     * @returns {string} CSS type classes.
+     */
     function _getTypeClass(name) {
         var classes = {
             "#": "id",
@@ -11,6 +17,13 @@ define(function (require, exports, module) {
         return " outline-entry-stylus-" + (classes[name[0]] || "tag");
     }
 
+    /**
+     * Create the HTML list entry.
+     * @private
+     * @param   {string} name List entry name.
+     * @param   {string} args Arguments as single string.
+     * @returns {object} Entry object with an $html property.
+     */
     function _createListEntry(name, args) {
         var $elements = [];
         var $name = $(document.createElement("span"));
@@ -32,9 +45,9 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {Array}   text          Documents text with normalized line endings.
-     * @param   {Boolean} showArguments args Preference.
-     * @returns {Array}   List of outline entries.
+     * @param   {string}   text          Documents text with normalized line endings.
+     * @param   {boolean}  showArguments args Preference.
+     * @returns {object[]} List of outline entries.
      */
     function getOutlineList(text, showArguments) {
         var lines = text.split("\n");

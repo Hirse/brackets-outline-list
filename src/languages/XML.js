@@ -3,6 +3,16 @@ define(function (require, exports, module) {
 
     var Editor = brackets.getModule("editor/Editor").Editor;
 
+    /**
+     * Create the HTML list entry.
+     * @private
+     * @param   {string} namespace List entry namespace.
+     * @param   {string} name      List entry name.
+     * @param   {string} type      List entry arguments type.
+     * @param   {string} args      List entry arguments.
+     * @param   {number} indent    Indentation level.
+     * @returns {object} Entry object with an $html property.
+     */
     function _createListEntry(namespace, name, type, args, indent) {
         var $elements = [];
         if (indent) {
@@ -39,6 +49,12 @@ define(function (require, exports, module) {
         };
     }
 
+    /**
+     * Get indentation level based on Editor settings.
+     * @private
+     * @param   {string} whitespace Actual whitespace in the beginning of a line.
+     * @returns {number} Indentation level.
+     */
     function _getIndentationLevel(whitespace) {
         if (!whitespace) {
             return 0;
@@ -54,9 +70,9 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {Array}   text          Documents text with normalized line endings.
-     * @param   {Boolean} showArguments args Preference.
-     * @returns {Array}   List of outline entries.
+     * @param   {string}   text          Documents text with normalized line endings.
+     * @param   {boolean}  showArguments args Preference.
+     * @returns {object[]} List of outline entries.
      */
     function getOutlineList(text, showArguments) {
         var lines = text.split("\n");

@@ -1,6 +1,12 @@
 define(function (require, exports, module) {
     "use strict";
 
+    /**
+     * Get the type class based on the entry name.
+     * @private
+     * @param   {string} name List entry name.
+     * @returns {string} CSS type class.
+     */
     function _getTypeClass(name) {
         var classes = {
             "#": "id",
@@ -11,6 +17,14 @@ define(function (require, exports, module) {
         return " outline-entry-css-" + (classes[name[0]] || "tag");
     }
 
+    /**
+     * Create the HTML list entry.
+     * @private
+     * @param   {string} name List entry name.
+     * @param   {number} line Line number.
+     * @param   {number} ch   Character number
+     * @returns {object} Entry object with an $html property.
+     */
     function _createListEntry(name, line, ch) {
         var $elements = [];
         var $name = $(document.createElement("span"));
@@ -29,8 +43,8 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {Array} text Documents text with normalized line endings.
-     * @returns {Array} List of outline entries.
+     * @param   {string}   text Documents text with normalized line endings.
+     * @returns {object[]} List of outline entries.
      */
     function getOutlineList(text) {
         var lines = text.replace(/(\n*)\{/g, "{$1").split("\n");
@@ -50,6 +64,12 @@ define(function (require, exports, module) {
         return result;
     }
 
+    /**
+     * Compare two list entries.
+     * @param   {object} a First list entry object.
+     * @param   {object} b Second list entry object.
+     * @returns {number} Comparison result.
+     */
     function compare(a, b) {
         if (a.name > b.name) {
             return 1;

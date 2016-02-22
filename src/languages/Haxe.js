@@ -1,8 +1,19 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var unnamedPlaceholder = "function";
+    /** @const {string} Placeholder for unnamed functions. */
+    var UNNAMED_PLACEHOLDER = "function";
 
+    /**
+     * Get the visibility class based on the function name.
+     * @private
+     * @param   {string}  name      List entry name.
+     * @param   {string}  type      List entry type.
+     * @param   {boolean} isPrivate Flag if the entry is private.
+     * @param   {boolean} isStatic  Flag if the entry is private.
+     * @param   {boolean} isRegion  Flag if the entry is a region.
+     * @returns {string}  CSS visibility class.
+     */
     function _getVisibilityClass(name, type, isPrivate, isStatic, isRegion) {
         var visClass = "";
         if (isRegion) {
@@ -11,7 +22,7 @@ define(function (require, exports, module) {
             if (isStatic) {
                 visClass = " outline-entry-static";
             }
-            if (name === unnamedPlaceholder) {
+            if (name === UNNAMED_PLACEHOLDER) {
                 visClass += " outline-entry-unnamed";
             } else {
                 visClass += " outline-entry-" + (isPrivate ? "private" : "public");
@@ -23,11 +34,23 @@ define(function (require, exports, module) {
         return visClass;
     }
 
+    /**
+     * Create the HTML list entry.
+     * @private
+     * @param   {string}  name      List entry name.
+     * @param   {string}  type      List entry type.
+     * @param   {boolean} isPrivate Flag if the entry is private.
+     * @param   {boolean} isStatic  Flag if the entry is private.
+     * @param   {boolean} isRegion  Flag if the entry is a region.
+     * @param   {string}  args      Arguments as single string.
+     * @param   {number}  line      Line number.
+     * @param   {number}  ch        Character number.
+     * @returns {object}  Entry object with an $html property.
+     */
     function _createListEntry(name, type, isPrivate, isStatic, isRegion, args, line, ch) {
         var $elements = [];
         var $name = $(document.createElement("span"));
         $name.addClass("outline-entry-name");
-//        $name.text(type==""?name:type+" " +name);
         $name.text(name);
         $elements.push($name);
         var $arguments = $(document.createElement("span"));
@@ -43,6 +66,12 @@ define(function (require, exports, module) {
         };
     }
 
+    /**
+     * Add surrouding parens to the arguments if missing.
+     * @private
+     * @param   {string} args String of arguments.
+     * @returns {string} String of arguments with parens.
+     */
     function _surroundArgs(args) {
         if (args[0] !== "(") {
             args = "(" + args + ")";
@@ -52,10 +81,10 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {Array}   text          Documents text with normalized line endings.
-     * @param   {Boolean} showArguments args Preference.
-     * @param   {Boolean} showUnnamed   unnamed Preference.
-     * @returns {Array}   List of outline entries.
+     * @param   {string}   text          Documents text with normalized line endings.
+     * @param   {boolean}  showArguments args Preference.
+     * @param   {boolean}  showUnnamed   unnamed Preference.
+     * @returns {object[]} List of outline entries.
      */
     function getOutlineList(text, showArguments, showUnnamed) {
         var lines = text.replace(/\)((?:[^\S\n]*\n)+)\s*\{/g, "){$1").split("\n");
@@ -73,7 +102,7 @@ define(function (require, exports, module) {
                 match = regex.exec(line);
                 if (name.length === 0) {
                     if (showUnnamed) {
-                        name = unnamedPlaceholder;
+                        name = UNNAMED_PLACEHOLDER;
                     } else {
                         continue;
                     }
@@ -84,17 +113,23 @@ define(function (require, exports, module) {
         return result;
     }
 
+    /**
+     * Compare two list entries.
+     * @param   {object} a First list entry object.
+     * @param   {object} b Second list entry object.
+     * @returns {number} Comparison result.
+     */
     function compare(a, b) {
-        if (b.name === unnamedPlaceholder) {
+        if (b.name === UNNAMED_PLACEHOLDER) {
             return -1;
         }
-        if (a.name === unnamedPlaceholder) {
+        if (a.name === UNNAMED_PLACEHOLDER) {
             return 1;
         }
-        if (a.name.toLowerCase() > b.name.toLowerCase()) {
+        if (a.name > b.name) {
             return 1;
         }
-        if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        if (a.name < b.name) {
             return -1;
         }
         return 0;

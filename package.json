@@ -23,24 +23,24 @@
     "PHP"
   ],
   "i18n": [
-    "en",
     "de",
+    "en",
+    "es",
     "fr",
-    "ja",
-    "es"
+    "ja"
   ],
   "package-i18n": {
     "de": {
       "description": "Zeigt eine Liste der Funktionen oder Definitionen im geöffneten Dokument. Unterstützt JavaScript, CoffeeScript, CSS, SCSS, LESS, XML, HTML, SVG, Markdown und PHP. Jetzt auch mit Icons!"
+    },
+    "es": {
+      "description": "Muestra una lista con las funciones o definiciones del documento actualmente abierto. Funciona con JavaScript, CoffeeScript, CSS, SCSS, LESS, XML, HTML, SVG, Markdown y PHP. ¡Ahora con iconos!"
     },
     "fr": {
       "description": "Affiche une liste des fonctions ou définition du document ouvert actuellement. Fonctionne avec JavaScript CoffeeScript, CSS, SCSS, LESS, XML, HTML, SVG, Markdown et PHP. Maintenant, avec des icônes!"
     },
     "ja": {
       "description": "現在開いているドキュメントの関数または定義の一覧を表示する。JavaScript, CoffeeScript, CSS, SCSS, LESS, XML, HTML, SVG, Markdown と PHP に対応。アイコン付き!"
-    },
-    "es": {
-      "description": "Muestra una lista con las funciones o definiciones del documento actualmente abierto. Funciona con JavaScript, CoffeeScript, CSS, SCSS, LESS, XML, HTML, SVG, Markdown y PHP. ¡Ahora con iconos!"
     }
   },
   "devDependencies": {

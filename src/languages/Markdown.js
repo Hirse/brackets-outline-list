@@ -1,10 +1,25 @@
 define(function (require, exports, module) {
     "use strict";
 
+    /**
+     * Get the modifier class based on the entry level.
+     * @private
+     * @param   {string} level String with one # for each level.
+     * @returns {string} CSS level class.
+     */
     function _getLevelClass(level) {
         return " outline-entry-md-" + level.length;
     }
 
+    /**
+     * Create the HTML list entry.
+     * @private
+     * @param   {string} name  List entry name.
+     * @param   {string} level String with one # for each level.
+     * @param   {number} line  Line number.
+     * @param   {number} ch    Character number.
+     * @returns {object} Entry object with an $html property.
+     */
     function _createListEntry(name, level, line, ch) {
         var $elements = [];
         var $name = $(document.createElement("span"));
@@ -22,8 +37,8 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {Array} text Documents text with normalized line endings.
-     * @returns {Array} List of outline entries.
+     * @param   {string}   text Documents text with normalized line endings.
+     * @returns {object[]} List of outline entries.
      */
     function getOutlineList(text) {
         var lines = text.split("\n");
@@ -41,13 +56,13 @@ define(function (require, exports, module) {
         return result;
     }
 
+    /**
+     * Compare two list entries.
+     * @param   {object} a First list entry object.
+     * @param   {object} b Second list entry object.
+     * @returns {number} Comparison result.
+     */
     function compare(a, b) {
-        if (b.name === "function") {
-            return -1;
-        }
-        if (a.name === "function") {
-            return 1;
-        }
         if (a.name > b.name) {
             return 1;
         }

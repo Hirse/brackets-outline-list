@@ -1,16 +1,15 @@
 define(function (require, exports, module) {
     "use strict";
 
-    // use lexer from thirdparty.
     var Lexer = require("thirdparty/lexer");
 
-    var unnamedPlaceholder = "function";
+    /** @const {string} Placeholder for unnamed functions. */
+    var UNNAMED_PLACEHOLDER = "function";
 
     /**
      * Parse the source and extract the code structure.
-     *
-     * @param   {Array} source the source code.
-     * @returns {Array} the code structure.
+     * @param   {string}   source the source code.
+     * @returns {object[]} the code structure.
      */
     function parse(source) {
         var line = 0; // line number.
@@ -132,7 +131,7 @@ define(function (require, exports, module) {
                     if (peek(state) === "function") {
                         var ref = peek(results);
                         if (!ref || ref.type !== "function") {
-                            ns.push(unnamedPlaceholder);
+                            ns.push(UNNAMED_PLACEHOLDER);
                             results.push({
                                 type: "function",
                                 name: ns.join("::"),

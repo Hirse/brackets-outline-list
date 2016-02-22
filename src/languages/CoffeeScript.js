@@ -1,15 +1,31 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var unnamedPlaceholder = "→";
+    /** @const {string} Placeholder for unnamed functions. */
+    var UNNAMED_PLACEHOLDER = "→";
 
+    /**
+     * Get the visibility class based on the function name.
+     * @private
+     * @param   {string} name List entry name.
+     * @returns {string} CSS visibility class.
+     */
     function _getVisibilityClass(name) {
-        if (name === unnamedPlaceholder) {
+        if (name === UNNAMED_PLACEHOLDER) {
             return " outline-entry-unnamed";
         }
         return " outline-entry-" + (name[0] === "_" ? "private" : "public");
     }
 
+    /**
+     * Create the HTML list entry.
+     * @private
+     * @param   {string} name List entry name.
+     * @param   {string} args Arguments as single string.
+     * @param   {number} line Line number.
+     * @param   {number} ch   Character number.
+     * @returns {object} Entry object with an $html property.
+     */
     function _createListEntry(name, args, line, ch) {
         var $elements = [];
         var $name = $(document.createElement("span"));
@@ -31,10 +47,10 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {Array}   text          Documents text with normalized line endings.
-     * @param   {Boolean} showArguments args Preference.
-     * @param   {Boolean} showUnnamed   unnamed Preference.
-     * @returns {Array}   List of outline entries.
+     * @param   {string}   text          Documents text with normalized line endings.
+     * @param   {boolean}  showArguments args Preference.
+     * @param   {boolean}  showUnnamed   unnamed Preference.
+     * @returns {object[]} List of outline entries.
      */
     function getOutlineList(text, showArguments, showUnnamed) {
         var lines = text.split("\n");
@@ -48,7 +64,7 @@ define(function (require, exports, module) {
                 match = regex.exec(line);
                 if (name.length === 0) {
                     if (showUnnamed) {
-                        name = unnamedPlaceholder;
+                        name = UNNAMED_PLACEHOLDER;
                     } else {
                         continue;
                     }
@@ -59,11 +75,17 @@ define(function (require, exports, module) {
         return result;
     }
 
+    /**
+     * Compare two list entries.
+     * @param   {object} a First list entry object.
+     * @param   {object} b Second list entry object.
+     * @returns {number} Comparison result.
+     */
     function compare(a, b) {
-        if (b.name === unnamedPlaceholder) {
+        if (b.name === UNNAMED_PLACEHOLDER) {
             return -1;
         }
-        if (a.name === unnamedPlaceholder) {
+        if (a.name === UNNAMED_PLACEHOLDER) {
             return 1;
         }
         if (a.name > b.name) {

@@ -3,6 +3,13 @@ define(function (require, exports, module) {
 
     var Editor = brackets.getModule("editor/Editor").Editor;
 
+    /**
+     * Create the HTML list entry.
+     * @private
+     * @param   {string} name   List entry name.
+     * @param   {number} indent Indentation level.
+     * @returns {object} Entry object with an $html property.
+     */
     function _createListEntry(name, indent) {
         var $elements = [];
         if (indent) {
@@ -26,6 +33,12 @@ define(function (require, exports, module) {
         };
     }
 
+    /**
+     * Get indentation level based on Editor settings.
+     * @private
+     * @param   {string} whitespace Actual whitespace in the beginning of a line.
+     * @returns {number} Indentation level.
+     */
     function _getIndentationLevel(whitespace) {
         if (!whitespace) {
             return 0;
@@ -41,8 +54,8 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {Array} text Documents text with normalized line endings.
-     * @returns {Array} List of outline entries.
+     * @param   {string}   text Documents text with normalized line endings.
+     * @returns {object[]} List of outline entries.
      */
     function getOutlineList(text) {
         var lines = text.split("\n");

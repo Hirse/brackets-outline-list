@@ -1,14 +1,22 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var unnamedPlaceholder = "function";
+    /** @const {string} Placeholder for unnamed functions. */
+    var UNNAMED_PLACEHOLDER = "function";
 
+    /**
+     * Get the visibility class based on the function name.
+     * @private
+     * @param   {string}  name        List entry name.
+     * @param   {boolean} isGenerator Flag if the entry represents a generator function.
+     * @returns {string}  CSS visibility class.
+     */
     function _getVisibilityClass(name, isGenerator) {
         var visClass = "";
         if (isGenerator) {
             visClass = " outline-entry-generator";
         }
-        if (name === unnamedPlaceholder) {
+        if (name === UNNAMED_PLACEHOLDER) {
             visClass += " outline-entry-unnamed";
         } else {
             visClass += " outline-entry-" + (name[0] === "_" ? "private" : "public");
@@ -16,6 +24,16 @@ define(function (require, exports, module) {
         return visClass;
     }
 
+    /**
+     * Create the HTML list entry.
+     * @private
+     * @param   {string}  name        List entry name.
+     * @param   {boolean} isGenerator Flag if the entry represents a generator function.
+     * @param   {string}  args        Arguments as single string.
+     * @param   {number}  line        Line number.
+     * @param   {number}  ch          Character number.
+     * @returns {object}  Entry object with an $html property.
+     */
     function _createListEntry(name, isGenerator, args, line, ch) {
         var $elements = [];
         var $name = $(document.createElement("span"));
@@ -35,6 +53,12 @@ define(function (require, exports, module) {
         };
     }
 
+    /**
+     * Add surrouding parens to the arguments if missing.
+     * @private
+     * @param   {string} args String of arguments.
+     * @returns {string} String of arguments with parens.
+     */
     function _surroundArgs(args) {
         if (args[0] !== "(") {
             args = "(" + args + ")";
@@ -44,10 +68,10 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {Array}   text          Documents text with normalized line endings.
-     * @param   {Boolean} showArguments args Preference.
-     * @param   {Boolean} showUnnamed   unnamed Preference.
-     * @returns {Array}   List of outline entries.
+     * @param   {string}   text          Documents text with normalized line endings.
+     * @param   {boolean}  showArguments args Preference.
+     * @param   {boolean}  showUnnamed   unnamed Preference.
+     * @returns {object[]} List of outline entries.
      */
     function getOutlineList(text, showArguments, showUnnamed) {
         var lines = text.replace(/\)((?:[^\S\n]*\n)+)\s*\{/g, "){$1").split("\n");
@@ -62,7 +86,7 @@ define(function (require, exports, module) {
                 match = regex.exec(line);
                 if (name.length === 0) {
                     if (showUnnamed) {
-                        name = unnamedPlaceholder;
+                        name = UNNAMED_PLACEHOLDER;
                     } else {
                         continue;
                     }
@@ -73,11 +97,17 @@ define(function (require, exports, module) {
         return result;
     }
 
+    /**
+     * Compare two list entries.
+     * @param   {object} a First list entry object.
+     * @param   {object} b Second list entry object.
+     * @returns {number} Comparison result.
+     */
     function compare(a, b) {
-        if (b.name === unnamedPlaceholder) {
+        if (b.name === UNNAMED_PLACEHOLDER) {
             return -1;
         }
-        if (a.name === unnamedPlaceholder) {
+        if (a.name === UNNAMED_PLACEHOLDER) {
             return 1;
         }
         if (a.name > b.name) {

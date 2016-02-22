@@ -3,9 +3,21 @@ define(function (require, exports, module) {
 
     var Lexer = require("src/lexers/PHPLexer");
 
-    var unnamedPlaceholder = "function";
+    /** @const {string} Placeholder for unnamed functions. */
+    var UNNAMED_PLACEHOLDER = "function";
 
-    function createListEntry(name, args, vis, isStatic, line, ch) {
+    /**
+     * Create the HTML list entry.
+     * @private
+     * @param   {string}  name     List entry name.
+     * @param   {string}  args     Arguments as single string.
+     * @param   {string}  vis      Visibility modifier.
+     * @param   {boolean} isStatic Flag if entry is static.
+     * @param   {number}  line     Line number.
+     * @param   {number}  ch       Character number.
+     * @returns {object}  Entry object with an $html property.
+     */
+    function _createListEntry(name, args, vis, isStatic, line, ch) {
         var $elements = [];
         var $name = $(document.createElement("span"));
         $name.addClass("outline-entry-name");
@@ -30,9 +42,9 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {Array}   text          Documents text with normalized line endings.
-     * @param   {Boolean} showArguments args Preference.
-     * @returns {Array}   List of outline entries.
+     * @param   {string}   text          Documents text with normalized line endings.
+     * @param   {boolean}  showArguments args Preference.
+     * @returns {object[]} List of outline entries.
      */
     function getOutlineList(text, showArguments) {
         return Lexer.parse(text)
@@ -42,7 +54,7 @@ define(function (require, exports, module) {
             })
             // map code structure to html item.
             .map(function (it) {
-                return createListEntry(
+                return _createListEntry(
                     it.name,
                     showArguments ? "(" + it.args.join(", ") + ")" : "",
                     it.modifier,
@@ -53,11 +65,17 @@ define(function (require, exports, module) {
             });
     }
 
+    /**
+     * Compare two list entries.
+     * @param   {object} a First list entry object.
+     * @param   {object} b Second list entry object.
+     * @returns {number} Comparison result.
+     */
     function compare(a, b) {
-        if (b.name === unnamedPlaceholder) {
+        if (b.name === UNNAMED_PLACEHOLDER) {
             return 1;
         }
-        if (a.name === unnamedPlaceholder) {
+        if (a.name === UNNAMED_PLACEHOLDER) {
             return -1;
         }
         if (a.name > b.name) {

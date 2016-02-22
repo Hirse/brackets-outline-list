@@ -19,7 +19,8 @@ define(function (require, exports, module) {
 
     ExtensionUtils.loadStyleSheet(module, "styles/styles.css");
 
-    var prefix = "hirse.outline";
+    /** @const {string} Prefix for commands. */
+    var PREFIX = "hirse.outline";
 
     /* beautify preserve:start *//* eslint-disable key-spacing */
     var languages = {
@@ -43,6 +44,10 @@ define(function (require, exports, module) {
     };
     /* eslint-enable key-spacing *//* beautify preserve:end */
 
+    /**
+     * Render the outline list template and assign event handlers.
+     * @returns {jQuery} jQuery object of the template.
+     */
     function getOutline() {
         var $outline = Mustache.render(ListTemplate, {
             Strings: Strings
@@ -59,12 +64,20 @@ define(function (require, exports, module) {
         return $outline;
     }
 
+    /**
+     * Go to the line and character of the selected entry.
+     * @param {object} event Event with line and ch as data.
+     */
     function goToLine(event) {
         var currentEditor = EditorManager.getActiveEditor();
         currentEditor.setCursorPos(event.data.line, event.data.ch, true);
         currentEditor.focus();
     }
 
+    /**
+     * Update the outline when the document has changed.
+     * If the current document is invalid or of a language that is unsupported, the outline will be hidden.
+     */
     function updateOutline() {
         var doc = DocumentManager.getCurrentDocument();
         if (!doc) {
@@ -99,11 +112,17 @@ define(function (require, exports, module) {
         });
     }
 
+    /**
+     * Handler for a horizontal resize of the outline list.
+     */
     function onResize() {
         var toolbarPx = $("#main-toolbar:visible").width() || 0;
         $(".content").css("right", ($("#outline").width() || 0) + toolbarPx + "px");
     }
 
+    /**
+     * Show the outline. The position is depending on the preferences.
+     */
     function showOutline() {
         if ($("#outline").length) {
             $("#outline-list ul").empty();
@@ -127,6 +146,10 @@ define(function (require, exports, module) {
         Menus.ContextMenu.assignContextMenuToSelector("#outline-settings", settingsMenu);
     }
 
+    /**
+     * Hide the outline and remove if it once the hinding is complete.
+     * @param {function} onHideCompleted Callback for hinding complete.
+     */
     function hideOutline(onHideCompleted) {
         if (prefs.get("sidebar")) {
             $("#outline").slideUp(function () {
@@ -145,6 +168,10 @@ define(function (require, exports, module) {
         }
     }
 
+    /**
+     * Enable outline.
+     * Set the toolbar button style, attach event listeners, and update the outline.
+     */
     function enableOutline() {
         $("#outline-toolbar-icon").addClass("enabled");
         EditorManager.on("activeEditorChange", updateOutline);
@@ -152,6 +179,10 @@ define(function (require, exports, module) {
         updateOutline();
     }
 
+    /**
+     * Disable the outline.
+     * Hide the outline, set the toolbar button style, and detach the event listeners.
+     */
     function disableOutline() {
         hideOutline();
         $("#outline-toolbar-icon").removeClass("enabled");
@@ -159,6 +190,9 @@ define(function (require, exports, module) {
         DocumentManager.off("documentSaved", updateOutline);
     }
 
+    /**
+     * Toggle the outline.
+     */
     function toggleEnabled() {
         if (prefs.togglePref("enabled")) {
             enableOutline();
@@ -171,7 +205,7 @@ define(function (require, exports, module) {
     /* Create Settings Context Menu */
     var settingsMenu = Menus.registerContextMenu("hirse-outline-context-menu");
     _.each(prefs.getSettings(), function (status, key) {
-        var commandName = prefix + "." + key;
+        var commandName = PREFIX + "." + key;
         var commandString = Strings["COMMAND_" + key.toUpperCase()];
         var command = CommmandManager.register(commandString, commandName, function () {
             var checked = prefs.togglePref(commandName.split(".")[2]);
