@@ -66,10 +66,10 @@ define(function (require, exports, module) {
         if (a.name === unnamedPlaceholder) {
             return 1;
         }
-        if (a.name > b.name) {
+        if (a.name.toLowerCase() > b.name.toLowerCase()) {
             return 1;
         }
-        if (a.name < b.name) {
+        if (a.name.toLowerCase() < b.name.toLowerCase()) {
             return -1;
         }
         return 0;
