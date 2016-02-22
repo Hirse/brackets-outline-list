@@ -29,6 +29,7 @@ define(function (require) {
             expect(result[1].line).toEqual(2);
             expect(result[1].name).toEqual("myClass::myFunc");
             expect(result[1].type).toEqual("function");
+            expect(result[1].modifier).toEqual("private");
         });
 
         it("detects function arguments declared on seperate lines", function () {
@@ -45,6 +46,12 @@ define(function (require) {
             expect(result[1].line).toEqual(2);
             expect(result[1].name).toEqual("myClass::myFunc");
             expect(result[1].type).toEqual("function");
+        });
+
+        it("detects comments", function () {
+            var test = require("text!example/php/comment.php");
+            var result = Lexer.parse(test);
+            expect(result.length).toEqual(0);
         });
     });
 });

@@ -16,7 +16,10 @@ define(function (require, exports, module) {
         var line = 0; // line number.
         var ns = []; // the namespace array.
         var literal = true; // check if it's in literal area.
+        var comment = false; // the comment flag.
         var state = []; // the state array.
+        var modifier = null; // the modifier.
+        var isStatic = false; // static flag.
         // helper function to peek an item from an array.
         var peek = function (a) {
             if (a.length > 0) {
@@ -28,7 +31,7 @@ define(function (require, exports, module) {
         var ignored = function () {};
         var lexer = new Lexer();
         lexer
-        // when it encounters `<?php` structure, turn off literal mode.
+            // when it encounters `<?php` structure, turn off literal mode.
             .addRule(/\<\?(php)?/, function () {
                 literal = false;
             })
@@ -36,11 +39,26 @@ define(function (require, exports, module) {
             .addRule(/\?\>/, function () {
                 literal = true;
             })
+            // toggle comment if necessary.
+            .addRule(/\/\*/, function () {
+                comment = true;
+            })
+            .addRule(/\*\//, function () {
+                comment = false;
+            })
+            // ignore the comments.
+            .addRule(/\/\/[^\n]*/, ignored)
+            .addRule(/public|protected|private/, function (w) {
+                modifier = w;
+            })
+            .addRule(/static/, function () {
+                isStatic = true;
+            })
             // when it encounters `function` and literal mode is off,
             // 1. push 'function' into state array;
             // 2. push a function structure in result.
             .addRule(/function/, function () {
-                if (!literal) {
+                if (!literal && !comment) {
                     state.push("function");
                     results.push({
                         type: "function",
@@ -56,28 +74,33 @@ define(function (require, exports, module) {
             // 1. push "class" into state array.
             // 2. create a class structure into results array.
             .addRule(/class/, function () {
-                if (!literal) {
+                if (!literal && !comment) {
                     state.push("class");
                     results.push({
                         type: "class",
                         name: ns.join("::"),
                         args: [],
                         modifier: "public",
-                        isStatic: false,
+                        isStatic: isStatic,
                         line: line
                     });
                 }
             })
             // if it's a variable and it's in function args semantics, push it into args array.
             .addRule(/\$[a-zA-Z_]+/, function (w) {
-                if (peek(state) === "args") {
-                    peek(results).args.push(w);
+                if (!literal && !comment) {
+                    if (peek(state) === "args") {
+                        peek(results).args.push(w);
+                    }
+                    // reset modifiers when variable is parsed.
+                    modifier = null;
+                    isStatic = false;
                 }
             })
             // check if it's an identity term.
             .addRule(/[a-zA-Z_]+/, function (w) {
                 var ref;
-                if (!literal) {
+                if (!literal && !comment) {
                     switch (peek(state)) {
                         case "function":
                             ns.push(w);
@@ -88,8 +111,7 @@ define(function (require, exports, module) {
                             } else {
                                 ref.name = w;
                             }
-                            // TODO: all function are assumed to be public.
-                            ref.modifier = "public";
+                            ref.modifier = modifier || "public";
                             break;
                         case "class":
                             ns.push(w);
@@ -99,39 +121,45 @@ define(function (require, exports, module) {
                         default:
                             break;
                     }
+                    // reset modifier when identity term is parsed.
+                    modifier = null;
+                    isStatic = false;
                 }
             })
             // check if it's in function definition, turn on args mode.
             .addRule(/\(/, function () {
-                if (peek(state) === "function") {
-                    var ref = peek(results);
-                    if (!ref || ref.type !== "function") {
-                        ns.push(unnamedPlaceholder);
-                        results.push({
-                            type: "function",
-                            name: ns.join("::"),
-                            args: [],
-                            modifier: "unnamed",
-                            isStatic: false,
-                            line: line
-                        });
+                if (!literal && !comment) {
+                    if (peek(state) === "function") {
+                        var ref = peek(results);
+                        if (!ref || ref.type !== "function") {
+                            ns.push(unnamedPlaceholder);
+                            results.push({
+                                type: "function",
+                                name: ns.join("::"),
+                                args: [],
+                                modifier: "unnamed",
+                                isStatic: false,
+                                line: line
+                            });
+                        }
+                        state.push("args");
                     }
-                    state.push("args");
                 }
             })
             // turn off args mode.
             .addRule(/\)/, function () {
-                if (peek(state) === "args") {
-                    state.pop();
+                if (!literal && !comment) {
+                    if (peek(state) === "args") {
+                        state.pop();
+                    }
                 }
             })
             // start function/class body definition or scoped code structure.
             .addRule(/{/, function () {
-                var prefix;
-                var ref;
-                if (!literal) {
+                if (!literal && !comment) {
+                    var ref;
                     if ((ref = peek(state)) === "function" || ref === "class") {
-                        prefix = state.pop();
+                        var prefix = state.pop();
                         state.push(prefix + ":start");
                     } else {
                         state.push("start");
@@ -141,7 +169,7 @@ define(function (require, exports, module) {
             // pop name from namespace array if it's in a namespace.
             .addRule(/}/, function () {
                 var s;
-                if (!literal && state.length > 0) {
+                if (!literal && !comment && state.length > 0) {
                     s = state.pop().split(":")[0];
                     if (s === "function" || s === "class") {
                         ns.pop();
