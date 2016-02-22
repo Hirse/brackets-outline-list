@@ -46,5 +46,11 @@ define(function (require) {
             expect(result[1].name).toEqual("myClass::myFunc");
             expect(result[1].type).toEqual("function");
         });
+
+        it("detects comments", function () {
+            var test = require("text!example/php/comment.php");
+            var result = Lexer.parse(test);
+            expect(result.length).toEqual(0);
+        });
     });
 });
