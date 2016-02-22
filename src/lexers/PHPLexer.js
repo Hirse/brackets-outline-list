@@ -111,7 +111,7 @@ define(function (require, exports, module) {
                             } else {
                                 ref.name = w;
                             }
-                            ref.modifier = modifier || 'public';
+                            ref.modifier = modifier || "public";
                             break;
                         case "class":
                             ns.push(w);
