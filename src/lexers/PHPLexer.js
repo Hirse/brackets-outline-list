@@ -16,8 +16,10 @@ define(function (require, exports, module) {
         var line = 0; // line number.
         var ns = []; // the namespace array.
         var literal = true; // check if it's in literal area.
-        var comment = false;
+        var comment = false; // the comment flag.
         var state = []; // the state array.
+        var modifier = null; // the modifier.
+        var isStatic = false; // static flag.
         // helper function to peek an item from an array.
         var peek = function (a) {
             if (a.length > 0) {
@@ -46,6 +48,12 @@ define(function (require, exports, module) {
             })
             // ignore the comments.
             .addRule(/\/\/[^\n]*/, ignored)
+            .addRule(/public|protected|private/, function (w) {
+                modifier = w;
+            })
+            .addRule(/static/, function () {
+                isStatic = true;
+            })
             // when it encounters `function` and literal mode is off,
             // 1. push 'function' into state array;
             // 2. push a function structure in result.
@@ -73,15 +81,20 @@ define(function (require, exports, module) {
                         name: ns.join("::"),
                         args: [],
                         modifier: "public",
-                        isStatic: false,
+                        isStatic: isStatic,
                         line: line
                     });
                 }
             })
             // if it's a variable and it's in function args semantics, push it into args array.
             .addRule(/\$[a-zA-Z_]+/, function (w) {
-                if (peek(state) === "args") {
-                    peek(results).args.push(w);
+                if (!literal && !comment) {
+                    if (peek(state) === "args") {
+                        peek(results).args.push(w);
+                    }
+                    // reset modifiers when variable is parsed.
+                    modifier = null;
+                    isStatic = false;
                 }
             })
             // check if it's an identity term.
@@ -98,8 +111,7 @@ define(function (require, exports, module) {
                             } else {
                                 ref.name = w;
                             }
-                            // TODO: all function are assumed to be public.
-                            ref.modifier = "public";
+                            ref.modifier = modifier || 'public';
                             break;
                         case "class":
                             ns.push(w);
@@ -109,6 +121,9 @@ define(function (require, exports, module) {
                         default:
                             break;
                     }
+                    // reset modifier when identity term is parsed.
+                    modifier = null;
+                    isStatic = false;
                 }
             })
             // check if it's in function definition, turn on args mode.
