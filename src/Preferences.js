@@ -2,10 +2,9 @@ define(function (require, exports, module) {
     "use strict";
 
     /* beautify preserve:start *//* eslint-disable no-multi-spaces */
-    var _                   = brackets.getModule("thirdparty/lodash");
-    var PreferencesManager  = brackets.getModule("preferences/PreferencesManager");
+    var PreferencesManager = brackets.getModule("preferences/PreferencesManager");
 
-    var Strings             = require("../strings");
+    var Strings            = require("../strings");
     /* eslint-enable no-multi-spaces *//* beautify preserve:end */
 
     /** @const {string} Prefix for preferences. */
@@ -13,63 +12,67 @@ define(function (require, exports, module) {
 
     var prefs = PreferencesManager.getExtensionPrefs(PREFIX);
 
-    var defaultPreferences = {
-        enabled: {
+    var defaultPreferences = [
+        {
+            id: "enabled",
             type: "boolean",
             value: false,
             options: {
                 name: Strings.PREF_ENABLED_NAME,
                 description: Strings.PREF_ENABLED_DESC
             }
-        },
-        unnamed: {
+        }, {
+            id: "unnamed",
             type: "boolean",
             value: true,
             options: {
                 name: Strings.PREF_UNNAMED_NAME,
                 description: Strings.PREF_UNNAMED_DESC
-            }
-        },
-        args: {
+            },
+            inContextMenu: true
+        }, {
+            id: "args",
             type: "boolean",
             value: true,
             options: {
                 name: Strings.PREF_ARGS_NAME,
                 description: Strings.PREF_ARGS_DESC
-            }
-        },
-        sidebar: {
+            },
+            inContextMenu: true
+        }, {
+            id: "sidebar",
             type: "boolean",
             value: true,
             options: {
                 name: Strings.PREF_SIDEBAR_NAME,
                 description: Strings.PREF_SIDEBAR_DESC
             }
-        },
-        sort: {
+        }, {
+            id: "sort",
             type: "boolean",
             value: false,
             options: {
                 name: Strings.PREF_SORT_NAME,
                 description: Strings.PREF_SORT_DESC
-            }
+            },
+            inContextMenu: true
         }
-    };
+    ];
 
-    _.each(defaultPreferences, function (definition, key) {
-        prefs.definePreference(key, definition.type, definition.value, definition.options);
+    defaultPreferences.forEach(function (preference) {
+        prefs.definePreference(preference.id, preference.type, preference.value, preference.options);
     });
     prefs.save();
 
     /**
-     * Toggle a preference by key and return the new value.
+     * Toggle a preference by id and return the new value.
      * Only works with boolean preferences.
-     * @param   {string}  key Preference key without prefix.
+     * @param   {string}  id Preference id without prefix.
      * @returns {boolean} New preference value.
      */
-    function togglePref(key) {
-        var state = prefs.get(key);
-        prefs.set(key, !state);
+    function togglePref(id) {
+        var state = prefs.get(id);
+        prefs.set(id, !state);
         prefs.save();
         return !state;
     }
@@ -79,27 +82,38 @@ define(function (require, exports, module) {
      * @returns {object[]} List of preference objects.
      */
     function getSettings() {
-        var prefValues = {};
-        Object.keys(defaultPreferences).forEach(function (value) {
-            if (value !== "enabled" && value !== "sidebar") {
-                prefValues[value] = prefs.get(value);
-            }
+        return defaultPreferences.filter(function (defaultPreference) {
+            return defaultPreference.inContextMenu;
+        }).map(function (defaultPreference) {
+            return {
+                id: defaultPreference.id,
+                value: prefs.get(defaultPreference.id)
+            };
         });
-        return prefValues;
     }
 
     /**
-     * Get a preference by key.
-     * @param   {string} key Preference key without prefix.
+     * Get a preference by id.
+     * @param   {string} id Preference id without prefix.
      * @returns {any}    Preference value.
      */
-    function get(key) {
-        return prefs.get(key);
+    function get(id) {
+        return prefs.get(id);
+    }
+
+    /**
+     * Set up a listener for the change event on a preference.
+     * @param {string}   id      Preference Id.
+     * @param {function} handler Handler function.
+     */
+    function onChange(id, handler) {
+        prefs.on("change", id, handler);
     }
 
     module.exports = {
         get: get,
         getSettings: getSettings,
-        togglePref: togglePref
+        togglePref: togglePref,
+        onChange: onChange
     };
 });

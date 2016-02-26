@@ -45,11 +45,10 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {string}   text          Documents text with normalized line endings.
-     * @param   {boolean}  showArguments args Preference.
+     * @param   {string}   text Documents text with normalized line endings.
      * @returns {object[]} List of outline entries.
      */
-    function getOutlineList(text, showArguments) {
+    function getOutlineList(text) {
         var lines = text.split("\n");
         var regex = /^(@?[\w-.#]+[\w-.# ]*)(\(.*?\))?/;
         var result = [];
@@ -57,7 +56,7 @@ define(function (require, exports, module) {
             var match = line.match(regex);
             if (match) {
                 var name = match[1].trim();
-                var args = showArguments ? (match[2] || "").trim() : "";
+                var args = (match[2] || "").trim();
                 var entry = _createListEntry(name, args);
                 entry.line = index;
                 entry.ch = line.length;

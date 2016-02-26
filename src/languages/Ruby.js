@@ -89,10 +89,10 @@ define(function (require, exports, module) {
      * @returns {number} Comparison result.
      */
     function compare(a, b) {
-        if (a.name > b.name) {
+        if (a > b) {
             return 1;
         }
-        if (a.name < b.name) {
+        if (a < b) {
             return -1;
         }
         return 0;

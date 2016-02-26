@@ -70,11 +70,10 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {string}   text          Documents text with normalized line endings.
-     * @param   {boolean}  showArguments args Preference.
+     * @param   {string}   text Documents text with normalized line endings.
      * @returns {object[]} List of outline entries.
      */
-    function getOutlineList(text, showArguments) {
+    function getOutlineList(text) {
         var lines = text.split("\n");
         var regex = /^(\s*)<([\w]+:)?([\w.:-]+)(?:[^>]*?(id|class)=["']([\w- ]+)["'])?/g;
         var result = [];
@@ -82,10 +81,10 @@ define(function (require, exports, module) {
             var match = regex.exec(line);
             while (match !== null) {
                 var whitespace = match[1];
-                var namespace = showArguments ? (match[2] || "").trim() : "";
+                var namespace = (match[2] || "").trim();
                 var name = match[3].trim();
                 var type = (match[4] || "").trim();
-                var args = showArguments ? (match[5] || "").trim() : "";
+                var args = (match[5] || "").trim();
                 var entry = _createListEntry(namespace, name, type, args, _getIndentationLevel(whitespace));
                 entry.line = index;
                 entry.ch = line.length;

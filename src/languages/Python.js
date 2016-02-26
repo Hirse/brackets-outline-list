@@ -56,11 +56,10 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {string}   text          Documents text with normalized line endings.
-     * @param   {boolean}  showArguments args Preference.
+     * @param   {string}   text Documents text with normalized line endings.
      * @returns {object[]} List of outline entries.
      */
-    function getOutlineList(text, showArguments) {
+    function getOutlineList(text) {
         var lines = text.split("\n");
         var regex = /^([ \t]*)(class|def) (\w+)(\([\w, ]*\))?:$/g;
         var result = [];
@@ -70,7 +69,7 @@ define(function (require, exports, module) {
                 var isIndented = Boolean(match[1]);
                 var type = match[2];
                 var name = match[3];
-                var args = showArguments ? (match[4] || "").trim() : "";
+                var args = (match[4] || "").trim();
                 var entry = _createListEntry(name, type, args, isIndented);
                 entry.line = index;
                 entry.ch = line.length;
@@ -88,10 +87,10 @@ define(function (require, exports, module) {
      * @returns {number} Comparison result.
      */
     function compare(a, b) {
-        if (a.name > b.name) {
+        if (a > b) {
             return 1;
         }
-        if (a.name < b.name) {
+        if (a < b) {
             return -1;
         }
         return 0;

@@ -42,11 +42,10 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {string}   text          Documents text with normalized line endings.
-     * @param   {boolean}  showArguments args Preference.
+     * @param   {string}   text Documents text with normalized line endings.
      * @returns {object[]} List of outline entries.
      */
-    function getOutlineList(text, showArguments) {
+    function getOutlineList(text) {
         return Lexer.parse(text)
             // ignore the classes definition.
             .filter(function (it) {
@@ -56,7 +55,7 @@ define(function (require, exports, module) {
             .map(function (it) {
                 return _createListEntry(
                     it.name,
-                    showArguments ? "(" + it.args.join(", ") + ")" : "",
+                    "(" + it.args.join(", ") + ")",
                     it.modifier,
                     it.isStatic,
                     it.line,
@@ -72,16 +71,16 @@ define(function (require, exports, module) {
      * @returns {number} Comparison result.
      */
     function compare(a, b) {
-        if (b.name === UNNAMED_PLACEHOLDER) {
+        if (b === UNNAMED_PLACEHOLDER) {
             return 1;
         }
-        if (a.name === UNNAMED_PLACEHOLDER) {
+        if (a === UNNAMED_PLACEHOLDER) {
             return -1;
         }
-        if (a.name > b.name) {
+        if (a > b) {
             return 1;
         }
-        if (a.name < b.name) {
+        if (a < b) {
             return -1;
         }
         return 0;

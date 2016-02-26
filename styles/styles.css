@@ -111,10 +111,6 @@
     width: 12px;
 }
 
-.outline-hide-unnamed.outline-entry-unnamed {
-    display: none;
-}
-
 .outline-entry-indent {
     color: #adb9bd;
     font-family: Ionicons;
@@ -128,6 +124,9 @@
     display: none;
 }
 
+.outline-hide-unnamed .outline-entry-unnamed {
+    display: none;
+}
 
 /* ==== Language Specific Entries ==== */
 

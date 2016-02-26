@@ -68,12 +68,10 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {string}   text          Documents text with normalized line endings.
-     * @param   {boolean}  showArguments args Preference.
-     * @param   {boolean}  showUnnamed   unnamed Preference.
+     * @param   {string}   text Documents text with normalized line endings.
      * @returns {object[]} List of outline entries.
      */
-    function getOutlineList(text, showArguments, showUnnamed) {
+    function getOutlineList(text) {
         var lines = text.replace(/\)((?:[^\S\n]*\n)+)\s*\{/g, "){$1").split("\n");
         var regex = /(?:(?:([\w$]+)\s*[=:]\s*)?\bfunction(\*)?(\s+[\w$]+)?\s*(\([\w$,\s]*\))|(\([\w$,\s]*\)|[\w$]+)\s*=>)/g;
         var result = [];
@@ -82,14 +80,10 @@ define(function (require, exports, module) {
             while (match !== null) {
                 var name = (match[1] || match[3] || "").trim();
                 var isGenerator = match[2] === "*";
-                var args = showArguments ? _surroundArgs(match[4] || match[5]) : "";
+                var args = _surroundArgs(match[4] || match[5]);
                 match = regex.exec(line);
                 if (name.length === 0) {
-                    if (showUnnamed) {
-                        name = UNNAMED_PLACEHOLDER;
-                    } else {
-                        continue;
-                    }
+                    name = UNNAMED_PLACEHOLDER;
                 }
                 result.push(_createListEntry(name, isGenerator, args, index, line.length));
             }
@@ -104,16 +98,16 @@ define(function (require, exports, module) {
      * @returns {number} Comparison result.
      */
     function compare(a, b) {
-        if (b.name === UNNAMED_PLACEHOLDER) {
+        if (b === UNNAMED_PLACEHOLDER) {
             return -1;
         }
-        if (a.name === UNNAMED_PLACEHOLDER) {
+        if (a === UNNAMED_PLACEHOLDER) {
             return 1;
         }
-        if (a.name > b.name) {
+        if (a > b) {
             return 1;
         }
-        if (a.name < b.name) {
+        if (a < b) {
             return -1;
         }
         return 0;

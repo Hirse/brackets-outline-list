@@ -81,12 +81,10 @@ define(function (require, exports, module) {
 
     /**
      * Create the entry list of functions language dependent.
-     * @param   {string}   text          Documents text with normalized line endings.
-     * @param   {boolean}  showArguments args Preference.
-     * @param   {boolean}  showUnnamed   unnamed Preference.
+     * @param   {string}   text Documents text with normalized line endings.
      * @returns {object[]} List of outline entries.
      */
-    function getOutlineList(text, showArguments, showUnnamed) {
+    function getOutlineList(text) {
         var lines = text.replace(/\)((?:[^\S\n]*\n)+)\s*\{/g, "){$1").split("\n");
         var regex = /(?:([\w$]+)\s*[=:]\s*)?\s*(?:(public|private)?\s+)?\s*(?:(static)?\s+)?\s*(?:function(?:\s+(?:&\s*)?([\w]+(?:\s*\<.*\>)?))?\s*(\(.*\))|(?:(class|interface|typedef)\s+)\s*([\w]+(?:\s*\<.*\>)?))|\/\/\s*(region)\s*(.*)/g;
         var result = [];
@@ -98,14 +96,10 @@ define(function (require, exports, module) {
                 var isStatic = match[3] === "static";
                 var isPrivate = !(match[2] === "public");
                 var type = (match[6] || "").trim();
-                var args = showArguments && match[5] ? _surroundArgs(match[5]) : "";
+                var args = match[5] ? _surroundArgs(match[5]) : "()";
                 match = regex.exec(line);
                 if (name.length === 0) {
-                    if (showUnnamed) {
-                        name = UNNAMED_PLACEHOLDER;
-                    } else {
-                        continue;
-                    }
+                    name = UNNAMED_PLACEHOLDER;
                 }
                 result.push(_createListEntry(name, type, isPrivate, isStatic, isRegion, args, index, line.length));
             }
@@ -120,16 +114,16 @@ define(function (require, exports, module) {
      * @returns {number} Comparison result.
      */
     function compare(a, b) {
-        if (b.name === UNNAMED_PLACEHOLDER) {
+        if (b === UNNAMED_PLACEHOLDER) {
             return -1;
         }
-        if (a.name === UNNAMED_PLACEHOLDER) {
+        if (a === UNNAMED_PLACEHOLDER) {
             return 1;
         }
-        if (a.name > b.name) {
+        if (a > b) {
             return 1;
         }
-        if (a.name < b.name) {
+        if (a < b) {
             return -1;
         }
         return 0;
