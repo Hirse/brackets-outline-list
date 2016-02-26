@@ -158,13 +158,12 @@
 /* Haxe */
 .outline-entry-hx.outline-entry-class:before {
     color: #f4229b;
-    content: "\f318" !important;
-    font-family: Ionicons;
+    content: "\f318";
 }
 
 .outline-entry-hx.outline-entry-unnamed:before {
-    color: #f47b22 !important;
-    content: "\3bb" !important;
+    color: #f47b22;
+    content: "\3bb";
     font-family: sans-serif;
 }
 
@@ -175,7 +174,7 @@
 
 .outline-entry-hx.outline-entry-region:before {
     color: #adb9bd;
-    content: " / /";
+    content: " //";
 }
 
 .outline-entry-hx.outline-entry-region {
@@ -183,13 +182,14 @@
 }
 
 .outline-entry-hx.outline-entry-public:before {
-    color: #9bf422 !important;
+    color: #9bf422;
     content: "\f276";
 }
 
 .outline-entry-hx.outline-entry-static {
     font-style: italic;
 }
+
 
 /* CoffeeScript */
 .outline-entry-coffee.outline-entry-private:before {
@@ -349,8 +349,8 @@
     content: "######";
 }
 
-/* Ruby */
 
+/* Ruby */
 .outline-entry-ruby.outline-entry-ruby-arg {
     color: #adb9bd;
 }
@@ -384,6 +384,7 @@
     color: #9bf422;
     content: "\f276";
 }
+
 
 /* XML */
 .outline-entry-xml-namespace,
