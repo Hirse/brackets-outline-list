@@ -38,6 +38,7 @@ module.exports = function (grunt) {
         eslint: {
             target: [
                 "**/*.js",
+                "!test/example/**/*.js",
                 "!thirdparty/**/*.js",
                 "!node_modules/**/*.js"
             ]
