@@ -5,6 +5,7 @@ module.exports = function (config) {
 
     config.set({
         basePath: "",
+        singleRun: false,
         frameworks: ["jasmine", "requirejs"],
         browsers: ["Chrome", "PhantomJS"],
         files: [
