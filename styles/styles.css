@@ -124,6 +124,10 @@
     display: none;
 }
 
+.outline-hide-indent .outline-entry-indent {
+    display: none;
+}
+
 .outline-hide-unnamed .outline-entry-unnamed {
     display: none;
 }

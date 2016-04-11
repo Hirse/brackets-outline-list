@@ -24,11 +24,12 @@ define(function (require, exports, module) {
      * If it is a node representing a function, return an object.
      * If it is a node which can be the name of a following function, return a string.
      * @private
-     * @param   {object}         node   AST node
-     * @param   {string}         [name] Name of a previous node
+     * @param   {object}         node  AST node
+     * @param   {string}         name  Name of a previous node
+     * @param   {number}         level Indentation level of the function
      * @returns {object|boolean} Parsed function object, or name
      */
-    function _visit(node, name) {
+    function _visit(node, name, level) {
         if (node.params) {
             name = node.id ? node.id.name : name || UNNAMED_PLACEHOLDER;
             var type;
@@ -47,6 +48,7 @@ define(function (require, exports, module) {
                 name: name,
                 line: node.loc.start.line,
                 type: type,
+                level: level,
                 args: _parseArgs(node.params, node.defaults)
             };
         }
@@ -68,18 +70,20 @@ define(function (require, exports, module) {
     /**
      * Traverse a subtree recursivly.
      * @private
-     * @param   {object}   node AST node
-     * @param   {object[]} list List of objects for the parsed nodes
-     * @param   {string}   name ame of a previous node
+     * @param   {object}   node  AST node
+     * @param   {object[]} list  List of objects for the parsed nodes
+     * @param   {string}   name  Name of a previous node
+     * @param   {number}   level Indentation level of the function
      * @returns {object[]} List of objects for the parsed nodes
      */
-    function _traverse(node, list, name) {
+    function _traverse(node, list, name, level) {
         if (node && typeof node.type === "string") {
-            var res = _visit(node, name);
+            var res = _visit(node, name, level);
             if (typeof res === "string") {
                 name = res;
             } else if (typeof res === "object") {
                 list.push(res);
+                level++;
             }
 
             for (var prop in node) {
@@ -92,10 +96,10 @@ define(function (require, exports, module) {
 
                 if (Array.isArray(child)) {
                     for (var i = 0; i < child.length; i++) {
-                        list = _traverse(child[i], list, name);
+                        list = _traverse(child[i], list, name, level);
                     }
                 } else {
-                    list = _traverse(child, list, name);
+                    list = _traverse(child, list, name, level);
                 }
             }
         }
@@ -113,7 +117,7 @@ define(function (require, exports, module) {
             tolerant: true
         });
 
-        var result = _traverse(ast, []);
+        var result = _traverse(ast, [], "", 0);
         return result;
     }
 

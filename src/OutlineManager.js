@@ -51,6 +51,10 @@ define(function (require, exports, module) {
         $outline.find("ul").toggleClass("outline-hide-args", !prefs.get("args"));
     });
 
+    prefs.onChange("indent", function () {
+        $outline.find("ul").toggleClass("outline-hide-indent", !prefs.get("indent"));
+    });
+
     prefs.onChange("unnamed", function () {
         $outline.find("ul").toggleClass("outline-hide-unnamed", !prefs.get("unnamed"));
     });

@@ -9,23 +9,36 @@ define(function (require, exports, module) {
     /**
      * Create the HTML list entry.
      * @private
-     * @param   {string} name List entry name.
-     * @param   {string} args Arguments as single string.
-     * @param   {string} type Function type.
-     * @param   {number} line Line number.
-     * @param   {number} ch   Character number.
+     * @param   {string} name  List entry name.
+     * @param   {string} args  Arguments as single string.
+     * @param   {string} type  Function type.
+     * @param   {string} level Function level.
+     * @param   {number} line  Line number.
+     * @param   {number} ch    Character number.
      * @returns {object} Entry object with an $html property.
      */
-    function _createListEntry(name, args, type, line, ch) {
+    function _createListEntry(name, args, type, level, line, ch) {
         var $elements = [];
+
+        var $indentation = $(document.createElement("span"));
+        $indentation.addClass("outline-entry-indent");
+        var interpunct = "";
+        for (var i = 0; i < level; i++) {
+            interpunct += "·";
+        }
+        $indentation.text(interpunct);
+        $elements.push($indentation);
+
         var $name = $(document.createElement("span"));
         $name.addClass("outline-entry-name");
         $name.text(name);
         $elements.push($name);
+
         var $arguments = $(document.createElement("span"));
         $arguments.addClass("outline-entry-arg");
         $arguments.text(args);
         $elements.push($arguments);
+
         return {
             name: name,
             line: line,
@@ -46,6 +59,7 @@ define(function (require, exports, module) {
                 it.name,
                 "(" + it.args.join(", ") + ")",
                 it.type,
+                it.level,
                 it.line,
                 0
             );
