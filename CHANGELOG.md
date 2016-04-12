@@ -9,6 +9,10 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 - Jade Support
 - Stylus Support
 
+### Changed
+- Use Esprima to parse JavaScript to extract the outline
+- Use Lexer to parse PHP to extract the outline
+
 
 ## 0.7.0 - 2015-07-28
 ### Added
