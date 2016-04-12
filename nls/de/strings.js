@@ -10,6 +10,7 @@ define({
     COMMAND_SORT: "Liste sortieren",
     COMMAND_UNNAMED: "Anonyme Funktionen anzeigen",
     COMMAND_ARGS: "Argumente anzeigen",
+    COMMAND_INDENT: "Einträge einrücken",
 
     PREF_ENABLED_NAME: "Outline - Aktiviert",
     PREF_ENABLED_DESC: "Aktiviert/deaktiviert die Outline Liste",
@@ -20,5 +21,7 @@ define({
     PREF_SIDEBAR_NAME: "Outline - Seitenleiste",
     PREF_SIDEBAR_DESC: "True, um die Outline Liste in der Seitenleiste und dem Dateibaum anzuzeigen",
     PREF_SORT_NAME: "Outline - Sortierung",
-    PREF_SORT_DESC: "True, um die Einträge in der Outline Liste zu sortieren"
+    PREF_SORT_DESC: "True, um die Einträge in der Outline Liste zu sortieren",
+    PREF_INDENT_NAME: "Outline - Einrückung",
+    PREF_INDENT_DESC: "True, um die Einträge in der Outline einzurücken"
 });
