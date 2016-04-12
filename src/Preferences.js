@@ -56,6 +56,15 @@ define(function (require, exports, module) {
                 description: Strings.PREF_SORT_DESC
             },
             inContextMenu: true
+        }, {
+            id: "indent",
+            type: "boolean",
+            value: true,
+            options: {
+                name: Strings.PREF_INDENT_NAME,
+                description: Strings.PREF_INDENT_DESC
+            },
+            inContextMenu: true
         }
     ];
 

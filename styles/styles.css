@@ -124,6 +124,10 @@
     display: none;
 }
 
+.outline-hide-indent .outline-entry-indent {
+    display: none;
+}
+
 .outline-hide-unnamed .outline-entry-unnamed {
     display: none;
 }
@@ -132,6 +136,10 @@
 
 
 /* JavaScript */
+.outline-entry-js.outline-entry-class:before {
+    color: #f4e422;
+    content: "\f3a0";
+}
 .outline-entry-js.outline-entry-private:before {
     color: #229bf4;
     content: "\f200";

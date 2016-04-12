@@ -7,9 +7,10 @@ define({
     BUTTON_MOVE: "Toggle Outline Position",
     BUTTON_CLOSE: "Close Outline",
 
-    COMMAND_SORT: "Sort Functions",
+    COMMAND_SORT: "Sort Entries",
     COMMAND_UNNAMED: "Show Unnamed Functions",
     COMMAND_ARGS: "Show Arguments",
+    COMMAND_INDENT: "Indent Entries",
 
     PREF_ENABLED_NAME: "Outline - Enabled",
     PREF_ENABLED_DESC: "Enable/disable Outline List",
@@ -20,5 +21,7 @@ define({
     PREF_SIDEBAR_NAME: "Outline - Sidebar",
     PREF_SIDEBAR_DESC: "True to show the Outline List in the Sidebar below the file tree",
     PREF_SORT_NAME: "Outline - Sorting",
-    PREF_SORT_DESC: "True to sort the content of the Outline List"
+    PREF_SORT_DESC: "True to sort the entries in the Outline List",
+    PREF_INDENT_NAME: "Outline - Indent",
+    PREF_INDENT_DESC: "True to indent the entries in the Outline List"
 });
