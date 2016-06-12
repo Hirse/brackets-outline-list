@@ -7,6 +7,7 @@ define(function (require, exports, module) {
     var Strings      = require("strings");
     var prefs        = require("src/Preferences");
     var SettingsMenu = require("src/SettingsMenu");
+    var Mustache     = brackets.getModule("thirdparty/mustache/mustache");
     var ListTemplate = require("text!templates/outline.html");
     /* eslint-enable no-multi-spaces *//* beautify preserve:end */
 

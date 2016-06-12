@@ -12,7 +12,7 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Use Esprima to parse JavaScript to extract the outline
 - Use Lexer to parse PHP to extract the outline
-- Update to Brackets 1.6 API
+- Update to Brackets 1.7 API
 
 
 ## 0.7.0 - 2015-07-28
