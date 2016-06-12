@@ -20,22 +20,22 @@ define(function (require, exports, module) {
         var modifier = null; // the modifier.
         var isStatic = false; // static flag.
         // helper function to peek an item from an array.
-        var peek = function (a) {
-            if (a.length > 0) {
-                return a[a.length - 1];
+        var peek = function (array) {
+            if (array.length > 0) {
+                return array[array.length - 1];
             }
             return null;
         };
         var results = [];
-        var ignored = function () {};
+        var ignored = function () { /* noop */ };
         var lexer = new Lexer();
         lexer
             // when it encounters `<?php` structure, turn off literal mode.
-            .addRule(/\<\?(php)?/, function () {
+            .addRule(/<\?(php)?/, function () {
                 literal = false;
             })
             // when it encounters `?>` structure, turn on literal mode.
-            .addRule(/\?\>/, function () {
+            .addRule(/\?>/, function () {
                 literal = true;
             })
             // toggle comment if necessary.
@@ -167,9 +167,8 @@ define(function (require, exports, module) {
             })
             // pop name from namespace array if it's in a namespace.
             .addRule(/}/, function () {
-                var s;
                 if (!literal && !comment && state.length > 0) {
-                    s = state.pop().split(":")[0];
+                    var s = state.pop().split(":")[0];
                     if (s === "function" || s === "class") {
                         ns.pop();
                     }

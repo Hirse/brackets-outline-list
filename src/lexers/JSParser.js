@@ -59,7 +59,7 @@ define(function (require, exports, module) {
                 if (node.expression.left) {
                     return node.expression.left.name || node.expression.left.property.name;
                 }
-                break;
+                return false;
             case "Property":
                 return node.key.name;
             default:

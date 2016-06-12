@@ -1,5 +1,5 @@
 ---
-  extends: "../.eslintrc"
+  extends: "../.eslintrc.yml"
 
   globals:
     requirejs: true

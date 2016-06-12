@@ -37,7 +37,7 @@ define(function (require, exports, module) {
      */
     function getOutlineList(text) {
         var lines = text.replace(/\)((?:[^\S\n]*\n)+)\s*\{/g, "){$1").split("\n");
-        var regexMethod = /\s*def\s+(\w*[.\w*]+\??)\s*(\([\w,\s,\$,\_="]*\))?/g;
+        var regexMethod = /\s*def\s+(\w*[.\w*]+\??)\s*(\([\w,\s,\$,_="]*\))?/g;
         var regexMethodClass = /\s*(class\s+<<\s+self)\s*/g;
         var regexMethodPrivate = /\s*private\s*/g;
         var result = [];
