@@ -147,7 +147,7 @@ define(function (require, exports, module) {
                 $outline.css("right", toolbarPx + "px");
                 $outline.addClass("outline-main quiet-scrollbars");
                 Resizer.makeResizable($outline, "horz", "left", 150);
-                $outline.on("panelResizeUpdate", resize);
+                $outline.on("panelResizeUpdate.outline-list", resize);
                 resize();
             }
             if (!settingsMenuAssigned) {
@@ -171,7 +171,7 @@ define(function (require, exports, module) {
             $outline.css("right", "");
             $outline.css("width", "");
             $outline.removeClass("outline-sidebar outline-main quiet-scrollbars");
-            $outline.off("panelResizeUpdate", resize);
+            $outline.off("panelResizeUpdate.outline-list", resize);
             Resizer.removeSizable($outline);
             if (position === POSITION_TOOLBAR) {
                 resize();

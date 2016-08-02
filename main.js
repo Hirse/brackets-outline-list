@@ -78,8 +78,8 @@ define(function (require, exports, module) {
     function handleEnabledChange() {
         ToolbarButton.setEnabled(prefs.get("enabled"));
         if (prefs.get("enabled")) {
-            EditorManager.on("activeEditorChange", handleEditorChange);
-            DocumentManager.on("documentSaved", handleDocumentSave);
+            EditorManager.on("activeEditorChange.outline-list", handleEditorChange);
+            DocumentManager.on("documentSaved.outline-list", handleDocumentSave);
             var document = DocumentManager.getCurrentDocument();
             if (isOutlineAvailable(document)) {
                 OutlineManager.setOutlineProvider(languageMapping[document.getLanguage().getName()]);
@@ -87,8 +87,8 @@ define(function (require, exports, module) {
                 OutlineManager.showOutline();
             }
         } else {
-            EditorManager.off("activeEditorChange", handleEditorChange);
-            DocumentManager.off("documentSaved", handleDocumentSave);
+            EditorManager.off("activeEditorChange.outline-list", handleEditorChange);
+            DocumentManager.off("documentSaved.outline-list", handleDocumentSave);
             OutlineManager.hideOutline();
         }
     }
