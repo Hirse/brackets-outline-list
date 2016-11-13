@@ -1,0 +1,12 @@
+screenshots/
+test/
+.csslintrc
+.eslintignore
+.gitignore
+.htmlhintrc
+.brackets.json
+.eslintrc.yml
+.travis.yml
+Gruntfile.js
+karma.conf.js
+*.zip

@@ -11,6 +11,7 @@
   "author": "Jan Pilzer (https://github.com/Hirse)",
   "license": "MIT",
   "keywords": [
+    "brackets-extension",
     "outline",
     "CSS",
     "CoffeeScript",
