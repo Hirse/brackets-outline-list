@@ -3,9 +3,6 @@ define(function (require, exports, module) {
 
     var Parser = require("src/lexers/JSParser");
 
-    /** @const {string} Placeholder for unnamed functions. */
-    var UNNAMED_PLACEHOLDER = "function";
-
     /**
      * Create the HTML list entry.
      * @private
@@ -60,7 +57,7 @@ define(function (require, exports, module) {
                 "(" + it.args.join(", ") + ")",
                 it.type,
                 it.level,
-                it.line,
+                it.line - 1,
                 0
             );
         });
@@ -73,10 +70,10 @@ define(function (require, exports, module) {
      * @returns {number} Comparison result.
      */
     function compare(a, b) {
-        if (b === UNNAMED_PLACEHOLDER) {
+        if (b === Parser.UNNAMED_PLACEHOLDER) {
             return -1;
         }
-        if (a === UNNAMED_PLACEHOLDER) {
+        if (a === Parser.UNNAMED_PLACEHOLDER) {
             return 1;
         }
         if (a > b) {

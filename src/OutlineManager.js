@@ -2,12 +2,12 @@ define(function (require, exports, module) {
     "use strict";
 
     /* beautify preserve:start *//* eslint-disable no-multi-spaces */
+    var Mustache     = brackets.getModule("thirdparty/mustache/mustache");
     var Resizer      = brackets.getModule("utils/Resizer");
 
     var Strings      = require("strings");
     var prefs        = require("src/Preferences");
     var SettingsMenu = require("src/SettingsMenu");
-    var Mustache     = brackets.getModule("thirdparty/mustache/mustache");
     var ListTemplate = require("text!templates/outline.html");
     /* eslint-enable no-multi-spaces *//* beautify preserve:end */
 
@@ -106,29 +106,40 @@ define(function (require, exports, module) {
      * @param {string} text Code to generate outline for.
      */
     function updateOutline(text) {
-        $outline.find("ul").empty();
-        var list = outlineProvider.getOutlineList(text).map(function (entry, index) {
-            var $entry = $(document.createElement("li"));
-            $entry.addClass("outline-entry " + entry.classes);
-            $entry.data("index", index);
-            $entry.data("name", entry.name);
-            $entry.append(entry.$html);
-            $entry.click(function () {
-                listeners.forEach(function (callback) {
-                    callback({
-                        line: entry.line,
-                        ch: entry.ch
+        var $ul = $outline.find("ul");
+        $ul.empty();
+        var list;
+        try {
+            list = outlineProvider.getOutlineList(text).map(function (entry, index) {
+                var $entry = $(document.createElement("li"));
+                $entry.addClass("outline-entry " + entry.classes);
+                $entry.data("index", index);
+                $entry.data("name", entry.name);
+                $entry.append(entry.$html);
+                $entry.click(function () {
+                    listeners.forEach(function (callback) {
+                        callback({
+                            line: entry.line,
+                            ch: entry.ch
+                        });
                     });
                 });
+                return $entry;
             });
-            return $entry;
-        });
-        if (outlineProvider.compare && prefs.get("sort")) {
-            list.sort(function (entryA, entryB) {
-                return outlineProvider.compare(entryA.data("name"), entryB.data("name"));
-            });
+            if (outlineProvider.compare && prefs.get("sort")) {
+                list.sort(function (entryA, entryB) {
+                    return outlineProvider.compare(entryA.data("name"), entryB.data("name"));
+                });
+            }
+            $ul.append(list);
+        } catch (error) {
+            if (error.message === "SyntaxError") {
+                var $li = $(document.createElement("li"));
+                $li.addClass("outline-message");
+                $li.append(Strings.MESSAGE_SYNTAX_ERROR);
+                $ul.append($li);
+            }
         }
-        $outline.find("ul").append(list);
     }
 
     /**

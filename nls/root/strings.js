@@ -12,6 +12,8 @@ define({
     COMMAND_ARGS: "Show Arguments",
     COMMAND_INDENT: "Indent Entries",
 
+    MESSAGE_SYNTAX_ERROR: "Fix the SyntaxErrors in the file to show the Outline.",
+
     PREF_ENABLED_NAME: "Outline - Enabled",
     PREF_ENABLED_DESC: "Enable/disable Outline List",
     PREF_UNNAMED_NAME: "Outline - Unnamed",

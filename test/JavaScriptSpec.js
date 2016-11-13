@@ -83,7 +83,7 @@ define(function JavaScriptSpec(require) {
 
             expect(result[1].args.length).toEqual(2);
             expect(result[1].args[0]).toEqual("a=1");
-            expect(result[1].args[1]).toEqual("b=2");
+            expect(result[1].args[1]).toEqual("b=" + Parser.ARG_DEFAULT_PLACEHOLDER);
             expect(result[1].level).toEqual(0);
             expect(result[1].line).toEqual(3);
             expect(result[1].name).toEqual("withDefaultParameters");
@@ -158,6 +158,13 @@ define(function JavaScriptSpec(require) {
             var result = Parser.parse(test);
 
             expect(result.length).toEqual(0);
+        });
+
+        it("error", function () {
+            var test = require("text!example/javascript/error.js");
+            expect(function () {
+                Parser.parse(test);
+            }).toThrowError("SyntaxError");
         });
     });
 });

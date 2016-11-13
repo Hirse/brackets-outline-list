@@ -1,21 +1,33 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var esprima = require("thirdparty/esprima");
+    var espree = require("thirdparty/espree");
 
     /** @const {string} Placeholder for unnamed functions. */
     var UNNAMED_PLACEHOLDER = "function";
 
+    /** @const {string} Placeholder for argument default values. */
+    var ARG_DEFAULT_PLACEHOLDER = "{⋯}";
+
     /**
      * Parse an array of Identifier nodes and the corresponding default values.
      * @private
-     * @param   {Indetifier[]} args     List of params
-     * @param   {Literal[]}    defaults List of default values
-     * @returns {string[]}     List of parsed strings for the arguments.
+     * @param   {(Indetifier|AssignmentPattern)[]} args List of params
+     * @returns {string[]}                         List of parsed strings for the arguments.
      */
-    function _parseArgs(args, defaults) {
-        return args.map(function (arg, i) {
-            return arg.name + (defaults[i] ? "=" + defaults[i].value : "");
+    function _parseArgs(args) {
+        return args.map(function (arg) {
+            if (arg.type === "Identifier") {
+                return arg.name;
+            } else if (arg.type === "AssignmentPattern") {
+                if (arg.right.type === "Literal") {
+                    return arg.left.name + "=" + arg.right.raw;
+                } else {
+                    return arg.left.name + "=" + ARG_DEFAULT_PLACEHOLDER;
+                }
+            } else {
+                return "";
+            }
         });
     }
 
@@ -112,16 +124,27 @@ define(function (require, exports, module) {
      * @returns {object[]} the code structure.
      */
     function parse(source) {
-        var ast = esprima.parse(source, {
-            loc: true,
-            tolerant: true
-        });
+        var ast;
+        try {
+            ast = espree.parse(source, {
+                loc: true,
+                ecmaVersion: 8
+            });
+        } catch (error) {
+            throw new Error("SyntaxError");
+        }
 
-        var result = _traverse(ast, [], "", 0);
-        return result;
+        try {
+            var result = _traverse(ast, [], "", 0);
+            return result;
+        } catch (error) {
+            throw new Error("ParserError");
+        }
     }
 
     module.exports = {
-        parse: parse
+        parse: parse,
+        UNNAMED_PLACEHOLDER: UNNAMED_PLACEHOLDER,
+        ARG_DEFAULT_PLACEHOLDER: ARG_DEFAULT_PLACEHOLDER
     };
 });

@@ -10,9 +10,9 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 - Stylus Support
 
 ### Changed
-- Use Esprima to parse JavaScript to extract the outline
+- Use Espree to parse JavaScript to extract the outline
 - Use Lexer to parse PHP to extract the outline
-- Update to Brackets 1.7 API
+- Update to latest Brackets API
 
 
 ## 0.7.0 - 2015-07-28

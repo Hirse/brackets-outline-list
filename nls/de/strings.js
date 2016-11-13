@@ -12,6 +12,8 @@ define({
     COMMAND_ARGS: "Argumente anzeigen",
     COMMAND_INDENT: "Einträge einrücken",
 
+    MESSAGE_SYNTAX_ERROR: "Die Outline kann nicht angezeigt werden, solange die Datei Fehler enthält.",
+
     PREF_ENABLED_NAME: "Outline - Aktiviert",
     PREF_ENABLED_DESC: "Aktiviert/deaktiviert die Outline Liste",
     PREF_UNNAMED_NAME: "Outline - Anonyme Funktionen",
