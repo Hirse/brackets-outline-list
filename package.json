@@ -4,7 +4,7 @@
   "title": "Brackets Outline List",
   "description": "Displays a list of the functions or definitions in the currently opened document. Works with CSS, CoffeeScript, HTML, Haxe, Jade, JavaScript, LESS, Markdown, PHP, Python, Ruby, SCSS, SVG, Stylus, and XML.",
   "engines": {
-    "brackets": ">=1.7.0"
+    "brackets": ">=1.8.0"
   },
   "homepage": "https://github.com/Hirse/brackets-outline-list",
   "repository": "Hirse/brackets-outline-list",
