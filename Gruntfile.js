@@ -27,34 +27,12 @@ module.exports = function (grunt) {
                     }
                 ]
             }
-        },
-        karma: {
-            ci: {
-                configFile: "karma.conf.js",
-                singleRun: true,
-                browsers: ["PhantomJS"]
-            }
-        },
-        eslint: {
-            target: [
-                "**/*.js",
-                "!test/example/**/*.js",
-                "!thirdparty/**/*.js",
-                "!node_modules/**/*.js"
-            ]
         }
     });
 
     grunt.loadNpmTasks("grunt-contrib-compress");
-    grunt.loadNpmTasks("grunt-eslint");
-    grunt.loadNpmTasks("grunt-karma");
 
     grunt.registerTask("default", [
         "compress"
-    ]);
-
-    grunt.registerTask("test", [
-        "eslint",
-        "karma:ci"
     ]);
 };
