@@ -13,7 +13,7 @@ module.exports = function (config) {
                 pattern: "thirdparty/*.js",
                 included: false
             }, {
-                pattern: "node_modules/text/text.js",
+                pattern: "node_modules/requirejs-text/text.js",
                 included: false
             }, {
                 pattern: "src/**/*.js",

@@ -12,7 +12,7 @@ requirejs.config({
     baseUrl: "/base/src",
 
     paths: {
-        text: "../node_modules/text/text",
+        text: "../node_modules/requirejs-text/text",
         thirdparty: "../thirdparty",
         example: "../test/example"
     },
