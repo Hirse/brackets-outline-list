@@ -52,7 +52,7 @@ define(function (require, exports, module) {
      */
     function getOutlineList(text) {
         var lines = text.split("\n");
-        var regex = /(([\w\$]*)?\s*(?:=|:))?\s*(\([\w\$@,.'"= ]*\))?\s*(?:->|=>)/g;
+        var regex = /(([\w$]*)?\s*(?:=|:))?\s*(\([\w$@,.'"= ]*\))?\s*(?:->|=>)/g;
         var result = [];
         lines.forEach(function (line, index) {
             var match = regex.exec(line);
