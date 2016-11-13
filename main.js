@@ -16,6 +16,7 @@ define(function (require, exports, module) {
     /* beautify preserve:start *//* eslint-disable key-spacing */
     var languageMapping = {
         JavaScript:          "JavaScript",
+        JSX:                 "JavaScript",
         Haxe:                "Haxe",
         CoffeeScript:        "CoffeeScript",
         CSS:                 "CSS",

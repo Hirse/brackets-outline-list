@@ -8,6 +8,7 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 - Python Support
 - Jade Support
 - Stylus Support
+- JSX Support
 
 ### Changed
 - Use Espree to parse JavaScript to extract the outline

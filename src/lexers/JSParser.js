@@ -128,7 +128,10 @@ define(function (require, exports, module) {
         try {
             ast = espree.parse(source, {
                 loc: true,
-                ecmaVersion: 8
+                ecmaVersion: 8,
+                ecmaFeatures: {
+                    jsx: true
+                }
             });
         } catch (error) {
             throw new Error("SyntaxError");

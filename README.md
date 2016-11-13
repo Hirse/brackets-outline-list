@@ -23,7 +23,7 @@
     * CoffeeScript
     * Haxe
     * Jade
-    * JavaScript (based on Espree AST)
+    * JavaScript, JSX (based on Espree AST)
     * Markdown, GitHub-Flavored-Markdown (atx-style headings only)
     * PHP
     * Python

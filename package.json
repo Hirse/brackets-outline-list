@@ -2,7 +2,7 @@
   "name": "hirse.outline-list",
   "version": "0.7.0",
   "title": "Brackets Outline List",
-  "description": "Displays a list of the functions or definitions in the currently opened document. Works with CSS, CoffeeScript, HTML, Haxe, Jade, JavaScript, LESS, Markdown, PHP, Python, Ruby, SCSS, SVG, Stylus, and XML.",
+  "description": "Displays a list of the functions or definitions in the currently opened document. Works with CSS, CoffeeScript, HTML, Haxe, Jade, JavaScript, JSX, LESS, Markdown, PHP, Python, Ruby, SCSS, SVG, Stylus, and XML.",
   "engines": {
     "brackets": ">=1.8.0"
   },
@@ -18,6 +18,7 @@
     "Haxe",
     "Jade",
     "JavaScript",
+    "JSX",
     "LESS",
     "Markdown",
     "PHP",
@@ -37,16 +38,16 @@
   ],
   "package-i18n": {
     "de": {
-      "description": "Zeigt eine Liste der Funktionen oder Definitionen im geöffneten Dokument. Unterstützt CSS, CoffeeScript, HTML, Haxe, Jade, JavaScript, LESS, Markdown, PHP, Python, Ruby, SCSS, SVG, Stylus, und XML."
+      "description": "Zeigt eine Liste der Funktionen oder Definitionen im geöffneten Dokument. Unterstützt CSS, CoffeeScript, HTML, Haxe, Jade, JavaScript, JSX, LESS, Markdown, PHP, Python, Ruby, SCSS, SVG, Stylus, und XML."
     },
     "es": {
-      "description": "Muestra una lista con las funciones o definiciones del documento actualmente abierto. Funciona con CSS, CoffeeScript, HTML, Haxe, Jade, JavaScript, LESS, Markdown, PHP, Python, Ruby, SCSS, SVG, Stylus, y XML."
+      "description": "Muestra una lista con las funciones o definiciones del documento actualmente abierto. Funciona con CSS, CoffeeScript, HTML, Haxe, Jade, JavaScript, JSX, LESS, Markdown, PHP, Python, Ruby, SCSS, SVG, Stylus, y XML."
     },
     "fr": {
-      "description": "Affiche une liste des fonctions ou définition du document ouvert actuellement. Fonctionne avec CSS, CoffeeScript, HTML, Haxe, Jade, JavaScript, LESS, Markdown, PHP, Python, Ruby, SCSS, SVG, Stylus, et XML."
+      "description": "Affiche une liste des fonctions ou définition du document ouvert actuellement. Fonctionne avec CSS, CoffeeScript, HTML, Haxe, Jade, JavaScript, JSX, LESS, Markdown, PHP, Python, Ruby, SCSS, SVG, Stylus, et XML."
     },
     "ja": {
-      "description": "現在開いているドキュメントの関数または定義の一覧を表示する。CSS, CoffeeScript, HTML, Haxe, Jade, JavaScript, LESS, Markdown, PHP, Python, Ruby, SCSS, SVG, Stylus, と XML に対応。"
+      "description": "現在開いているドキュメントの関数または定義の一覧を表示する。CSS， CoffeeScript， HTML， Haxe， Jade， JavaScript， JSX， LESS， Markdown， PHP， Python， Ruby， SCSS， SVG， Stylus， と XML に対応。"
     }
   },
   "devDependencies": {
