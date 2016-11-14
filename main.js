@@ -2,13 +2,14 @@ define(function (require, exports, module) {
     "use strict";
 
     /* beautify preserve:start *//* eslint-disable no-multi-spaces */
-    var DocumentManager = brackets.getModule("document/DocumentManager");
-    var EditorManager   = brackets.getModule("editor/EditorManager");
-    var ExtensionUtils  = brackets.getModule("utils/ExtensionUtils");
+    var DocumentManager    = brackets.getModule("document/DocumentManager");
+    var EditorManager      = brackets.getModule("editor/EditorManager");
+    var PreferencesManager = brackets.getModule("preferences/PreferencesManager");
+    var ExtensionUtils     = brackets.getModule("utils/ExtensionUtils");
 
-    var prefs           = require("src/Preferences");
-    var OutlineManager  = require("src/OutlineManager");
-    var ToolbarButton   = require("src/ToolbarButton");
+    var prefs              = require("src/Preferences");
+    var OutlineManager     = require("src/OutlineManager");
+    var ToolbarButton      = require("src/ToolbarButton");
     /* eslint-enable no-multi-spaces *//* beautify preserve:end */
 
     ExtensionUtils.loadStyleSheet(module, "styles/styles.css");
@@ -126,6 +127,13 @@ define(function (require, exports, module) {
     prefs.onChange("enabled", handleEnabledChange);
 
     prefs.onChange("sidebar", handleSidebarChange);
+
+    // Update the position if the no-distractions/pure-code mode is turned on
+    PreferencesManager.on("change", "noDistractions", function () {
+        if (!prefs.get("sidebar")) {
+            OutlineManager.setPosition(OutlineManager.POSITION_TOOLBAR);
+        }
+    });
 
     ToolbarButton.onClick(handleButtonClick);
 

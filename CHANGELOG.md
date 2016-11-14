@@ -3,17 +3,22 @@ All notable changes to this project will be documented in this file.
 This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 
+## Unreleased
+### Fixed
+- No distractions mode conflict (see [#64](https://github.com/Hirse/brackets-outline-list/issues/64))
+
+
 ## 1.0.0-alpha.0 - 2016-11-14
 ### Added
-- Python Support
-- Jade Support
-- Stylus Support
-- JSX Support
+- Python Support (see [#44](https://github.com/Hirse/brackets-outline-list/issues/44))
+- Jade Support (see [#15](https://github.com/Hirse/brackets-outline-list/issues/15))
+- Stylus Support (see [#14](https://github.com/Hirse/brackets-outline-list/issues/14))
+- JSX Support (see [#65](https://github.com/Hirse/brackets-outline-list/issues/65))
 
 ### Changed
 - Use Espree to parse JavaScript to extract the outline
-- Use Lexer to parse PHP to extract the outline
-- Update to latest Brackets API
+- Use Lexer to parse PHP to extract the outline, thanks to [__@yfwz100__](https://github.com/yfwz100)
+- Update to Brackets 1.8 API
 
 
 ## 0.7.0 - 2015-07-28
@@ -21,7 +26,7 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 - Names and Descriptions for preferences
 
 ### Changed
-- Requires Brackets 1.4
+- Update to Brackets 1.4 API
 - Reduced Toolbar Icon size to fit design guide
 
 
