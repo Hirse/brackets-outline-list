@@ -58,6 +58,7 @@
     "jasmine-core": "2.x.x",
     "karma": "1.x.x",
     "karma-chrome-launcher": "2.x.x",
+    "karma-coverage": "1.x.x",
     "karma-jasmine": "1.x.x",
     "karma-phantomjs-launcher": "1.x.x",
     "karma-requirejs": "1.x.x",

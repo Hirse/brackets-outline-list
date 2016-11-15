@@ -8,6 +8,16 @@ module.exports = function (config) {
         singleRun: false,
         frameworks: ["jasmine", "requirejs"],
         browsers: ["Chrome", "PhantomJS"],
+        reporters: ["progress", "coverage"],
+        preprocessors: {
+            "src/**/*.js": ["coverage"]
+        },
+        coverageReporter: {
+            type: "lcovonly",
+            dir: "coverage",
+            subdir: "lcov",
+            file: "lcov.info"
+        },
         files: [
             {
                 pattern: "thirdparty/*.js",
