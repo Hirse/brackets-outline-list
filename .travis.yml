@@ -1,3 +1,7 @@
 language: node_js
 node_js:
   - node
+addons:
+  code_climate:
+    repo_token: 3c25f80f68db490c170b279a8617c15542b65ddd53f1135dc5b4a994effd2c36
+after_success: npm run codeClimate
