@@ -1,0 +1,13 @@
+exclude_paths:
+  - thirdparty/
+  - test/example
+engines:
+  csslint:
+    enabled: true
+  duplication:
+    enabled: true
+  eslint:
+    enabled: true
+    channel: "eslint-3"
+  fixme:
+    enabled: true
