@@ -1,5 +1,7 @@
 [![npm](https://img.shields.io/npm/v/hirse.outline-list.svg)](https://www.npmjs.com/package/hirse.outline-list)
 [![Build Status](https://travis-ci.org/Hirse/brackets-outline-list.svg?branch=master)](https://travis-ci.org/Hirse/brackets-outline-list)
+[![Code Climate](https://codeclimate.com/github/Hirse/brackets-outline-list/badges/gpa.svg)](https://codeclimate.com/github/Hirse/brackets-outline-list)
+[![Test Coverage](https://codeclimate.com/github/Hirse/brackets-outline-list/badges/coverage.svg)](https://codeclimate.com/github/Hirse/brackets-outline-list/coverage)
 
 # Brackets Outline List
 [Brackets][Brackets] Extension to display a list of the functions or definitions in the currently opened document. Settings for parameters and anonymous functions. See [features](#features) for a list of supported languages.
