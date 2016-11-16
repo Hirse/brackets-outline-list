@@ -1,6 +1,3 @@
-exclude_paths:
-  - thirdparty/
-  - test/example
 engines:
   csslint:
     enabled: true
@@ -14,3 +11,9 @@ engines:
     channel: "eslint-3"
   fixme:
     enabled: true
+ratings:
+   paths:
+     - **/*.js
+exclude_paths:
+  - thirdparty/
+  - test/example
