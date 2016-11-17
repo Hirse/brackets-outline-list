@@ -21,18 +21,21 @@
 * Toggle sorting of Outline List
 * Toggle anonymous function
 * Toggle function arguments
-* Supported languages:
-    * CSS, SCSS, LESS
-    * CoffeeScript
-    * Haxe
-    * Jade
-    * JavaScript, JSX (based on Espree AST)
-    * Markdown, GitHub-Flavored-Markdown (atx-style headings only)
-    * PHP
-    * Python
-    * Ruby
-    * Stylus
-    * XML, HTML, SVG (hierarchical based on indentation)
+
+### Language features:
+|                                    | Parsing | Sorting            | Indentation        | Arguments          | Unnamed            |
+|------------------------------------|---------|:------------------:|:------------------:|:------------------:|:------------------:|
+| CSS, SCSS, LESS                    | RegExp  | :heavy_check_mark: | :x:                | :x:                | :x:                |
+| CoffeeScript                       | RegExp  | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
+| Haxe                               | RegExp  | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
+| Jade                               | RegExp  | :x:                | :x:                | :x:                | :x:                |
+| JavaScript, JSX                    | Espree  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Markdown, GitHub-Flavored-Markdown | RegExp  | :heavy_check_mark: | :x:                | :x:                | :x:                |
+| PHP                                | Lexer   | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
+| Python                             | RegExp  | :heavy_check_mark: | :x:                | :heavy_check_mark: | :x:                |
+| Ruby                               | RegExp  | :heavy_check_mark: | :x:                | :heavy_check_mark: | :x:                |
+| Stylus                             | RegExp  | :x:                | :x:                | :x:                | :x:                |
+| XML, HTML, SVG                     | RegExp  | :x:                | :heavy_check_mark: | :x:                | :x:                |
 
 ## Installation
 ### Latest Release
