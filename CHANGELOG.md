@@ -6,6 +6,7 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 ### Fixed
 - No distractions mode conflict (see [#64](https://github.com/Hirse/brackets-outline-list/issues/64))
+- Position change shows hid outline (see [#72](https://github.com/Hirse/brackets-outline-list/issues/72))
 
 
 ## 1.0.0-alpha.0 - 2016-11-14

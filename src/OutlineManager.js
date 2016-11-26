@@ -192,13 +192,17 @@ define(function (require, exports, module) {
 
     /**
      * Set the position of the outline.
-     * Hides and shows the outline again.
+     * Hides and shows the outline again if it was visible.
      * @param {number} newPosition Position as number.
      */
     function setPosition(newPosition) {
-        hideOutline();
-        position = newPosition;
-        showOutline();
+        if (isVisible) {
+            hideOutline();
+            position = newPosition;
+            showOutline();
+        } else {
+            position = newPosition;
+        }
     }
 
     module.exports = {
