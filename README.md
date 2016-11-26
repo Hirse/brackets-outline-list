@@ -41,6 +41,9 @@
 ### Latest Release
 To install the latest _release_ of this extension use the built-in Brackets [Extension Manager][Brackets Extension Manager] which downloads the extension from the [extension registry][Brackets Extension Registry].
 
+### Brackets npm Registry
+The latest _release_ of this extension is also available on the [Brackets npm Registry][Brackets npm Registry].
+
 ### Latest Commit
 To install the latest _commit_ of this extension use the built-in Brackets [Extension Manager][Brackets Extension Manager] which has a function to `Install from URL...` using this link: https://github.com/Hirse/brackets-outline-list/archive/master.zip.
 
@@ -56,6 +59,7 @@ Used thirdparty software:
 [Brackets]: http://brackets.io
 [Brackets Extension Manager]: https://github.com/adobe/brackets/wiki/Brackets-Extensions
 [Brackets Extension Registry]: https://brackets-registry.aboutweb.com
+[Brackets npm Registry]: https://github.com/zaggino/brackets-npm-registry
 
 [Ionicons]: http://ionicons.com
 [Lexer]: https://github.com/aaditmshah/lexer
