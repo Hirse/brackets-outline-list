@@ -180,9 +180,10 @@ define(function (require, exports, module) {
             .addRule(/\r?\n/, function () {
                 line += 1;
             });
-        lexer.setInput(source);
         // parse the code to the end of the source.
-        while (lexer.index < source.length - 1) {
+        source = source.split('\n');
+        for (var i =0, l = source.length; i<l; i++) {
+            lexer.setInput(source[i]);
             lexer.lex();
         }
         return results;
