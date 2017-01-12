@@ -175,16 +175,14 @@ define(function (require, exports, module) {
                 }
             })
             // other terms are ignored.
-            .addRule(/./, ignored)
-            // line number increases.
-            .addRule(/\r?\n/, function () {
-                line += 1;
-            });
-        // parse the code to the end of the source.
+            .addRule(/./, ignored);
         source = source.split('\n');
+        // parse the code to the end of the source.
         for (var i =0, l = source.length; i<l; i++) {
             lexer.setInput(source[i]);
             lexer.lex();
+            // line number increases.
+            line += 1;
         }
         return results;
     }
