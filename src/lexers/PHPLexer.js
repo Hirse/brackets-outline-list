@@ -176,9 +176,9 @@ define(function (require, exports, module) {
             })
             // other terms are ignored.
             .addRule(/./, ignored);
-        source = source.split('\n');
+        source = source.split("\n");
         // parse the code to the end of the source.
-        for (var i =0, l = source.length; i<l; i++) {
+        for (var i = 0, l = source.length; i < l; i++) {
             lexer.setInput(source[i]);
             lexer.lex();
             // line number increases.
