@@ -19,6 +19,7 @@ define(function (require, exports, module) {
         var state = []; // the state array.
         var modifier = null; // the modifier.
         var isStatic = false; // static flag.
+        var isAbstract = false; // abstract flag.
         // helper function to peek an item from an array.
         var peek = function (array) {
             if (array.length > 0) {
@@ -47,8 +48,13 @@ define(function (require, exports, module) {
             })
             // ignore the comments.
             .addRule(/\/\/[^\n]*/, ignored)
-            .addRule(/public|protected|private/, function (w) {
-                modifier = w;
+            // detect abstract modifier, but treat it apart from the visibility modifiers
+            .addRule(/public|protected|private|abstract/, function (w) {
+                if (w === "abstract") {
+                    isAbstract = true;
+                } else {
+                    modifier = w;
+                }
             })
             .addRule(/static/, function () {
                 isStatic = true;
@@ -64,7 +70,7 @@ define(function (require, exports, module) {
                         name: ns.join("::"),
                         args: [],
                         modifier: "unnamed",
-                        isStatic: false,
+                        isStatic: isStatic, // static functions did not appear in cursive (flag always false)
                         line: line
                     });
                 }
@@ -73,7 +79,7 @@ define(function (require, exports, module) {
             // 1. push "class" into state array.
             // 2. create a class structure into results array.
             .addRule(/class/, function () {
-                if (!literal && !comment) {
+                if (!literal && !comment && ns.length === 0) {
                     state.push("class");
                     results.push({
                         type: "class",
@@ -85,8 +91,16 @@ define(function (require, exports, module) {
                     });
                 }
             })
+            // added support for extended classes
+            .addRule(/extends/, function () {
+                if (!literal && !comment) {
+                    if (peek(state) === "class") {
+                        state.pop();
+                    }
+                }
+            })
             // if it's a variable and it's in function args semantics, push it into args array.
-            .addRule(/\$[a-zA-Z_]+/, function (w) {
+            .addRule(/\$[0-9a-zA-Z_]+/, function (w) { // PHP variables can contain numbers
                 if (!literal && !comment) {
                     if (peek(state) === "args") {
                         peek(results).args.push(w);
@@ -97,7 +111,7 @@ define(function (require, exports, module) {
                 }
             })
             // check if it's an identity term.
-            .addRule(/[a-zA-Z_]+/, function (w) {
+            .addRule(/[0-9a-zA-Z_]+/, function (w) { // PHP classes and functions can contain numbers
                 var ref;
                 if (!literal && !comment) {
                     switch (peek(state)) {
@@ -169,7 +183,25 @@ define(function (require, exports, module) {
             .addRule(/}/, function () {
                 if (!literal && !comment && state.length > 0) {
                     var s = state.pop().split(":")[0];
-                    if (s === "function" || s === "class") {
+                    if (s === "class") {
+                        ns.pop();
+                    }
+                    // support for anonymous functions within other functions
+                    if (s === "function") {
+                        if (peek(results).modifier === "unnamed") {
+                            state.pop();
+                        } else {
+                            ns.pop();
+                        }
+                    }
+                }
+            })
+            .addRule(/;/, function () {
+                if (!literal && !comment) {
+                    if(peek(state) === "function" && isAbstract) {
+                        ns.pop();
+                        isAbstract = false;
+                    } else if (peek(state) === "class") {
                         ns.pop();
                     }
                 }
