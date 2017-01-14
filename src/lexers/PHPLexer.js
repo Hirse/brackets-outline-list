@@ -206,7 +206,7 @@ define(function (require, exports, module) {
             })
             .addRule(/;/, function () {
                 if (!literal && !comment) {
-                    if(peek(state) === "function" && isAbstract) {
+                    if (peek(state) === "function" && isAbstract) {
                         ns.pop();
                         isAbstract = false;
                     } else if (peek(state) === "class") {
