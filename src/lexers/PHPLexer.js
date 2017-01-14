@@ -20,6 +20,7 @@ define(function (require, exports, module) {
         var modifier = null; // the modifier.
         var isStatic = false; // static flag.
         var isAbstract = false; // abstract flag.
+        var lastExtended = null;
         // helper function to peek an item from an array.
         var peek = function (array) {
             if (array.length > 0) {
@@ -95,7 +96,8 @@ define(function (require, exports, module) {
             .addRule(/extends/, function () {
                 if (!literal && !comment) {
                     if (peek(state) === "class") {
-                        state.pop();
+                        lastExtended = results.pop();
+                        state.push("extended");
                     }
                 }
             })
@@ -128,6 +130,12 @@ define(function (require, exports, module) {
                             break;
                         case "class":
                             ns.push(w);
+                            ref = peek(results);
+                            ref.name += "::" + w;
+                            break;
+                        case "extended":
+                            state.push("class");
+                            results.push(lastExtended);
                             ref = peek(results);
                             ref.name += "::" + w;
                             break;
