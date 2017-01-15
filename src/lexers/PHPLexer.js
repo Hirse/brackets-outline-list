@@ -20,7 +20,9 @@ define(function (require, exports, module) {
         var modifier = null; // the modifier.
         var isStatic = false; // static flag.
         var isAbstract = false; // abstract flag.
-        var lastExtendsChild = null; // stores the results object of class that extends another
+        // stores the results object of class that extends another
+        // or implements an interface.
+        var lastChildClass = null;
         // helper function to peek an item from an array.
         var peek = function (array) {
             if (array.length > 0) {
@@ -92,12 +94,12 @@ define(function (require, exports, module) {
                     });
                 }
             })
-            // added support for extended classes
-            .addRule(/extends/, function () {
+            // add support for extended classes and interface implementations
+            .addRule(/extends|implements/, function () {
                 if (!literal && !comment) {
                     if (peek(state) === "class") {
-                        lastExtendsChild = results.pop();
-                        state.push("extended");
+                        lastChildClass = results.pop();
+                        state.push("inheriting");
                     }
                 }
             })
@@ -133,9 +135,9 @@ define(function (require, exports, module) {
                             ref = peek(results);
                             ref.name += "::" + w;
                             break;
-                        case "extended":
+                        case "inheriting":
                             state.push("class");
-                            results.push(lastExtendsChild);
+                            results.push(lastChildClass);
                             ref = peek(results);
                             ref.name += "::" + w;
                             break;
