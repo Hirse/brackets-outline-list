@@ -20,8 +20,8 @@ define(function (require, exports, module) {
         var modifier = null; // the modifier.
         var isStatic = false; // static flag.
         var isAbstract = false; // abstract flag.
-        // stores the results object of class that extends another
-        // or implements an interface.
+        // saves the results object of the last class that
+        // extends another or implements an interface.
         var lastChildClass = null;
         // helper function to peek an item from an array.
         var peek = function (array) {
@@ -81,7 +81,7 @@ define(function (require, exports, module) {
             // when it encounters `class` and literal mode is off.
             // 1. push "class" into state array.
             // 2. create a class structure into results array.
-            .addRule(/class/, function () {
+            .addRule(/class /, function () {
                 if (!literal && !comment && ns.length === 0) {
                     state.push("class");
                     results.push({
@@ -94,7 +94,7 @@ define(function (require, exports, module) {
                     });
                 }
             })
-            // add support for extended classes and interface implementations
+            // support for extended classes and interface implementations
             .addRule(/extends|implements/, function () {
                 if (!literal && !comment) {
                     if (peek(state) === "class") {
@@ -104,7 +104,7 @@ define(function (require, exports, module) {
                 }
             })
             // if it's a variable and it's in function args semantics, push it into args array.
-            .addRule(/\$[0-9a-zA-Z_]+/, function (w) { // PHP variables can contain numbers
+            .addRule(/\$[0-9a-zA-Z_]+/, function (w) {
                 if (!literal && !comment) {
                     if (peek(state) === "args") {
                         peek(results).args.push(w);
@@ -115,7 +115,7 @@ define(function (require, exports, module) {
                 }
             })
             // check if it's an identity term.
-            .addRule(/[0-9a-zA-Z_]+/, function (w) { // PHP classes and functions can contain numbers
+            .addRule(/[0-9a-zA-Z_]+/, function (w) {
                 var ref;
                 if (!literal && !comment) {
                     switch (peek(state)) {
@@ -198,19 +198,26 @@ define(function (require, exports, module) {
                     }
                     // support for anonymous functions within other functions
                     if (s === "function") {
-                        if (peek(results).modifier === "unnamed") {
+                        var ref = peek(results);
+                        if (ref.modifier === "unnamed") {
+                            if (ns.length > 0) {
+                                ref.name += "::";
+                            }
+                            ref.name += UNNAMED_PLACEHOLDER;
                             state.pop();
+                            ns.pop();
                         } else {
                             ns.pop();
                         }
                     }
                 }
             })
+            // support for abstract methods
             .addRule(/;/, function () {
                 if (!literal && !comment) {
                     if (peek(state) === "function" && isAbstract) {
                         ns.pop();
-                        isAbstract = false;
+                        isAbstract = false; // reset abstract flag
                     } else if (peek(state) === "class") {
                         ns.pop();
                     }
