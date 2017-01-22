@@ -1,12 +1,15 @@
 # Change Log
-All notable changes to this project will be documented in this file.  
+All notable changes to this project will be documented in this file.
 This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 
-## Unreleased
+## 1.0.0-alpha.1 - 2017-01-22
 ### Fixed
 - No distractions mode conflict (see [#64](https://github.com/Hirse/brackets-outline-list/issues/64))
 - Position change shows hid outline (see [#72](https://github.com/Hirse/brackets-outline-list/issues/72))
+- Broken PHP class detection (see [#73](https://github.com/Hirse/brackets-outline-list/issues/73) and [#74](https://github.com/Hirse/brackets-outline-list/issues/74)), thanks to [__@pelatx__](https://github.com/pelatx)
+- PHP abstract classes detection (see [#76](https://github.com/Hirse/brackets-outline-list/issues/76)), thanks to [__@pelatx__](https://github.com/pelatx)
+- Performance in large PHP files (see [#70](https://github.com/Hirse/brackets-outline-list/issues/70)), thanks to [__@mskocik__](https://github.com/mskocik)
 
 
 ## 1.0.0-alpha.0 - 2016-11-14
