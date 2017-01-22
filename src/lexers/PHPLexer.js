@@ -225,14 +225,14 @@ define(function (require, exports, module) {
             })
             // other terms are ignored.
             .addRule(/./, ignored);
-        source = source.split("\n");
+
         // parse the code to the end of the source.
-        for (var i = 0, l = source.length; i < l; i++) {
-            lexer.setInput(source[i]);
+        source.split(/\r?\n/).forEach(function (sourceLine) {
+            lexer.setInput(sourceLine);
             lexer.lex();
             // line number increases.
             line += 1;
-        }
+        });
         return results;
     }
 
