@@ -53,5 +53,151 @@ define(function (require) {
             var result = Lexer.parse(test);
             expect(result.length).toEqual(0);
         });
+
+        it("detects inheritance", function () {
+            var test = require("text!example/php/inheritance.php");
+            var result = Lexer.parse(test);
+            expect(result).toEqual([
+                {
+                    type: "class",
+                    name: "::Child::IChild",
+                    args: [],
+                    modifier: "public",
+                    isStatic: false,
+                    line: 1
+                }, {
+                    type: "function",
+                    name: "Child::speak",
+                    args: [],
+                    modifier: "public",
+                    isStatic: false,
+                    line: 2
+                }, {
+                    type: "class",
+                    name: "::Child::BaseChild",
+                    args: [],
+                    modifier: "public",
+                    isStatic: false,
+                    line: 5
+                }, {
+                    type: "function",
+                    name: "Child::speak",
+                    args: [],
+                    modifier: "public",
+                    isStatic: false,
+                    line: 6
+                }, {
+                    type: "class",
+                    name: "::Child::BaseChild::IChild",
+                    args: [],
+                    modifier: "public",
+                    isStatic: false,
+                    line: 9
+                }, {
+                    type: "function",
+                    name: "Child::speak",
+                    args: [],
+                    modifier: "public",
+                    isStatic: false,
+                    line: 10
+                }, {
+                    type: "class",
+                    name: "::Child::IChild::IChild2",
+                    args: [],
+                    modifier: "public",
+                    isStatic: false,
+                    line: 13
+                }, {
+                    type: "function",
+                    name: "Child::speak",
+                    args: [],
+                    modifier: "public",
+                    isStatic: false,
+                    line: 14
+                }
+            ]);
+        });
+    });
+
+    describe("PHP Lexer issues", function () {
+        it("73 - ignores 'class' when used in html", function () {
+            var test = require("text!example/php/73-html_class.php");
+            var result = Lexer.parse(test);
+            expect(result).toEqual([
+                {
+                    type: "function",
+                    name: "_flow",
+                    args: [],
+                    modifier: "public",
+                    isStatic: false,
+                    line: 1
+                }, {
+                    type: "function",
+                    name: "ProcessAction",
+                    args: ["$vars"],
+                    modifier: "public",
+                    isStatic: false,
+                    line: 6
+                }
+            ]);
+        });
+
+        it("74 - ignores 'class' when used in require", function () {
+            var test = require("text!example/php/74-require_class.php");
+            var result = Lexer.parse(test);
+            expect(result).toEqual([
+                {
+                    type: "class",
+                    name: "::LogHelper",
+                    args: [],
+                    modifier: "public",
+                    isStatic: false,
+                    line: 6
+                }, {
+                    type: "function",
+                    name: "LogHelper::LogToDB",
+                    args: ["$param1", "$param2", "$param3", "$param4"],
+                    modifier: "public",
+                    isStatic: true,
+                    line: 8
+                }
+            ]);
+        });
+
+        it("76 - detects the abstract keyword", function () {
+            var test = require("text!example/php/76-abstract.php");
+            var result = Lexer.parse(test);
+            expect(result).toEqual([
+                {
+                    type: "class",
+                    name: "::BaseAdapter",
+                    args: [],
+                    modifier: "public",
+                    isStatic: false,
+                    line: 1
+                }, {
+                    type: "function",
+                    name: "BaseAdapter::__construct",
+                    args: [],
+                    modifier: "protected",
+                    isStatic: false,
+                    line: 2
+                }, {
+                    type: "function",
+                    name: "BaseAdapter::insertAlias",
+                    args: ["$alias", "$ormizer_id", "$referenced_table"],
+                    modifier: "public",
+                    isStatic: false,
+                    line: 12
+                }, {
+                    type: "function",
+                    name: "BaseAdapter::castColumns",
+                    args: ["$columns_array"],
+                    modifier: "protected",
+                    isStatic: false,
+                    line: 14
+                }
+            ]);
+        });
     });
 });
