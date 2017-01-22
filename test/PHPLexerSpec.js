@@ -100,20 +100,28 @@ define(function (require) {
                     modifier: "public",
                     isStatic: false,
                     line: 10
-                }, {
+                }
+            ]);
+        });
+
+        xit("detects multiple interfaces", function () {
+            var test = require("text!example/php/multiple_interfaces.php");
+            var result = Lexer.parse(test);
+            expect(result).toEqual([
+                {
                     type: "class",
                     name: "::Child::IChild::IChild2",
                     args: [],
                     modifier: "public",
                     isStatic: false,
-                    line: 13
+                    line: 1
                 }, {
                     type: "function",
                     name: "Child::speak",
                     args: [],
                     modifier: "public",
                     isStatic: false,
-                    line: 14
+                    line: 2
                 }
             ]);
         });

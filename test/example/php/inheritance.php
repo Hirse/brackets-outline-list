@@ -10,7 +10,3 @@ class Child extends BaseChild {
 class Child extends BaseChild implements IChild {
     public function speak() {}
 }
-
-class Child implements IChild, IChild2 {
-    public function speak() {}
-}
