@@ -51,6 +51,10 @@ define(function (require, exports, module) {
             })
             // ignore the comments.
             .addRule(/\/\/[^\n]*/, ignored)
+            // ignore strings (double quotes).
+            .addRule(/"((?:\\.|[^"\\])*)"/, ignored)
+            // ignore strings (single quotes).
+            .addRule(/'((?:\\.|[^'\\])*)'/, ignored)
             // detect abstract modifier, but treat it apart from the visibility modifiers
             .addRule(/public|protected|private|abstract/, function (w) {
                 if (w === "abstract") {
@@ -81,7 +85,7 @@ define(function (require, exports, module) {
             // when it encounters `class` and literal mode is off.
             // 1. push "class" into state array.
             // 2. create a class structure into results array.
-            .addRule(/class /, function () {
+            .addRule(/class/, function () {
                 if (!literal && !comment && ns.length === 0) {
                     state.push("class");
                     results.push({
