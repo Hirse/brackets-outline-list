@@ -104,7 +104,7 @@ define(function (require) {
             ]);
         });
 
-        xit("detects multiple interfaces", function () {
+        it("detects multiple interfaces", function () {
             var test = require("text!example/php/multiple_interfaces.php");
             var result = Lexer.parse(test);
             expect(result).toEqual([
