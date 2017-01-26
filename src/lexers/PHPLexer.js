@@ -227,6 +227,15 @@ define(function (require, exports, module) {
                     }
                 }
             })
+            // support for classes implementing multiple interfaces
+            .addRule(/,/, function () {
+                if (!literal && !comment) {
+                    if (peek(state) === "class") {
+                        state.pop();
+                        results.pop();
+                    }
+                }
+            })
             // other terms are ignored.
             .addRule(/./, ignored);
 
