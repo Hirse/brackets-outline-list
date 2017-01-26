@@ -55,6 +55,8 @@ define(function (require, exports, module) {
             .addRule(/"((?:\\.|[^"\\])*)"/, ignored)
             // ignore strings (single quotes).
             .addRule(/'((?:\\.|[^'\\])*)'/, ignored)
+            // ignore execution operator (backticks).
+            .addRule(/`((?:\\.|[^`\\])*)`/, ignored)
             // detect abstract modifier, but treat it apart from the visibility modifiers
             .addRule(/public|protected|private|abstract/, function (w) {
                 if (w === "abstract") {
