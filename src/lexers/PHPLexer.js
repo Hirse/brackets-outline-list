@@ -23,6 +23,9 @@ define(function (require, exports, module) {
         // saves the results object of the last class that
         // extends another or implements an interface.
         var lastChildClass = null;
+        // saves the name of the last non-anonymous function found
+        // to be added to an anonymous function that is inside it.
+        var lastNamedFunction = null;
         // helper function to peek an item from an array.
         var peek = function (array) {
             if (array.length > 0) {
@@ -79,7 +82,7 @@ define(function (require, exports, module) {
                         name: ns.join("::"),
                         args: [],
                         modifier: "unnamed",
-                        isStatic: isStatic, // static functions did not appear in cursive (flag always false)
+                        isStatic: isStatic,
                         line: line
                     });
                 }
@@ -88,7 +91,7 @@ define(function (require, exports, module) {
             // 1. push "class" into state array.
             // 2. create a class structure into results array.
             .addRule(/class/, function () {
-                if (!literal && !comment && ns.length === 0) {
+                if (!literal && !comment) {
                     state.push("class");
                     results.push({
                         type: "class",
@@ -126,10 +129,10 @@ define(function (require, exports, module) {
                 if (!literal && !comment) {
                     switch (peek(state)) {
                         case "function":
-                            ns.push(w);
+                            lastNamedFunction = w;
                             ref = peek(results);
                             // if it's in name space scope.
-                            if (ns.length > 1) {
+                            if (ns.length > 0) {
                                 ref.name += "::" + w;
                             } else {
                                 ref.name = w;
@@ -142,7 +145,7 @@ define(function (require, exports, module) {
                             ref.name += "::" + w;
                             break;
                         case "inheriting":
-                            state.push("class");
+                            state.pop();
                             results.push(lastChildClass);
                             ref = peek(results);
                             ref.name += "::" + w;
@@ -160,6 +163,15 @@ define(function (require, exports, module) {
                 if (!literal && !comment) {
                     if (peek(state) === "function") {
                         var ref = peek(results);
+                        if (ref.modifier === "unnamed") {
+                            if (lastNamedFunction) {
+                                if (ns.length > 0) {
+                                    ref.name += "::"
+                                }
+                                ref.name += lastNamedFunction + "::";
+                            }
+                            ref.name += UNNAMED_PLACEHOLDER;
+                        }
                         if (!ref || ref.type !== "function") {
                             ns.push(UNNAMED_PLACEHOLDER);
                             results.push({
@@ -202,27 +214,13 @@ define(function (require, exports, module) {
                     if (s === "class") {
                         ns.pop();
                     }
-                    // support for anonymous functions within other functions
-                    if (s === "function") {
-                        var ref = peek(results);
-                        if (ref.modifier === "unnamed") {
-                            if (ns.length > 0) {
-                                ref.name += "::";
-                            }
-                            ref.name += UNNAMED_PLACEHOLDER;
-                            state.pop();
-                            ns.pop();
-                        } else {
-                            ns.pop();
-                        }
-                    }
                 }
             })
             // support for abstract methods
             .addRule(/;/, function () {
                 if (!literal && !comment) {
                     if (peek(state) === "function" && isAbstract) {
-                        ns.pop();
+                        state.pop();
                         isAbstract = false; // reset abstract flag
                     } else if (peek(state) === "class") {
                         ns.pop();
@@ -233,7 +231,7 @@ define(function (require, exports, module) {
             .addRule(/,/, function () {
                 if (!literal && !comment) {
                     if (peek(state) === "class") {
-                        state.pop();
+                        state.push("inheriting");
                         results.pop();
                     }
                 }

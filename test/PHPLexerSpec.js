@@ -125,6 +125,69 @@ define(function (require) {
                 }
             ]);
         });
+
+        it("detects anonymous functions, also within other functions", function () {
+            var test = require("text!example/php/anonymous_functions.php");
+            var result = Lexer.parse(test);
+            expect(result).toEqual([
+                {
+                    type: "function",
+                    name: "function",
+                    args: ["$val"],
+                    modifier: "unnamed",
+                    isStatic: false,
+                    line: 1
+                }, {
+                    type: "function",
+                    name: "myFunc",
+                    args: [],
+                    modifier: "public",
+                    isStatic: false,
+                    line: 5
+                },{
+                    type: "function",
+                    name: "myFunc::function",
+                    args: ["$val"],
+                    modifier: "unnamed",
+                    isStatic: false,
+                    line: 6
+                },{
+                    type: "class",
+                    name: "::MyClass",
+                    args: [],
+                    modifier: "public",
+                    isStatic: false,
+                    line: 11
+                },{
+                    type: "function",
+                    name: "MyClass::myFunc2",
+                    args: [],
+                    modifier: "public",
+                    isStatic: false,
+                    line: 12
+                },{
+                    type: "function",
+                    name: "MyClass::myFunc2::function",
+                    args: ["$val"],
+                    modifier: "unnamed",
+                    isStatic: false,
+                    line: 13
+                },{
+                    type: "function",
+                    name: "MyClass::myFunc3",
+                    args: [],
+                    modifier: "public",
+                    isStatic: false,
+                    line: 18
+                }
+            ]);
+        });
+
+        it("detects and ignore strings and execute operator", function () {
+            var test = require("text!example/php/strings.php");
+            var result = Lexer.parse(test);
+            expect(result.length).toEqual(0);
+        });
     });
 
     describe("PHP Lexer issues", function () {
