@@ -166,7 +166,7 @@ define(function (require, exports, module) {
                         if (ref.modifier === "unnamed") {
                             if (lastNamedFunction) {
                                 if (ns.length > 0) {
-                                    ref.name += "::"
+                                    ref.name += "::";
                                 }
                                 ref.name += lastNamedFunction + "::";
                             }

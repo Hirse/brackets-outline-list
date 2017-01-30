@@ -144,35 +144,35 @@ define(function (require) {
                     modifier: "public",
                     isStatic: false,
                     line: 5
-                },{
+                }, {
                     type: "function",
                     name: "myFunc::function",
                     args: ["$val"],
                     modifier: "unnamed",
                     isStatic: false,
                     line: 6
-                },{
+                }, {
                     type: "class",
                     name: "::MyClass",
                     args: [],
                     modifier: "public",
                     isStatic: false,
                     line: 11
-                },{
+                }, {
                     type: "function",
                     name: "MyClass::myFunc2",
                     args: [],
                     modifier: "public",
                     isStatic: false,
                     line: 12
-                },{
+                }, {
                     type: "function",
                     name: "MyClass::myFunc2::function",
                     args: ["$val"],
                     modifier: "unnamed",
                     isStatic: false,
                     line: 13
-                },{
+                }, {
                     type: "function",
                     name: "MyClass::myFunc3",
                     args: [],
