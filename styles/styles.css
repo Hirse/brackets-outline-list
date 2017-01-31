@@ -276,6 +276,10 @@
 
 
 /* PHP */
+.outline-entry-php.outline-entry-class {
+    color: #d14747;
+    content: "\f3a0";
+}
 .outline-entry-php.outline-entry-private:before {
     color: #229bf4;
     content: "\f200";

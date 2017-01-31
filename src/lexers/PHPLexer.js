@@ -23,9 +23,6 @@ define(function (require, exports, module) {
         // saves the results object of the last class that
         // extends another or implements an interface.
         var lastChildClass = null;
-        // saves the name of the last non-anonymous function found
-        // to be added to an anonymous function that is inside it.
-        var lastNamedFunction = null;
         // helper function to peek an item from an array.
         var peek = function (array) {
             if (array.length > 0) {
@@ -60,6 +57,8 @@ define(function (require, exports, module) {
             .addRule(/'((?:\\.|[^'\\])*)'/, ignored)
             // ignore execution operator (backticks).
             .addRule(/`((?:\\.|[^`\\])*)`/, ignored)
+            // ignore 'class' word in static::class late static binding.
+            .addRule(/static::class/, ignored)
             // detect abstract modifier, but treat it apart from the visibility modifiers
             .addRule(/public|protected|private|abstract/, function (w) {
                 if (w === "abstract") {
@@ -79,9 +78,10 @@ define(function (require, exports, module) {
                     state.push("function");
                     results.push({
                         type: "function",
-                        name: ns.join("::"),
+                        name: "",
                         args: [],
                         modifier: "unnamed",
+                        level: 0,
                         isStatic: isStatic,
                         line: line
                     });
@@ -95,9 +95,10 @@ define(function (require, exports, module) {
                     state.push("class");
                     results.push({
                         type: "class",
-                        name: ns.join("::"),
+                        name: "",
                         args: [],
                         modifier: "public",
+                        level: 0,
                         isStatic: isStatic,
                         line: line
                     });
@@ -129,26 +130,20 @@ define(function (require, exports, module) {
                 if (!literal && !comment) {
                     switch (peek(state)) {
                         case "function":
-                            lastNamedFunction = w;
+                            ns.push(w);
                             ref = peek(results);
-                            // if it's in name space scope.
-                            if (ns.length > 0) {
-                                ref.name += "::" + w;
-                            } else {
-                                ref.name = w;
-                            }
+                            ref.name = w;
+                            ref.level = ns.length - 1;
                             ref.modifier = modifier || "public";
                             break;
                         case "class":
                             ns.push(w);
                             ref = peek(results);
-                            ref.name += "::" + w;
+                            ref.name = w;
                             break;
                         case "inheriting":
                             state.pop();
                             results.push(lastChildClass);
-                            ref = peek(results);
-                            ref.name += "::" + w;
                             break;
                         default:
                             break;
@@ -164,21 +159,18 @@ define(function (require, exports, module) {
                     if (peek(state) === "function") {
                         var ref = peek(results);
                         if (ref.modifier === "unnamed") {
-                            if (lastNamedFunction) {
-                                if (ns.length > 0) {
-                                    ref.name += "::";
-                                }
-                                ref.name += lastNamedFunction + "::";
-                            }
-                            ref.name += UNNAMED_PLACEHOLDER;
+                            ns.push(UNNAMED_PLACEHOLDER);
+                            ref.name = UNNAMED_PLACEHOLDER;
+                            ref.level = ns.length - 1;
                         }
                         if (!ref || ref.type !== "function") {
                             ns.push(UNNAMED_PLACEHOLDER);
                             results.push({
                                 type: "function",
-                                name: ns.join("::"),
+                                name: "",
                                 args: [],
                                 modifier: "unnamed",
+                                level: 0,
                                 isStatic: false,
                                 line: line
                             });
@@ -211,7 +203,7 @@ define(function (require, exports, module) {
             .addRule(/}/, function () {
                 if (!literal && !comment && state.length > 0) {
                     var s = state.pop().split(":")[0];
-                    if (s === "class") {
+                    if (s === "class" || s === "function") {
                         ns.pop();
                     }
                 }
@@ -221,6 +213,7 @@ define(function (require, exports, module) {
                 if (!literal && !comment) {
                     if (peek(state) === "function" && isAbstract) {
                         state.pop();
+                        ns.pop();
                         isAbstract = false; // reset abstract flag
                     } else if (peek(state) === "class") {
                         ns.pop();
