@@ -51,6 +51,14 @@ define(function (require, exports, module) {
             })
             // ignore the comments.
             .addRule(/\/\/[^\n]*/, ignored)
+            // ignore strings (double quotes).
+            .addRule(/"((?:\\.|[^"\\])*)"/, ignored)
+            // ignore strings (single quotes).
+            .addRule(/'((?:\\.|[^'\\])*)'/, ignored)
+            // ignore execution operator (backticks).
+            .addRule(/`((?:\\.|[^`\\])*)`/, ignored)
+            // ignore 'class' word in static::class late static binding.
+            .addRule(/static::class/, ignored)
             // detect abstract modifier, but treat it apart from the visibility modifiers
             .addRule(/public|protected|private|abstract/, function (w) {
                 if (w === "abstract") {
@@ -70,10 +78,11 @@ define(function (require, exports, module) {
                     state.push("function");
                     results.push({
                         type: "function",
-                        name: ns.join("::"),
+                        name: "",
                         args: [],
                         modifier: "unnamed",
-                        isStatic: isStatic, // static functions did not appear in cursive (flag always false)
+                        level: 0,
+                        isStatic: isStatic,
                         line: line
                     });
                 }
@@ -81,14 +90,15 @@ define(function (require, exports, module) {
             // when it encounters `class` and literal mode is off.
             // 1. push "class" into state array.
             // 2. create a class structure into results array.
-            .addRule(/class /, function () {
-                if (!literal && !comment && ns.length === 0) {
+            .addRule(/class/, function () {
+                if (!literal && !comment) {
                     state.push("class");
                     results.push({
                         type: "class",
-                        name: ns.join("::"),
+                        name: "",
                         args: [],
                         modifier: "public",
+                        level: 0,
                         isStatic: isStatic,
                         line: line
                     });
@@ -122,24 +132,18 @@ define(function (require, exports, module) {
                         case "function":
                             ns.push(w);
                             ref = peek(results);
-                            // if it's in name space scope.
-                            if (ns.length > 1) {
-                                ref.name += "::" + w;
-                            } else {
-                                ref.name = w;
-                            }
+                            ref.name = w;
+                            ref.level = ns.length - 1;
                             ref.modifier = modifier || "public";
                             break;
                         case "class":
                             ns.push(w);
                             ref = peek(results);
-                            ref.name += "::" + w;
+                            ref.name = w;
                             break;
                         case "inheriting":
-                            state.push("class");
+                            state.pop();
                             results.push(lastChildClass);
-                            ref = peek(results);
-                            ref.name += "::" + w;
                             break;
                         default:
                             break;
@@ -154,13 +158,19 @@ define(function (require, exports, module) {
                 if (!literal && !comment) {
                     if (peek(state) === "function") {
                         var ref = peek(results);
+                        if (ref.modifier === "unnamed") {
+                            ns.push(UNNAMED_PLACEHOLDER);
+                            ref.name = UNNAMED_PLACEHOLDER;
+                            ref.level = ns.length - 1;
+                        }
                         if (!ref || ref.type !== "function") {
                             ns.push(UNNAMED_PLACEHOLDER);
                             results.push({
                                 type: "function",
-                                name: ns.join("::"),
+                                name: "",
                                 args: [],
                                 modifier: "unnamed",
+                                level: 0,
                                 isStatic: false,
                                 line: line
                             });
@@ -193,22 +203,8 @@ define(function (require, exports, module) {
             .addRule(/}/, function () {
                 if (!literal && !comment && state.length > 0) {
                     var s = state.pop().split(":")[0];
-                    if (s === "class") {
+                    if (s === "class" || s === "function") {
                         ns.pop();
-                    }
-                    // support for anonymous functions within other functions
-                    if (s === "function") {
-                        var ref = peek(results);
-                        if (ref.modifier === "unnamed") {
-                            if (ns.length > 0) {
-                                ref.name += "::";
-                            }
-                            ref.name += UNNAMED_PLACEHOLDER;
-                            state.pop();
-                            ns.pop();
-                        } else {
-                            ns.pop();
-                        }
                     }
                 }
             })
@@ -216,10 +212,20 @@ define(function (require, exports, module) {
             .addRule(/;/, function () {
                 if (!literal && !comment) {
                     if (peek(state) === "function" && isAbstract) {
+                        state.pop();
                         ns.pop();
                         isAbstract = false; // reset abstract flag
                     } else if (peek(state) === "class") {
                         ns.pop();
+                    }
+                }
+            })
+            // support for classes implementing multiple interfaces
+            .addRule(/,/, function () {
+                if (!literal && !comment) {
+                    if (peek(state) === "class") {
+                        state.push("inheriting");
+                        results.pop();
                     }
                 }
             })

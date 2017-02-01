@@ -12,13 +12,25 @@ define(function (require, exports, module) {
      * @param   {string}  name     List entry name.
      * @param   {string}  args     Arguments as single string.
      * @param   {string}  vis      Visibility modifier.
+     * @param   {number}  level    Indentation level.
+     * @param   {boolean} isClass  Flag if entry is class.
      * @param   {boolean} isStatic Flag if entry is static.
      * @param   {number}  line     Line number.
      * @param   {number}  ch       Character number.
      * @returns {object}  Entry object with an $html property.
      */
-    function _createListEntry(name, args, vis, isStatic, line, ch) {
+    function _createListEntry(name, args, vis, level, isClass, isStatic, line, ch) {
         var $elements = [];
+
+        var $indentation = $(document.createElement("span"));
+        $indentation.addClass("outline-entry-indent");
+        var interpunct = "";
+        for (var i = 0; i < level; i++) {
+            interpunct += "·";
+        }
+        $indentation.text(interpunct);
+        $elements.push($indentation);
+
         var $name = $(document.createElement("span"));
         $name.addClass("outline-entry-name");
         $name.text(name);
@@ -30,6 +42,9 @@ define(function (require, exports, module) {
         var classes = "outline-entry-php outline-entry-icon outline-entry-" + vis;
         if (isStatic) {
             classes += " outline-entry-static";
+        }
+        if (isClass) {
+            classes += " outline-entry-class";
         }
         return {
             name: name,
@@ -47,16 +62,21 @@ define(function (require, exports, module) {
      */
     function getOutlineList(text) {
         return Lexer.parse(text)
-            // ignore the classes definition.
-            .filter(function (it) {
-                return it.type === "function";
-            })
             // map code structure to html item.
             .map(function (it) {
+                var isClass = true;
+                // show arguments parenthesis only for functions
+                var argsToggle = "";
+                if (it.type === "function") {
+                    argsToggle = "(" + it.args.join(", ") + ")";
+                    isClass = false;
+                }
                 return _createListEntry(
                     it.name,
-                    "(" + it.args.join(", ") + ")",
+                    argsToggle,
                     it.modifier,
+                    it.level,
+                    isClass,
                     it.isStatic,
                     it.line,
                     0

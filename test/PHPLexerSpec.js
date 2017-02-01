@@ -21,15 +21,17 @@ define(function (require) {
             expect(result.length).toEqual(2);
 
             expect(result[0].line).toEqual(1);
-            expect(result[0].name).toEqual("::myClass");
+            expect(result[0].name).toEqual("myClass");
             expect(result[0].type).toEqual("class");
+            expect(result[0].level).toEqual(0);
 
             expect(result[1].args.length).toEqual(0);
             expect(result[1].isStatic).toEqual(false);
             expect(result[1].line).toEqual(2);
-            expect(result[1].name).toEqual("myClass::myFunc");
+            expect(result[1].name).toEqual("myFunc");
             expect(result[1].type).toEqual("function");
             expect(result[1].modifier).toEqual("private");
+            expect(result[1].level).toEqual(1);
         });
 
         it("detects function arguments declared on seperate lines", function () {
@@ -38,14 +40,16 @@ define(function (require) {
             expect(result.length).toEqual(2);
 
             expect(result[0].line).toEqual(1);
-            expect(result[0].name).toEqual("::myClass");
+            expect(result[0].name).toEqual("myClass");
             expect(result[0].type).toEqual("class");
+            expect(result[0].level).toEqual(0);
 
             expect(result[1].args.length).toEqual(2);
             expect(result[1].isStatic).toEqual(false);
             expect(result[1].line).toEqual(2);
-            expect(result[1].name).toEqual("myClass::myFunc");
+            expect(result[1].name).toEqual("myFunc");
             expect(result[1].type).toEqual("function");
+            expect(result[1].level).toEqual(1);
         });
 
         it("detects comments", function () {
@@ -60,70 +64,204 @@ define(function (require) {
             expect(result).toEqual([
                 {
                     type: "class",
-                    name: "::Child::IChild",
+                    name: "Child",
                     args: [],
                     modifier: "public",
+                    level: 0,
                     isStatic: false,
                     line: 1
                 }, {
                     type: "function",
-                    name: "Child::speak",
+                    name: "speak",
                     args: [],
                     modifier: "public",
+                    level: 1,
                     isStatic: false,
                     line: 2
                 }, {
                     type: "class",
-                    name: "::Child::BaseChild",
+                    name: "Child",
                     args: [],
                     modifier: "public",
+                    level: 0,
                     isStatic: false,
                     line: 5
                 }, {
                     type: "function",
-                    name: "Child::speak",
+                    name: "speak",
                     args: [],
                     modifier: "public",
+                    level: 1,
                     isStatic: false,
                     line: 6
                 }, {
                     type: "class",
-                    name: "::Child::BaseChild::IChild",
+                    name: "Child",
                     args: [],
                     modifier: "public",
+                    level: 0,
                     isStatic: false,
                     line: 9
                 }, {
                     type: "function",
-                    name: "Child::speak",
+                    name: "speak",
                     args: [],
                     modifier: "public",
+                    level: 1,
                     isStatic: false,
                     line: 10
                 }
             ]);
         });
 
-        xit("detects multiple interfaces", function () {
+        it("detects multiple interfaces", function () {
             var test = require("text!example/php/multiple_interfaces.php");
             var result = Lexer.parse(test);
             expect(result).toEqual([
                 {
                     type: "class",
-                    name: "::Child::IChild::IChild2",
+                    name: "Child",
                     args: [],
                     modifier: "public",
+                    level: 0,
                     isStatic: false,
                     line: 1
                 }, {
                     type: "function",
-                    name: "Child::speak",
+                    name: "speak",
                     args: [],
                     modifier: "public",
+                    level: 1,
                     isStatic: false,
                     line: 2
                 }
             ]);
+        });
+
+        it("detects anonymous functions, also within other functions", function () {
+            var test = require("text!example/php/anonymous_functions.php");
+            var result = Lexer.parse(test);
+            expect(result).toEqual([
+                {
+                    type: "function",
+                    name: "function",
+                    args: ["$val"],
+                    modifier: "unnamed",
+                    level: 0,
+                    isStatic: false,
+                    line: 1
+                }, {
+                    type: "function",
+                    name: "myFunc",
+                    args: [],
+                    modifier: "public",
+                    level: 0,
+                    isStatic: false,
+                    line: 5
+                }, {
+                    type: "function",
+                    name: "function",
+                    args: ["$val"],
+                    modifier: "unnamed",
+                    level: 1,
+                    isStatic: false,
+                    line: 6
+                }, {
+                    type: "class",
+                    name: "MyClass",
+                    args: [],
+                    modifier: "public",
+                    level: 0,
+                    isStatic: false,
+                    line: 11
+                }, {
+                    type: "function",
+                    name: "myFunc2",
+                    args: [],
+                    modifier: "public",
+                    level: 1,
+                    isStatic: false,
+                    line: 12
+                }, {
+                    type: "function",
+                    name: "function",
+                    args: ["$val"],
+                    modifier: "unnamed",
+                    level: 2,
+                    isStatic: false,
+                    line: 13
+                }, {
+                    type: "function",
+                    name: "myFunc3",
+                    args: [],
+                    modifier: "public",
+                    level: 1,
+                    isStatic: false,
+                    line: 18
+                }
+            ]);
+        });
+
+        it("correctly returns the indentation level", function () {
+            var test = require("text!example/php/indentation_levels.php");
+            var result = Lexer.parse(test);
+            expect(result).toEqual([
+                {
+                    type: "function",
+                    name: "a",
+                    args: [],
+                    modifier: "public",
+                    level: 0,
+                    isStatic: false,
+                    line: 1
+                }, {
+                    type: "class",
+                    name: "MyClass",
+                    args: [],
+                    modifier: "public",
+                    level: 0,
+                    isStatic: false,
+                    line: 3
+                }, {
+                    type: "function",
+                    name: "b",
+                    args: [],
+                    modifier: "public",
+                    level: 1,
+                    isStatic: false,
+                    line: 4
+                }, {
+                    type: "function",
+                    name: "c",
+                    args: [],
+                    modifier: "public",
+                    level: 2,
+                    isStatic: false,
+                    line: 5
+                }, {
+                    type: "function",
+                    name: "function",
+                    args: ["$val"],
+                    modifier: "unnamed",
+                    level: 3,
+                    isStatic: false,
+                    line: 6
+                }, {
+                    type: "function",
+                    name: "d",
+                    args: [],
+                    modifier: "public",
+                    level: 1,
+                    isStatic: false,
+                    line: 11
+                }
+            ]);
+        });
+
+        it("detects and ignore strings and execute operator", function () {
+            var test = require("text!example/php/strings.php");
+            var result = Lexer.parse(test);
+            expect(result.length).toEqual(0);
         });
     });
 
@@ -137,6 +275,7 @@ define(function (require) {
                     name: "_flow",
                     args: [],
                     modifier: "public",
+                    level: 0,
                     isStatic: false,
                     line: 1
                 }, {
@@ -144,6 +283,7 @@ define(function (require) {
                     name: "ProcessAction",
                     args: ["$vars"],
                     modifier: "public",
+                    level: 0,
                     isStatic: false,
                     line: 6
                 }
@@ -156,16 +296,18 @@ define(function (require) {
             expect(result).toEqual([
                 {
                     type: "class",
-                    name: "::LogHelper",
+                    name: "LogHelper",
                     args: [],
                     modifier: "public",
+                    level: 0,
                     isStatic: false,
                     line: 6
                 }, {
                     type: "function",
-                    name: "LogHelper::LogToDB",
+                    name: "LogToDB",
                     args: ["$param1", "$param2", "$param3", "$param4"],
                     modifier: "public",
+                    level: 1,
                     isStatic: true,
                     line: 8
                 }
@@ -178,30 +320,34 @@ define(function (require) {
             expect(result).toEqual([
                 {
                     type: "class",
-                    name: "::BaseAdapter",
+                    name: "BaseAdapter",
                     args: [],
                     modifier: "public",
+                    level: 0,
                     isStatic: false,
                     line: 1
                 }, {
                     type: "function",
-                    name: "BaseAdapter::__construct",
+                    name: "__construct",
                     args: [],
                     modifier: "protected",
+                    level: 1,
                     isStatic: false,
                     line: 2
                 }, {
                     type: "function",
-                    name: "BaseAdapter::insertAlias",
+                    name: "insertAlias",
                     args: ["$alias", "$ormizer_id", "$referenced_table"],
                     modifier: "public",
+                    level: 1,
                     isStatic: false,
                     line: 12
                 }, {
                     type: "function",
-                    name: "BaseAdapter::castColumns",
+                    name: "castColumns",
                     args: ["$columns_array"],
                     modifier: "protected",
+                    level: 1,
                     isStatic: false,
                     line: 14
                 }
