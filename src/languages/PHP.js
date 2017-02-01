@@ -12,6 +12,8 @@ define(function (require, exports, module) {
      * @param   {string}  name     List entry name.
      * @param   {string}  args     Arguments as single string.
      * @param   {string}  vis      Visibility modifier.
+     * @param   {number}  level    Indentation level.
+     * @param   {boolean} isClass  Flag if entry is class.
      * @param   {boolean} isStatic Flag if entry is static.
      * @param   {number}  line     Line number.
      * @param   {number}  ch       Character number.
