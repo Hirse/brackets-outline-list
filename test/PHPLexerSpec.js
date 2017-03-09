@@ -263,6 +263,38 @@ define(function (require) {
             var result = Lexer.parse(test);
             expect(result.length).toEqual(0);
         });
+
+        it("detects php return types", function () {
+            var test = require("text!example/php/return_types.php");
+            var result = Lexer.parse(test);
+            expect(result).toEqual([
+                {
+                    type: "function",
+                    name: "getSomeThing",
+                    args: [],
+                    modifier: "public",
+                    level: 0,
+                    isStatic: false,
+                    line: 1
+                }, {
+                    type: "class",
+                    name: "Finder",
+                    args: [],
+                    modifier: "public",
+                    level: 0,
+                    isStatic: false,
+                    line: 5
+                }, {
+                    type: "function",
+                    name: "getSomeThing",
+                    args: [],
+                    modifier: "public",
+                    level: 1,
+                    isStatic: false,
+                    line: 6
+                }
+            ]);
+        });
     });
 
     describe("PHP Lexer issues", function () {

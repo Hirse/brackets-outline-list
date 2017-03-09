@@ -276,8 +276,8 @@
 
 
 /* PHP */
-.outline-entry-php.outline-entry-class {
-    color: #d14747;
+.outline-entry-php.outline-entry-class:before {
+    color: #f4e422;
     content: "\f3a0";
 }
 .outline-entry-php.outline-entry-private:before {

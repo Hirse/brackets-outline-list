@@ -187,6 +187,8 @@ define(function (require, exports, module) {
                     }
                 }
             })
+            // ignore return types.
+            .addRule(/:\s*[0-9a-zA-Z_]+/, ignored)
             // start function/class body definition or scoped code structure.
             .addRule(/{/, function () {
                 if (!literal && !comment) {

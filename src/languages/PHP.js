@@ -39,12 +39,14 @@ define(function (require, exports, module) {
         $arguments.addClass("outline-entry-arg");
         $arguments.text(args);
         $elements.push($arguments);
-        var classes = "outline-entry-php outline-entry-icon outline-entry-" + vis;
+        var classes = "outline-entry-php outline-entry-icon";
         if (isStatic) {
             classes += " outline-entry-static";
         }
         if (isClass) {
             classes += " outline-entry-class";
+        } else {
+            classes += " outline-entry-" + vis;
         }
         return {
             name: name,

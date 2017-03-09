@@ -7,6 +7,11 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 ### Added
 - Support ES6 Classes (see [#79](https://github.com/Hirse/brackets-outline-list/issues/79))
 
+### Fixed
+- Various PHP issues, for example multipe inheritance [__@pelatx__](https://github.com/pelatx)
+- Use Class icon for PHP Class definitions
+- Don't break on PHP return types (see [#80](https://github.com/Hirse/brackets-outline-list/issues/80))
+
 
 ## 1.0.0-alpha.1 - 2017-01-22
 ### Fixed
