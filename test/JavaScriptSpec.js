@@ -153,6 +153,45 @@ define(function JavaScriptSpec(require) {
             expect(result[2].type).toEqual("public");
         });
 
+        it("detects es6 classes", function () {
+            var test = require("text!example/javascript/class.js");
+            var result = Parser.parse(test);
+
+            expect(result).toEqual([
+                {
+                    type: "class",
+                    name: "Class",
+                    args: [],
+                    level: 0,
+                    line: 1
+                }, {
+                    type: "public",
+                    name: "method",
+                    args: ["argument"],
+                    level: 1,
+                    line: 2
+                }, {
+                    type: "public",
+                    name: "field",
+                    args: [],
+                    level: 1,
+                    line: 3
+                }, {
+                    type: "public",
+                    name: "field",
+                    args: ["value"],
+                    level: 1,
+                    line: 4
+                }, {
+                    type: "class",
+                    name: "SubClass",
+                    args: ["SuperClass"],
+                    level: 0,
+                    line: 7
+                }
+            ]);
+        });
+
         it("detects comments", function () {
             var test = require("text!example/javascript/comment.js");
             var result = Parser.parse(test);

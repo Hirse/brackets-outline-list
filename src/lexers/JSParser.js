@@ -42,6 +42,15 @@ define(function (require, exports, module) {
      * @returns {object|boolean} Parsed function object, or name
      */
     function _visit(node, name, level) {
+        if (node.type === "ClassDeclaration") {
+            return {
+                name: node.id.name,
+                line: node.loc.start.line,
+                type: "class",
+                level: level,
+                args: node.superClass ? [node.superClass.name] : []
+            };
+        }
         if (node.params) {
             name = node.id ? node.id.name : name || UNNAMED_PLACEHOLDER;
             var type;
@@ -73,6 +82,8 @@ define(function (require, exports, module) {
                 }
                 return false;
             case "Property":
+                return node.key.name;
+            case "MethodDefinition":
                 return node.key.name;
             default:
                 return false;

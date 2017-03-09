@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 
+## Unreleased
+### Added
+- Support ES6 Classes (see [#79](https://github.com/Hirse/brackets-outline-list/issues/79))
+
+
 ## 1.0.0-alpha.1 - 2017-01-22
 ### Fixed
 - No distractions mode conflict (see [#64](https://github.com/Hirse/brackets-outline-list/issues/64))
