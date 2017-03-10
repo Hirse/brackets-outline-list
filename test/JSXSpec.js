@@ -1,4 +1,4 @@
-define(function JavaScriptSpec(require) {
+define(function JSXSpec(require) {
     "use strict";
 
     var Parser = require("lexers/JSParser");
