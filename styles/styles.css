@@ -404,7 +404,6 @@
 
 /* XML */
 .outline-entry-xml-namespace,
-.outline-entry-xml-id,
-.outline-entry-xml-class {
+.outline-entry-xml-attributes {
     color: #adb9bd;
 }
