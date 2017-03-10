@@ -134,7 +134,7 @@
     id-blacklist: 0 # disallow specified identifiers
     id-length: 0 # enforce minimum and maximum identifier lengths
     id-match: 0 # require identifiers to match a specified regular expression
-    indent: [2, 4, {SwitchCase: 1}] # enforce consistent indentation
+    indent: [1, 4, {SwitchCase: 1}] # enforce consistent indentation
     jsx-quotes: 0 # enforce the consistent use of either double or single quotes in JSX attributes
     key-spacing: 1 # enforce consistent spacing between keys and values in object literal properties
     keyword-spacing: 1 # enforce consistent spacing before and after keywords
