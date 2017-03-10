@@ -5,6 +5,7 @@ define(function (require, exports, module) {
     var Mustache     = brackets.getModule("thirdparty/mustache/mustache");
     var Resizer      = brackets.getModule("utils/Resizer");
 
+    var Promise      = require("thirdparty/promise");
     var Strings      = require("strings");
     var prefs        = require("src/Preferences");
     var SettingsMenu = require("src/SettingsMenu");
@@ -108,9 +109,17 @@ define(function (require, exports, module) {
     function updateOutline(text) {
         var $ul = $outline.find("ul");
         $ul.empty();
-        var list;
+        var promise;
         try {
-            list = outlineProvider.getOutlineList(text).map(function (entry, index) {
+            promise = outlineProvider.getOutlineList(text);
+            if (!(promise instanceof Promise)) {
+                promise = Promise.resolve(promise);
+            }
+        } catch (error) {
+            promise = Promise.reject(error);
+        }
+        promise.then(function (list) {
+            list = list.map(function (entry, index) {
                 var $entry = $(document.createElement("li"));
                 $entry.addClass("outline-entry " + entry.classes);
                 $entry.data("index", index);
@@ -132,14 +141,14 @@ define(function (require, exports, module) {
                 });
             }
             $ul.append(list);
-        } catch (error) {
+        }).catch(function (error) {
             if (error.message === "SyntaxError") {
                 var $li = $(document.createElement("li"));
                 $li.addClass("outline-message");
                 $li.append(Strings.MESSAGE_SYNTAX_ERROR);
                 $ul.append($li);
             }
-        }
+        });
     }
 
     /**
