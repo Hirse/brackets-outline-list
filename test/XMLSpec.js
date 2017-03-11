@@ -141,5 +141,13 @@ define(function XMLSpec(require) {
                 done();
             });
         });
+
+        it("ignores broken HTML", function (done) {
+            var test = require("text!example/html/error.html");
+            Parser.parse(test).then(function (result) {
+                expect(result).toEqual([]);
+                done();
+            });
+        });
     });
 });
