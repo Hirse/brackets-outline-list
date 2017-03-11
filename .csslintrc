@@ -1,37 +1,29 @@
-{
-    "box-model": true,
-    "display-property-grouping": true,
-    "duplicate-properties": true,
-    "empty-rules": true,
-    "known-properties": true,
+--errors=
+    box-model,
+    display-property-grouping,
+    duplicate-properties,
+    empty-rules,
+    known-properties
 
-    "adjoining-classes": false,
-    "box-sizing": false,
-    "compatible-vendor-prefixes": false,
-    "gradients": false,
-    "text-indent": true,
-    "vendor-prefix": true,
-    "fallback-colors": false,
-    "star-property-hack": true,
-    "underscore-property-hack": true,
-    "bulletproof-font-face": false,
-
-    "font-faces": true,
-    "import": true,
-    "regex-selectors": true,
-    "unqualified-attributes": true,
-    "zero-units": true,
-    "overqualified-elements": false,
-    "shorthand": true,
-    "duplicate-background-images": true,
-
-    "floats": true,
-    "font-sizes": true,
-    "ids": false,
-    "important": true,
-
-    "outline-none": false,
-
-    "qualified-headings": true,
-    "unique-headings": true
-}
+--warnings=
+    compatible-vendor-prefixes,
+    gradients,
+    text-indent,
+    vendor-prefix,
+    star-property-hack,
+    underscore-property-hack,
+    bulletproof-font-face,
+    font-faces,
+    import,
+    regex-selectors,
+    universal-selector,
+    unqualified-attributes,
+    zero-units,
+    overqualified-elements,
+    shorthand,
+    duplicate-background-images,
+    floats,
+    font-sizes,
+    important,
+    order-alphabetical,
+    outline-none

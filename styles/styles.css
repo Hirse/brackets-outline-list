@@ -56,11 +56,19 @@
     box-sizing: content-box;
     font-size: 12px;
     height: 13px;
-    outline: none;
     padding: 4px 6px;
     position: absolute;
     top: 7px;
     width: 13px;
+}
+
+.outline-button:focus {
+    box-shadow: 0 0 0 1px #94ceff;
+    outline: none;
+}
+
+.outline-button:active {
+    box-shadow: none;
 }
 
 #outline-settings {
