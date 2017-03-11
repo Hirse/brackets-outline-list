@@ -36,9 +36,6 @@ define(function (require, exports, module) {
      * @returns {objct[]}  The code structure
      */
     function _traverse(dom, source, level) {
-        if (!Array.isArray(dom)) {
-            return [];
-        }
         return dom.reduce(function (result, entry) {
             if (entry.type === "tag") {
                 // Skip eRuby tags
