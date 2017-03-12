@@ -1,13 +1,13 @@
+.github/
 coverage/
 images/
 test/
 .csslintrc
 .eslintignore
+.eslintrc.yml
 .gitignore
 .htmlhintrc
-.brackets.json
-.eslintrc.yml
 .travis.yml
 Gruntfile.js
+hirse.outline-list.zip
 karma.conf.js
-*.zip
