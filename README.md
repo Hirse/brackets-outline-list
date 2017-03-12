@@ -3,14 +3,16 @@
 [![Code Climate](https://codeclimate.com/github/Hirse/brackets-outline-list/badges/gpa.svg)](https://codeclimate.com/github/Hirse/brackets-outline-list)
 [![Test Coverage](https://codeclimate.com/github/Hirse/brackets-outline-list/badges/coverage.svg)](https://codeclimate.com/github/Hirse/brackets-outline-list/coverage)
 
+<a href="http://brackets.io/"><img src="https://raw.githubusercontent.com/Hirse/brackets-outline-list/master/images/brackets.png" alt="Brackets" align="left" /></a>
+
 # Brackets Outline List
 [Brackets][Brackets] Extension to display a list of the functions or definitions in the currently opened document. Settings for parameters and anonymous functions. See [features](#features) for a list of supported languages.
 
 ## Screenshots
-![JavaScript Outline](https://raw.githubusercontent.com/Hirse/brackets-outline-list/master/screenshots/outline.png)  
+![JavaScript Outline](https://raw.githubusercontent.com/Hirse/brackets-outline-list/master/images/outline.png)  
 *Outline for JavaScript*
 
-![CSS Outline](https://raw.githubusercontent.com/Hirse/brackets-outline-list/master/screenshots/outline-sidebar.png)  
+![CSS Outline](https://raw.githubusercontent.com/Hirse/brackets-outline-list/master/images/outline-sidebar.png)  
 *Outline for CSS, HTML and Markdown in the Sidebar*
 
 ## Features
@@ -23,19 +25,19 @@
 * Toggle function arguments
 
 ### Language features:
-|                                    | Parsing | Sorting            | Indentation        | Arguments          | Unnamed            |
-|------------------------------------|---------|:------------------:|:------------------:|:------------------:|:------------------:|
-| CSS, SCSS, LESS                    | RegExp  | :heavy_check_mark: | :x:                | :x:                | :x:                |
-| CoffeeScript                       | RegExp  | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
-| Haxe                               | RegExp  | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
-| Jade                               | RegExp  | :x:                | :x:                | :x:                | :x:                |
-| JavaScript, JSX                    | Espree  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
-| Markdown, GitHub-Flavored-Markdown | RegExp  | :heavy_check_mark: | :x:                | :x:                | :x:                |
-| PHP                                | Lexer   | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
-| Python                             | RegExp  | :heavy_check_mark: | :x:                | :heavy_check_mark: | :x:                |
-| Ruby                               | RegExp  | :heavy_check_mark: | :x:                | :heavy_check_mark: | :x:                |
-| Stylus                             | RegExp  | :x:                | :x:                | :x:                | :x:                |
-| XML, HTML, SVG                     | RegExp  | :x:                | :heavy_check_mark: | :x:                | :x:                |
+|                                    | Parsing      | Sorting            | Indentation        | Arguments          | Unnamed            |
+|------------------------------------|--------------|:------------------:|:------------------:|:------------------:|:------------------:|
+| CSS, SCSS, LESS                    | PostCSS      | :heavy_check_mark: | :heavy_check_mark: | :no_entry_sign:    | :no_entry_sign:    |
+| CoffeeScript                       | RegExp       | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
+| Haxe                               | RegExp       | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
+| Pug (Jade)                         | RegExp       | :x:                | :x:                | :x:                | :x:                |
+| JavaScript, JSX                    | Espree       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Markdown, GitHub-Flavored-Markdown | RegExp       | :heavy_check_mark: | :no_entry_sign:    | :x:                | :x:                |
+| PHP                                | Lexer        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Python                             | RegExp       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x:                |
+| Ruby                               | RegExp       | :heavy_check_mark: | :x:                | :heavy_check_mark: | :x:                |
+| Stylus                             | RegExp       | :x:                | :x:                | :no_entry_sign:    | :no_entry_sign:    |
+| XML, HTML, SVG                     | htmlparser2  | :no_entry_sign:    | :heavy_check_mark: | :heavy_check_mark: | :no_entry_sign:    |
 
 ## Installation
 ### Latest Release
@@ -54,6 +56,8 @@ Used thirdparty software:
 * [Ionicons][Ionicons] is licensed under the [MIT license][MIT]
 * [Lexer][Lexer] is licensed under the [MIT license][MIT]
 * [Espree][Espree] is licensed under the [BSD 2-Clause License][BSD-2-Clause]
+* [PostCSS Safe Parser][PostCSS] is licensed under the [MIT license][MIT]
+* [htmlparser2][htmlparser2] is licensed under the [MIT license][MIT]
 
 
 [Brackets]: http://brackets.io
@@ -64,6 +68,8 @@ Used thirdparty software:
 [Ionicons]: http://ionicons.com
 [Lexer]: https://github.com/aaditmshah/lexer
 [Espree]: https://github.com/eslint/espree
+[PostCSS]: https://github.com/postcss/postcss-safe-parser
+[htmlparser2]: https://github.com/fb55/htmlparser2
 
 [MIT]: http://opensource.org/licenses/MIT
 [BSD-2-Clause]: https://opensource.org/licenses/BSD-2-Clause
