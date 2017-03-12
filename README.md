@@ -30,9 +30,9 @@
 | CSS, SCSS, LESS                    | PostCSS      | :heavy_check_mark: | :heavy_check_mark: | :no_entry_sign:    | :no_entry_sign:    |
 | CoffeeScript                       | RegExp       | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
 | Haxe                               | RegExp       | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
-| Pug (Jade)                         | RegExp       | :x:                | :x:                | :x:                | :x:                |
+| Pug (Jade)                         | RegExp       | :no_entry_sign:    | :x:                | :x:                | :no_entry_sign:    |
 | JavaScript, JSX                    | Espree       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
-| Markdown, GitHub-Flavored-Markdown | RegExp       | :heavy_check_mark: | :no_entry_sign:    | :x:                | :x:                |
+| Markdown, GitHub-Flavored-Markdown | RegExp       | :heavy_check_mark: | :no_entry_sign:    | :no_entry_sign:    | :no_entry_sign:    |
 | PHP                                | Lexer        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | Python                             | RegExp       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x:                |
 | Ruby                               | RegExp       | :heavy_check_mark: | :x:                | :heavy_check_mark: | :x:                |
