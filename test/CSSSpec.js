@@ -104,6 +104,26 @@ define(function CSSSpec(require) {
             ]);
         });
 
+        it("detects comma separated rules in CSS", function () {
+            var test = require("text!example/css/comma.css");
+            var result = Parser.parse(test);
+            expect(result).toEqual([
+                {
+                    type: "tag",
+                    name: "a, b",
+                    level: 0,
+                    line: 0,
+                    ch: 0
+                }, {
+                    type: "tag",
+                    name: "a, b",
+                    level: 0,
+                    line: 1,
+                    ch: 0
+                }
+            ]);
+        });
+
         it("detects rules with parent selectors in SCSS", function () {
             var test = require("text!example/css/parent.scss");
             var result = Parser.parse(test);

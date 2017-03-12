@@ -20,6 +20,15 @@ define(function (require, exports, module) {
     }
 
     /**
+     * Replace whitespace with a single space.
+     * @param   {string} string String potentially containing multiple whitespace.
+     * @returns {string} Normalized string.
+     */
+    function _normalize(string) {
+        return string.replace(/\s+/g, " ");
+    }
+
+    /**
      * Visit a node in the CSS AST and its children recursively.
      * Add the parsed entries to the given result array.
      * @private
@@ -30,7 +39,7 @@ define(function (require, exports, module) {
     function _visit(result, node, level) {
         if (node.type === "rule") {
             result.push({
-                name: node.selector,
+                name: _normalize(node.selector),
                 type: _getType(node.selector),
                 level: level,
                 line: node.source.start.line - 1,
@@ -38,7 +47,7 @@ define(function (require, exports, module) {
             });
         } else if (node.type === "atrule") {
             result.push({
-                name: "@" + node.name + " " + node.params,
+                name: _normalize("@" + node.name + " " + node.params),
                 type: "at-rule",
                 level: level,
                 line: node.source.start.line - 1,
