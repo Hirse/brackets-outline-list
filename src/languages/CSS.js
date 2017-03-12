@@ -1,42 +1,35 @@
 define(function (require, exports, module) {
     "use strict";
 
-    /**
-     * Get the type class based on the entry name.
-     * @private
-     * @param   {string} name List entry name.
-     * @returns {string} CSS type class.
-     */
-    function _getTypeClass(name) {
-        var classes = {
-            "#": "id",
-            ".": "class",
-            "@": "at-rules",
-            "[": "attribute"
-        };
-        return " outline-entry-css-" + (classes[name[0]] || "tag");
-    }
+    var Parser = require("src/lexers/CSSParser");
 
     /**
-     * Create the HTML list entry.
+     * Create the CSS list entry.
      * @private
-     * @param   {string} name List entry name.
-     * @param   {number} line Line number.
-     * @param   {number} ch   Character number
+     * @param   {string} name  List entry name.
+     * @param   {string} type  List entry type.
+     * @param   {number} level List entry level.
      * @returns {object} Entry object with an $html property.
      */
-    function _createListEntry(name, line, ch) {
+    function _createListEntry(name, type, level) {
         var $elements = [];
+        if (level) {
+            var $indentation = $(document.createElement("span"));
+            $indentation.addClass("outline-entry-indent");
+            var interpunct = "";
+            for (var i = 0; i < level; i++) {
+                interpunct += "·";
+            }
+            $indentation.text(interpunct);
+            $elements.push($indentation);
+        }
         var $name = $(document.createElement("span"));
-        var typeClass = _getTypeClass(name);
         $name.addClass("outline-entry-name");
         $name.text(name);
         $elements.push($name);
         return {
             name: name,
-            line: line,
-            ch: ch,
-            classes: "outline-entry-css outline-entry-icon" + typeClass,
+            classes: "outline-entry-css outline-entry-icon outline-entry-css-" + type,
             $html: $elements
         };
     }
@@ -47,21 +40,12 @@ define(function (require, exports, module) {
      * @returns {object[]} List of outline entries.
      */
     function getOutlineList(text) {
-        var lines = text.replace(/(\n*)\{/g, "{$1").split("\n");
-        var regex = /([^\r\n,{}]+)((?=[^}]*\{)|\s*\{)/g;
-        var result = [];
-        lines.forEach(function (line, index) {
-            if (line.length > 1000) {
-                return;
-            }
-            var match = regex.exec(line);
-            while (match !== null) {
-                var name = match[1].trim();
-                result.push(_createListEntry(name, index, line.length));
-                match = regex.exec(line);
-            }
+        return Parser.parse(text).map(function (result) {
+            var entry = _createListEntry(result.name, result.type, result.level);
+            entry.line = result.line;
+            entry.ch = result.ch;
+            return entry;
         });
-        return result;
     }
 
     /**

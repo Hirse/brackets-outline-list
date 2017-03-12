@@ -144,6 +144,7 @@
     display: none;
 }
 
+
 /* ==== Language Specific Entries ==== */
 
 
@@ -152,6 +153,7 @@
     color: #f4e422;
     content: "\f3a0";
 }
+
 .outline-entry-js.outline-entry-private:before {
     color: #229bf4;
     content: "\f200";
@@ -245,7 +247,7 @@
     content: "\f20b";
 }
 
-.outline-entry-css-at-rules:before {
+.outline-entry-css-at-rule:before {
     color: #f4229b;
     content: "\f10f";
 }
@@ -253,6 +255,12 @@
 .outline-entry-css-attribute:before {
     color: #f4e422;
     content: "\f2aa";
+}
+
+.outline-entry-css-parent:before {
+    color: #8164cc;
+    content: "&";
+    font-family: sans-serif;
 }
 
 
@@ -288,6 +296,7 @@
     color: #f4e422;
     content: "\f3a0";
 }
+
 .outline-entry-php.outline-entry-private:before {
     color: #229bf4;
     content: "\f200";
