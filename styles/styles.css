@@ -125,7 +125,7 @@
 
 .outline-entry-indent {
     color: #adb9bd;
-    font-family: Ionicons;
+    font-family: monospace;
 }
 
 .outline-entry-arg {
