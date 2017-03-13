@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 
+## Unreleased
+### Fixed
+- Use correct name (or none) for callback functions (see [#81](https://github.com/Hirse/brackets-outline-list/issues/81))
+
+
 ## 1.0.0 - 2017-03-12
 ### Added
 - Support ES6 Classes (see [#79](https://github.com/Hirse/brackets-outline-list/issues/79))

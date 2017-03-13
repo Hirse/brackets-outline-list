@@ -194,6 +194,26 @@ define(function JavaScriptSpec(require) {
             ]);
         });
 
+        it("detects callback functions", function () {
+            var test = require("text!example/javascript/callback.js");
+            var result = Parser.parse(test);
+            expect(result).toEqual([
+                {
+                    type: "unnamed",
+                    name: "function",
+                    args: [],
+                    level: 0,
+                    line: 1
+                }, {
+                    type: "unnamed",
+                    name: "function",
+                    args: [],
+                    level: 0,
+                    line: 2
+                }
+            ]);
+        });
+
         it("detects comments", function () {
             var test = require("text!example/javascript/comment.js");
             var result = Parser.parse(test);

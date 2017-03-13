@@ -119,7 +119,7 @@ define(function (require, exports, module) {
 
                 if (Array.isArray(child)) {
                     for (var i = 0; i < child.length; i++) {
-                        list = _traverse(child[i], list, name, level);
+                        list = _traverse(child[i], list, "", level);
                     }
                 } else {
                     list = _traverse(child, list, name, level);
