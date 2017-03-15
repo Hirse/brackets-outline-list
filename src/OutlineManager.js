@@ -78,14 +78,6 @@ define(function (require, exports, module) {
     // AutoHide
     var $editorHolder = $("#editor-holder");
 
-    prefs.onChange("autohide", function () {
-        if (prefs.get("autohide")) {
-            $editorHolder.on("click", autohide);
-        } else {
-            $editorHolder.off("click", autohide);
-        }
-    });
-
     /**
      * Handler for autohide Outline List
      */
@@ -94,6 +86,14 @@ define(function (require, exports, module) {
             prefs.togglePref("enabled");
         }
     }
+
+    prefs.onChange("autohide", function () {
+        if (prefs.get("autohide")) {
+            $editorHolder.on("click", autohide);
+        } else {
+            $editorHolder.off("click", autohide);
+        }
+    });
 
     /**
      * Handler for a horizontal resize of the outline list.
