@@ -1,0 +1,15 @@
+define({
+    HEADER_TITLE: "الأوت لاين",
+
+    TOOLBAR_ICON_TOOLTIP: "علامة تبويب",
+
+    BUTTON_SETTINGS: "الخصائص",
+    BUTTON_MOVE: "تغيير الوضعية",
+    BUTTON_CLOSE: "إغلاق",
+
+    COMMAND_SORT: "قائمة قصيرة",
+    COMMAND_UNNAMED: "إظهارالوظائف",
+    COMMAND_ARGS: "إظهار الخصائص"
+});
+
+/* Last translated for 41a691e45e34f3ebde20bc5e3fdca8014871490d */
