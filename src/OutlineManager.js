@@ -75,25 +75,38 @@ define(function (require, exports, module) {
         }
     });
 
-    // AutoHide
-    var $editorHolder = $("#editor-holder");
-
     /**
-     * Handler for autohide Outline List
+     * Enable/disable the Outline auto-hide.
+     * @param {boolean} enable True to enable, false to disable.
      */
-    function autohide() {
-        if (prefs.get("enabled")) {
-            prefs.togglePref("enabled");
+    function enableAutohide(enable) {
+        enable = (enable === undefined) ? true : enable;
+
+        var $content = $(".content");
+        var $unhideArea;
+
+        if (position === POSITION_SIDEBAR) {
+            $unhideArea = $("#sidebar");
+        } else {
+            $unhideArea = $("#main-toolbar");
+        }
+
+        if (enable) {
+            $content.on("mouseenter", function () {
+                if (prefs.get("enabled")) {
+                    hideOutline();
+                }
+            });
+            $unhideArea.on("mouseenter", function () {
+                if (prefs.get("enabled")) {
+                    showOutline();
+                }
+            });
+        } else {
+            $content.off("mouseenter");
+            $unhideArea.off("mouseenter");
         }
     }
-
-    prefs.onChange("autohide", function () {
-        if (prefs.get("autohide")) {
-            $editorHolder.on("click", autohide);
-        } else {
-            $editorHolder.off("click", autohide);
-        }
-    });
 
     /**
      * Handler for a horizontal resize of the outline list.
@@ -241,6 +254,7 @@ define(function (require, exports, module) {
         updateOutline: updateOutline,
         showOutline: showOutline,
         hideOutline: hideOutline,
+        enableAutohide: enableAutohide,
         POSITION_SIDEBAR: POSITION_SIDEBAR,
         POSITION_TOOLBAR: POSITION_TOOLBAR
     };

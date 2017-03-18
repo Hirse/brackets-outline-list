@@ -68,12 +68,12 @@ define(function (require, exports, module) {
         }, {
             id: "autohide",
             type: "boolean",
-            value: true,
+            value: false,
             options: {
                 name: Strings.PREF_AUTOHIDE_NAME,
                 description: Strings.PREF_AUTOHIDE_DESC
             },
-            inContextMenu: true
+            inContextMenu: false
         }
     ];
 
