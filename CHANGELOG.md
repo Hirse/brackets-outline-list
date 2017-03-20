@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 
+## Unreleased
+### Added
+- Arabic translation, thanks to [__@sadik-fattah__](https://github.com/sadik-fattah)
+
+
 ## 1.0.1 - 2017-03-13
 ### Fixed
 - Use correct name (or none) for callback functions (see [#81](https://github.com/Hirse/brackets-outline-list/issues/81))
