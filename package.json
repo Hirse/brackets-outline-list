@@ -39,8 +39,8 @@
   ],
   "package-i18n": {
     "ar":{
-		 "description": " CSS, CoffeeScript, HTML, Haxe, Jade, JavaScript, JSX, LESS, Markdown, PHP, Python, Ruby, SCSS, SVG, Stylus, and XML.يعرض قائم  بالوظائف أو التعريفات في الوثيقة المفتوحة حاليا ، يعمل مع لغة"
-	  }
+      "description": " CSS, CoffeeScript, HTML, Haxe, Jade, JavaScript, JSX, LESS, Markdown, PHP, Python, Ruby, SCSS, SVG, Stylus, and XML.يعرض قائم  بالوظائف أو التعريفات في الوثيقة المفتوحة حاليا ، يعمل مع لغة"
+    },
     "de": {
       "description": "Zeigt eine Liste der Funktionen oder Definitionen im geöffneten Dokument. Unterstützt CSS, CoffeeScript, HTML, Haxe, Jade, JavaScript, JSX, LESS, Markdown, PHP, Python, Ruby, SCSS, SVG, Stylus, und XML."
     },
