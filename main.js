@@ -140,7 +140,12 @@ define(function (require, exports, module) {
     function handleAutohideChange() {
         if (prefs.get("autohide")) {
             OutlineManager.enableAutohide();
-            if (prefs.get("enabled")) OutlineManager.hideOutline();
+            if (prefs.get("enabled")) {
+                OutlineManager.hideOutline();
+                if (!prefs.get("sidebar")) {
+                    OutlineManager.showPlaceHolder();
+                }
+            }
         } else {
             OutlineManager.enableAutohide(false);
             if (prefs.get("enabled")) OutlineManager.showOutline();
