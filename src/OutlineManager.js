@@ -76,75 +76,6 @@ define(function (require, exports, module) {
     });
 
     /**
-     * Show the Auto-hide place holder and enable its listener for mouse enter.
-     */
-    function showPlaceHolder() {
-        $(".main-view").append('<div id="outline-placeholder"></div>');
-        var $placeHolder = $("#outline-placeholder");
-        var toolbarPx = $("#main-toolbar:visible").width() || 0;
-        $placeHolder.css("width", "20px");
-        $placeHolder.css("right", toolbarPx + "px");
-        $(".content").css("right", $placeHolder.width() + toolbarPx + "px");
-
-        $placeHolder.on("mouseenter", function () {
-            if (prefs.get("enabled")) {
-                 showOutline();
-            }
-        });
-    }
-
-    /**
-     * Hide the Auto-hide place holder and disable its listener.
-     */
-    function hidePlaceHolder() {
-        var $placeHolder = $("#outline-placeholder");
-        if ($placeHolder.length > 0) {
-            var toolbarPx = $("#main-toolbar:visible").width() || 0;
-            $placeHolder.off("mouseenter");
-            $placeHolder.remove();
-            $(".content").css("right", toolbarPx + "px");
-        }
-    }
-
-    /**
-     * Enable/disable the Outline Auto-hide.
-     * @param {boolean} enable True to enable, false to disable.
-     */
-    function enableAutohide(enable) {
-        enable = (enable === undefined) ? true : enable;
-        var $content = $(".content");
-
-        if (enable) {
-            if (position === POSITION_SIDEBAR) {
-                $("#sidebar").on("mouseenter", function () {
-                    if (prefs.get("enabled")) {
-                        showOutline();
-                    }
-                });
-            } else {
-                if (prefs.get("enable")) {
-                    showPlaceHolder();
-                }
-            }
-            $content.on("mouseenter", function () {
-                if (prefs.get("enabled")) {
-                    hideOutline();
-                    if (position === POSITION_TOOLBAR) {
-                        showPlaceHolder();
-                    }
-                }
-            });
-        } else {
-            $content.off("mouseenter");
-            if (position === POSITION_SIDEBAR) {
-                $("#sidebar").off("mouseenter");
-            } else {
-                hidePlaceHolder();
-            }
-        }
-    }
-
-    /**
      * Handler for a horizontal resize of the outline list.
      */
     function resize() {
@@ -280,6 +211,75 @@ define(function (require, exports, module) {
             showOutline();
         } else {
             position = newPosition;
+        }
+    }
+
+    /**
+     * Show the Auto-hide place holder and enable its listener for mouse enter.
+     */
+    function showPlaceHolder() {
+        $(".main-view").append('<div id="outline-placeholder"></div>');
+        var $placeHolder = $("#outline-placeholder");
+        var toolbarPx = $("#main-toolbar:visible").width() || 0;
+        $placeHolder.css("width", "20px");
+        $placeHolder.css("right", toolbarPx + "px");
+        $(".content").css("right", $placeHolder.width() + toolbarPx + "px");
+
+        $placeHolder.on("mouseenter", function () {
+            if (prefs.get("enabled")) {
+                 showOutline();
+            }
+        });
+    }
+
+    /**
+     * Hide the Auto-hide place holder and disable its listener.
+     */
+    function hidePlaceHolder() {
+        var $placeHolder = $("#outline-placeholder");
+        if ($placeHolder.length > 0) {
+            var toolbarPx = $("#main-toolbar:visible").width() || 0;
+            $placeHolder.off("mouseenter");
+            $placeHolder.remove();
+            $(".content").css("right", toolbarPx + "px");
+        }
+    }
+
+    /**
+     * Enable/disable the Outline Auto-hide.
+     * @param {boolean} enable True to enable, false to disable.
+     */
+    function enableAutohide(enable) {
+        enable = (enable === undefined) ? true : enable;
+        var $content = $(".content");
+
+        if (enable) {
+            if (position === POSITION_SIDEBAR) {
+                $("#sidebar").on("mouseenter", function () {
+                    if (prefs.get("enabled")) {
+                        showOutline();
+                    }
+                });
+            } else {
+                if (prefs.get("enable")) {
+                    showPlaceHolder();
+                }
+            }
+            $content.on("mouseenter", function () {
+                if (prefs.get("enabled")) {
+                    hideOutline();
+                    if (position === POSITION_TOOLBAR) {
+                        showPlaceHolder();
+                    }
+                }
+            });
+        } else {
+            $content.off("mouseenter");
+            if (position === POSITION_SIDEBAR) {
+                $("#sidebar").off("mouseenter");
+            } else {
+                hidePlaceHolder();
+            }
         }
     }
 
