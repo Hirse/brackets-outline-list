@@ -82,6 +82,7 @@ define(function (require, exports, module) {
         $(".main-view").append('<div id="outline-placeholder"></div>');
         var $placeHolder = $("#outline-placeholder");
         var toolbarPx = $("#main-toolbar:visible").width() || 0;
+        $placeHolder.css("width", "20px");
         $placeHolder.css("right", toolbarPx + "px");
         $(".content").css("right", $placeHolder.width() + toolbarPx + "px");
 
