@@ -94,7 +94,9 @@ define(function (require, exports, module) {
                 OutlineManager.setOutlineProvider(languageMapping[document.getLanguage().getName()]);
                 OutlineManager.updateOutline(document.getText());
                 OutlineManager.showOutline();
-                if (prefs.get("autohide")) OutlineManager.enableAutohide();
+                if (prefs.get("autohide")) {
+                    OutlineManager.enableAutohide();
+                }
             }
         } else {
             EditorManager.off("activeEditorChange.outline-list", handleEditorChange);
@@ -186,5 +188,4 @@ define(function (require, exports, module) {
     menu.addMenuItem(COMMAND_AUTOHIDE);
 
     CommandManager.get(COMMAND_AUTOHIDE).setChecked(prefs.get("autohide"));
-
 });

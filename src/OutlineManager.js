@@ -250,7 +250,9 @@ define(function (require, exports, module) {
      * @param {boolean} enable True to enable, false to disable.
      */
     function enableAutohide(enable) {
-        enable = enable === undefined ? true : enable;
+        if (enable === undefined) {
+            enable = true;
+        }
         var $content = $(".content");
 
         if (enable) {
