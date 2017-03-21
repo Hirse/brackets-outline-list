@@ -8,8 +8,6 @@ define(function (require, exports, module) {
     var ExtensionUtils     = brackets.getModule("utils/ExtensionUtils");
     var CommandManager     = brackets.getModule("command/CommandManager");
     var Menus              = brackets.getModule("command/Menus");
-    var Commands           = brackets.getModule("command/Commands");
-    var AppInit            = brackets.getModule("utils/AppInit");
 
     var prefs              = require("src/Preferences");
     var OutlineManager     = require("src/OutlineManager");
@@ -102,7 +100,9 @@ define(function (require, exports, module) {
             EditorManager.off("activeEditorChange.outline-list", handleEditorChange);
             DocumentManager.off("documentSaved.outline-list", handleDocumentSave);
             OutlineManager.hideOutline();
-            if (prefs.get("autohide")) OutlineManager.enableAutohide(false);
+            if (prefs.get("autohide")) {
+                OutlineManager.enableAutohide(false);
+            }
         }
     }
 
@@ -110,13 +110,17 @@ define(function (require, exports, module) {
      * Change the position of the outline.
      */
     function handleSidebarChange() {
-        if (prefs.get("autohide")) OutlineManager.enableAutohide(false);
+        if (prefs.get("autohide")) {
+            OutlineManager.enableAutohide(false);
+        }
         if (prefs.get("sidebar")) {
             OutlineManager.setPosition(OutlineManager.POSITION_SIDEBAR);
         } else {
             OutlineManager.setPosition(OutlineManager.POSITION_TOOLBAR);
         }
-        if (prefs.get("autohide")) OutlineManager.enableAutohide();
+        if (prefs.get("autohide")) {
+            OutlineManager.enableAutohide();
+        }
     }
 
     /**
@@ -148,7 +152,9 @@ define(function (require, exports, module) {
             }
         } else {
             OutlineManager.enableAutohide(false);
-            if (prefs.get("enabled")) OutlineManager.showOutline();
+            if (prefs.get("enabled")) {
+                OutlineManager.showOutline();
+            }
         }
     }
 
@@ -166,7 +172,7 @@ define(function (require, exports, module) {
     // Update the position if the no-distractions/pure-code mode is turned on
     PreferencesManager.on("change", "noDistractions", function () {
         if (!prefs.get("sidebar")) {
-                OutlineManager.setPosition(OutlineManager.POSITION_TOOLBAR);
+            OutlineManager.setPosition(OutlineManager.POSITION_TOOLBAR);
         }
     });
 

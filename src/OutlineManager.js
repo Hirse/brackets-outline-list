@@ -218,7 +218,7 @@ define(function (require, exports, module) {
      * Show the Auto-hide place holder and enable its listener for mouse enter.
      */
     function showPlaceHolder() {
-        $(".main-view").append('<div id="outline-placeholder"></div>');
+        $(".main-view").append("<div id=\"outline-placeholder\"></div>");
         var $placeHolder = $("#outline-placeholder");
         var toolbarPx = $("#main-toolbar:visible").width() || 0;
         $placeHolder.css("width", "20px");
@@ -227,7 +227,7 @@ define(function (require, exports, module) {
 
         $placeHolder.on("mouseenter", function () {
             if (prefs.get("enabled")) {
-                 showOutline();
+                showOutline();
             }
         });
     }
@@ -250,7 +250,7 @@ define(function (require, exports, module) {
      * @param {boolean} enable True to enable, false to disable.
      */
     function enableAutohide(enable) {
-        enable = (enable === undefined) ? true : enable;
+        enable = enable === undefined ? true : enable;
         var $content = $(".content");
 
         if (enable) {
