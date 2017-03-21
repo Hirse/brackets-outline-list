@@ -260,10 +260,6 @@ define(function (require, exports, module) {
                         showOutline();
                     }
                 });
-            } else {
-                if (prefs.get("enable")) {
-                    showPlaceHolder();
-                }
             }
             $content.on("mouseenter", function () {
                 if (prefs.get("enabled")) {
