@@ -226,9 +226,7 @@ define(function (require, exports, module) {
         $(".content").css("right", $placeHolder.width() + toolbarPx + "px");
 
         $placeHolder.on("mouseenter", function () {
-            if (prefs.get("enabled")) {
-                showOutline();
-            }
+            showOutline();
         });
     }
 
@@ -258,17 +256,13 @@ define(function (require, exports, module) {
         if (enable) {
             if (position === POSITION_SIDEBAR) {
                 $("#sidebar").on("mouseenter", function () {
-                    if (prefs.get("enabled")) {
-                        showOutline();
-                    }
+                    showOutline();
                 });
             }
             $content.on("mouseenter", function () {
-                if (prefs.get("enabled")) {
-                    hideOutline();
-                    if (position === POSITION_TOOLBAR) {
-                        showPlaceHolder();
-                    }
+                hideOutline();
+                if (position === POSITION_TOOLBAR) {
+                    showPlaceHolder();
                 }
             });
         } else {
