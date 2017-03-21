@@ -28,5 +28,7 @@ define({
     PREF_INDENT_NAME: "Outline - Indent",
     PREF_INDENT_DESC: "True to indent the entries in the Outline List",
     PREF_AUTOHIDE_NAME: "Outline - AutoHide",
-    PREF_AUTOHIDE_DESC: "True to enable autohide of the Outline List"
+    PREF_AUTOHIDE_DESC: "True to enable autohide of the Outline List",
+
+    MENU_ITEM_AUTOHIDE: "Outline List AutoHide"
 });

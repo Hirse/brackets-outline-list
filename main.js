@@ -12,6 +12,7 @@ define(function (require, exports, module) {
     var prefs              = require("src/Preferences");
     var OutlineManager     = require("src/OutlineManager");
     var ToolbarButton      = require("src/ToolbarButton");
+    var Strings            = require("strings");
     /* eslint-enable no-multi-spaces *//* beautify preserve:end */
 
     ExtensionUtils.loadStyleSheet(module, "styles/styles.css");
@@ -41,7 +42,7 @@ define(function (require, exports, module) {
 
     /* beautify preserve:start *//* eslint-disable no-multi-spaces */
     var COMMAND_AUTOHIDE   = "outline.autohide";
-    var MENU_ITEM_AUTOHIDE = "Outline List Autohide";
+    var MENU_ITEM_AUTOHIDE = Strings.MENU_ITEM_AUTOHIDE;
     /* eslint-enable no-multi-spaces *//* beautify preserve:end */
 
     /**
@@ -95,7 +96,7 @@ define(function (require, exports, module) {
                 OutlineManager.updateOutline(document.getText());
                 OutlineManager.showOutline();
                 if (prefs.get("autohide")) {
-                    OutlineManager.enableAutohide();
+                    OutlineManager.toggleAutohide();
                 }
             }
         } else {
@@ -103,7 +104,7 @@ define(function (require, exports, module) {
             DocumentManager.off("documentSaved.outline-list", handleDocumentSave);
             OutlineManager.hideOutline();
             if (prefs.get("autohide")) {
-                OutlineManager.enableAutohide(false);
+                OutlineManager.toggleAutohide(false);
             }
         }
     }
@@ -113,7 +114,7 @@ define(function (require, exports, module) {
      */
     function handleSidebarChange() {
         if (prefs.get("autohide")) {
-            OutlineManager.enableAutohide(false);
+            OutlineManager.toggleAutohide(false);
         }
         if (prefs.get("sidebar")) {
             OutlineManager.setPosition(OutlineManager.POSITION_SIDEBAR);
@@ -121,7 +122,7 @@ define(function (require, exports, module) {
             OutlineManager.setPosition(OutlineManager.POSITION_TOOLBAR);
         }
         if (prefs.get("autohide")) {
-            OutlineManager.enableAutohide();
+            OutlineManager.toggleAutohide();
         }
     }
 
@@ -145,7 +146,7 @@ define(function (require, exports, module) {
 
     function handleAutohideChange() {
         if (prefs.get("autohide")) {
-            OutlineManager.enableAutohide();
+            OutlineManager.toggleAutohide();
             if (prefs.get("enabled")) {
                 OutlineManager.hideOutline();
                 if (!prefs.get("sidebar")) {
@@ -153,7 +154,7 @@ define(function (require, exports, module) {
                 }
             }
         } else {
-            OutlineManager.enableAutohide(false);
+            OutlineManager.toggleAutohide(false);
             if (prefs.get("enabled")) {
                 OutlineManager.showOutline();
             }

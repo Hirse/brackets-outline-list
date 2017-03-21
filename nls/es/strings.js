@@ -13,6 +13,8 @@ define({
     COMMAND_INDENT: "Indentar Entradas",
     COMMAND_AUTOHIDE: "Auto-ocultar",
 
+    MESSAGE_SYNTAX_ERROR: "Arregla los errores de sintaxis en el fichero para que se muestre el Outline.",
+
     PREF_ENABLED_NAME: "Outline - Habilitar",
     PREF_ENABLED_DESC: "Habilitar/Deshabilitar Outline List",
     PREF_UNNAMED_NAME: "Outline - Anónimas",
@@ -26,5 +28,7 @@ define({
     PREF_INDENT_NAME: "Outline - Indentar",
     PREF_INDENT_DESC: "Verdadero para indentar las entradas de Outline List",
     PREF_AUTOHIDE_NAME: "Outline - Auto-ocultar",
-    PREF_AUTOHIDE_DESC: "Verdadero para habilitar auto-ocultar de Outline List"
+    PREF_AUTOHIDE_DESC: "Verdadero para habilitar auto-ocultar de Outline List",
+
+    MENU_ITEM_AUTOHIDE: "Outline List Auto-ocultar"
 });

@@ -247,7 +247,7 @@ define(function (require, exports, module) {
      * Enable/disable the Outline Auto-hide.
      * @param {boolean} enable True to enable, false to disable.
      */
-    function enableAutohide(enable) {
+    function toggleAutohide(enable) {
         if (typeof enable !== "boolean") {
             enable = true;
         }
@@ -282,7 +282,7 @@ define(function (require, exports, module) {
         updateOutline: updateOutline,
         showOutline: showOutline,
         hideOutline: hideOutline,
-        enableAutohide: enableAutohide,
+        toggleAutohide: toggleAutohide,
         showPlaceHolder: showPlaceHolder,
         POSITION_SIDEBAR: POSITION_SIDEBAR,
         POSITION_TOOLBAR: POSITION_TOOLBAR

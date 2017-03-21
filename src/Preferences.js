@@ -72,8 +72,7 @@ define(function (require, exports, module) {
             options: {
                 name: Strings.PREF_AUTOHIDE_NAME,
                 description: Strings.PREF_AUTOHIDE_DESC
-            },
-            inContextMenu: false
+            }
         }
     ];
 
