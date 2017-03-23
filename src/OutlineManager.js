@@ -225,7 +225,7 @@ define(function (require, exports, module) {
         $placeHolder.css("right", toolbarPx + "px");
         $(".content").css("right", $placeHolder.width() + toolbarPx + "px");
 
-        $placeHolder.on("mouseenter", function () {
+        $placeHolder.on("mouseenter.outline", function () {
             showOutline();
         });
     }
@@ -237,7 +237,7 @@ define(function (require, exports, module) {
         var $placeHolder = $("#outline-placeholder");
         if ($placeHolder.length > 0) {
             var toolbarPx = $("#main-toolbar:visible").width() || 0;
-            $placeHolder.off("mouseenter");
+            $placeHolder.off(".outline");
             $placeHolder.remove();
             $(".content").css("right", toolbarPx + "px");
         }
@@ -255,11 +255,11 @@ define(function (require, exports, module) {
 
         if (enable) {
             if (position === POSITION_SIDEBAR) {
-                $("#sidebar").on("mouseenter", function () {
+                $("#sidebar").on("mouseenter.outline", function () {
                     showOutline();
                 });
             }
-            $content.on("mouseenter", function () {
+            $content.on("mouseenter.outline", function () {
                 hideOutline();
                 if (position === POSITION_TOOLBAR) {
                     showPlaceHolder();
@@ -268,7 +268,7 @@ define(function (require, exports, module) {
         } else {
             $content.off("mouseenter");
             if (position === POSITION_SIDEBAR) {
-                $("#sidebar").off("mouseenter");
+                $("#sidebar").off(".outline");
             } else {
                 hidePlaceHolder();
             }
