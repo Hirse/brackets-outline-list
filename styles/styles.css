@@ -102,6 +102,14 @@
     padding-left: 14px;
 }
 
+#outline-placeholder {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background-color: #47484b;
+    bottom: 0;
+    position: absolute;
+    top: 0;
+}
+
 
 /* ==== Outline Entries ==== */
 

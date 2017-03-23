@@ -214,6 +214,67 @@ define(function (require, exports, module) {
         }
     }
 
+    /**
+     * Show the Auto-hide place holder and enable its listener for mouse enter.
+     */
+    function showPlaceHolder() {
+        $(".main-view").append("<div id=\"outline-placeholder\"></div>");
+        var $placeHolder = $("#outline-placeholder");
+        var toolbarPx = $("#main-toolbar:visible").width() || 0;
+        $placeHolder.css("width", "20px");
+        $placeHolder.css("right", toolbarPx + "px");
+        $(".content").css("right", $placeHolder.width() + toolbarPx + "px");
+
+        $placeHolder.on("mouseenter.outline", function () {
+            showOutline();
+        });
+    }
+
+    /**
+     * Hide the Auto-hide place holder and disable its listener.
+     */
+    function hidePlaceHolder() {
+        var $placeHolder = $("#outline-placeholder");
+        if ($placeHolder.length > 0) {
+            var toolbarPx = $("#main-toolbar:visible").width() || 0;
+            $placeHolder.off(".outline");
+            $placeHolder.remove();
+            $(".content").css("right", toolbarPx + "px");
+        }
+    }
+
+    /**
+     * Enable/disable the Outline Auto-hide.
+     * @param {boolean} enable True to enable, false to disable.
+     */
+    function toggleAutohide(enable) {
+        if (typeof enable !== "boolean") {
+            enable = true;
+        }
+        var $content = $(".content");
+
+        if (enable) {
+            if (position === POSITION_SIDEBAR) {
+                $("#sidebar").on("mouseenter.outline", function () {
+                    showOutline();
+                });
+            }
+            $content.on("mouseenter.outline", function () {
+                hideOutline();
+                if (position === POSITION_TOOLBAR) {
+                    showPlaceHolder();
+                }
+            });
+        } else {
+            $content.off("mouseenter");
+            if (position === POSITION_SIDEBAR) {
+                $("#sidebar").off(".outline");
+            } else {
+                hidePlaceHolder();
+            }
+        }
+    }
+
     module.exports = {
         onSelect: onSelect,
         setOutlineProvider: setOutlineProvider,
@@ -221,6 +282,8 @@ define(function (require, exports, module) {
         updateOutline: updateOutline,
         showOutline: showOutline,
         hideOutline: hideOutline,
+        toggleAutohide: toggleAutohide,
+        showPlaceHolder: showPlaceHolder,
         POSITION_SIDEBAR: POSITION_SIDEBAR,
         POSITION_TOOLBAR: POSITION_TOOLBAR
     };
