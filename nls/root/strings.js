@@ -11,6 +11,7 @@ define({
     COMMAND_UNNAMED: "Show Unnamed Functions",
     COMMAND_ARGS: "Show Arguments",
     COMMAND_INDENT: "Indent Entries",
+    COMMAND_OUTLINE: "Outline List Autohide",
 
     MESSAGE_SYNTAX_ERROR: "Fix the SyntaxErrors in the file to show the Outline.",
 
@@ -25,5 +26,7 @@ define({
     PREF_SORT_NAME: "Outline - Sorting",
     PREF_SORT_DESC: "True to sort the entries in the Outline List",
     PREF_INDENT_NAME: "Outline - Indent",
-    PREF_INDENT_DESC: "True to indent the entries in the Outline List"
+    PREF_INDENT_DESC: "True to indent the entries in the Outline List",
+    PREF_AUTOHIDE_NAME: "Outline - Autohide",
+    PREF_AUTOHIDE_DESC: "True to enable autohide of the Outline List"
 });

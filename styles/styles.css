@@ -102,6 +102,14 @@
     padding-left: 14px;
 }
 
+/* === Outline Autohide === */
+
+#outline-placeholder {
+    background-color: #47484b;
+    bottom: 0;
+    position: absolute;
+    top: 0;
+}
 
 /* ==== Outline Entries ==== */
 
