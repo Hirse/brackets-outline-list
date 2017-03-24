@@ -24,7 +24,7 @@ define({
     PREF_SIDEBAR_NAME: "Outline - Barra lateral",
     PREF_SIDEBAR_DESC: "Marca para mostrar Outline List en la barra lateral bajo el arbol de archivos",
     PREF_SORT_NAME: "Outline - Ordenar",
-    PREF_SORT_DESC: "Marca para ordenar el contenido de Outline List"
+    PREF_SORT_DESC: "Marca para ordenar el contenido de Outline List",
     PREF_INDENT_NAME: "Outline - Indentar",
     PREF_INDENT_DESC: "Verdadero para indentar las entradas en el Outline List",
     PREF_AUTOHIDE_NAME: "Outline - Auto-ocultar",
