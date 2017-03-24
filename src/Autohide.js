@@ -13,11 +13,6 @@ define(function (require, exports, module) {
     var isExposed = false;
 
 
-    function resize() {
-        var toolbarPx = $("#main-toolbar:visible").width() || 0;
-        $content.css("right", ($placeholder.width() || 0) + toolbarPx + "px");
-    }
-
     function showPlaceholder() {
         var toolbarPx = $("#main-toolbar:visible").width() || 0;
         $mainView.append($placeholder);
@@ -50,10 +45,12 @@ define(function (require, exports, module) {
     }
 
     function enable() {
-        $content.on("mouseover", coverOutline);
-        if (prefs.get("enabled")) {
-            isExposed = true;
-            coverOutline();
+        if (!prefs.get("sidebar")) {
+            $content.on("mouseover", coverOutline);
+            if (prefs.get("enabled")) {
+                isExposed = true;
+                coverOutline();
+            }
         }
     }
 
@@ -75,12 +72,16 @@ define(function (require, exports, module) {
         isExposed = false;
     }
 
+    function reset(callback) {
+        callback = (typeof callback === 'function') ? callback : function () {};
+        disable();
+        callback();
+        enable();
+    }
+
     module.exports = {
         enable: enable,
         disable: disable,
-        showPlaceholder: showPlaceholder,
-        hidePlaceholder: hidePlaceholder,
-        exposeOutline: exposeOutline,
-        coverOutline: coverOutline
+        reset: reset
     };
 });

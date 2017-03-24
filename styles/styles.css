@@ -104,7 +104,7 @@
 
 /* === Outline Autohide === */
 
-#outline-placeholder {
+#outline-autohide-placeholder {
     background-color: #47484b;
     bottom: 0;
     position: absolute;

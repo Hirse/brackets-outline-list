@@ -61,7 +61,9 @@ define(function (require, exports, module) {
             if (isOutlineAvailable(document)) {
                 OutlineManager.setOutlineProvider(languageMapping[document.getLanguage().getName()]);
                 OutlineManager.updateOutline(document.getText());
-                OutlineManager.showOutline();
+                if (prefs.get("autohide")) {
+                    Autohide.reset(OutlineManager.showOutline());
+                }
             } else {
                 OutlineManager.hideOutline();
             }
@@ -91,9 +93,9 @@ define(function (require, exports, module) {
                 OutlineManager.setOutlineProvider(languageMapping[document.getLanguage().getName()]);
                 OutlineManager.updateOutline(document.getText());
                 OutlineManager.showOutline();
-            }
-            if (prefs.get("autohide")) {
-                Autohide.enable();
+                if (prefs.get("autohide")) {
+                    Autohide.enable();
+                }
             }
         } else {
             EditorManager.off("activeEditorChange.outline-list", handleEditorChange);
@@ -111,8 +113,14 @@ define(function (require, exports, module) {
     function handleSidebarChange() {
         if (prefs.get("sidebar")) {
             OutlineManager.setPosition(OutlineManager.POSITION_SIDEBAR);
+            if (prefs.get("autohide")) {
+                Autohide.disable();
+            }
         } else {
             OutlineManager.setPosition(OutlineManager.POSITION_TOOLBAR);
+            if (prefs.get("autohide")) {
+                Autohide.enable();
+            }
         }
     }
 
@@ -164,12 +172,8 @@ define(function (require, exports, module) {
 
     OutlineManager.onSelect(handleSelect);
 
-    // Initialize autohide and set menu toogle.
     CommandManager.register(Strings.COMMAND_OUTLINE, "outline.autohide", toggleAutohide);
     var menu = Menus.getMenu(Menus.AppMenuBar.VIEW_MENU);
     menu.addMenuItem("outline.autohide");
     CommandManager.get("outline.autohide").setChecked(prefs.get("autohide"));
-    /*if (prefs.get("autohide")) {
-        Autohide.enable();
-    }*/
 });
