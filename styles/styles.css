@@ -111,6 +111,11 @@
     top: 0;
 }
 
+.outline-autohide-content {
+    -webkit-transition: right 0.1s ease-out;
+    transition: right 0.1s ease-out;
+}
+
 /* ==== Outline Entries ==== */
 
 .outline-entry {

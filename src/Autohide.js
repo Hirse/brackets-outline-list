@@ -13,6 +13,16 @@ define(function (require, exports, module) {
     var isExposed = false;
 
 
+    function enableContentTransition() {
+        $mainView.css("background-color", "#47484b");
+        $content.addClass("outline-autohide-content");
+    }
+
+    function disableContentTransition() {
+        $mainView.css("background-color", "");
+        $content.removeClass("outline-autohide-content");
+    }
+
     function showPlaceholder() {
         var toolbarPx = $("#main-toolbar:visible").width() || 0;
         $mainView.append($placeholder);
@@ -29,8 +39,14 @@ define(function (require, exports, module) {
 
     function exposeOutline() {
         if (!isExposed) {
+            $content.bind("transitionend", function () {
+                var $outline = $("#outline");
+                $outline.css("visibility", "visible");
+            });
             hidePlaceholder();
             OutlineManager.showOutline();
+            var $outline = $("#outline");
+            $outline.css("visibility", "hidden");
             isExposed = true;
         }
     }
@@ -50,6 +66,7 @@ define(function (require, exports, module) {
             if (prefs.get("enabled")) {
                 isExposed = true;
                 coverOutline();
+                enableContentTransition();
             }
         }
     }
@@ -69,6 +86,7 @@ define(function (require, exports, module) {
                 OutlineManager.hideOutline();
             }
         }
+        disableContentTransition()
         isExposed = false;
     }
 
