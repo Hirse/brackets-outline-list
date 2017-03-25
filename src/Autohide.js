@@ -100,17 +100,13 @@ define(function (require, exports, module) {
     function disable() {
         $content.off("mouseover", coverOutline);
         $placeholder.off("mouseover", exposeOutline);
-        if (prefs.get("enabled")) {
-            if (!isExposed) {
-                hidePlaceholder();
-                OutlineManager.showOutline();
-            }
-        } else {
-            if (isExposed) {
-                OutlineManager.hideOutline();
-            } else {
-                hidePlaceholder();
-            }
+        if (prefs.get("enabled") && !isExposed) {
+            hidePlaceholder();
+            OutlineManager.showOutline();
+        } else if (!prefs.get("enabled") && isExposed) {
+            OutlineManager.hideOutline();
+        } else if (!prefs.get("enabled") && !isExposed) {
+            hidePlaceholder();
         }
         disableContentTransition();
         isExposed = false;
