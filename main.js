@@ -165,6 +165,9 @@ define(function (require, exports, module) {
     PreferencesManager.on("change", "noDistractions", function () {
         if (!prefs.get("sidebar")) {
             OutlineManager.setPosition(OutlineManager.POSITION_TOOLBAR);
+            if (prefs.get("autohide")) {
+                Autohide.reset();
+            }
         }
     });
 
