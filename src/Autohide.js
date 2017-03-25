@@ -106,13 +106,13 @@ define(function (require, exports, module) {
                 OutlineManager.showOutline();
             }
         } else {
-            if (!isExposed) {
-                hidePlaceholder();
-            } else {
+            if (isExposed) {
                 OutlineManager.hideOutline();
+            } else {
+                hidePlaceholder();
             }
         }
-        disableContentTransition()
+        disableContentTransition();
         isExposed = false;
     }
 
@@ -121,9 +121,10 @@ define(function (require, exports, module) {
      * @param {function} callback To be executed between disable and re-enable.
      */
     function reset(callback) {
-        callback = (typeof callback === 'function') ? callback : function () {};
         disable();
-        callback();
+        if (typeof callback === "function") {
+            callback();
+        }
         enable();
     }
 
