@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function SettingsMenu(require, exports, module) {
     "use strict";
 
     /* beautify preserve:start *//* eslint-disable no-multi-spaces */

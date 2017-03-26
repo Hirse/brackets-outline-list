@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function Markdown(require, exports, module) {
     "use strict";
 
     /**

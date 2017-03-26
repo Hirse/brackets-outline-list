@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function XML(require, exports, module) {
     "use strict";
 
     var Parser = require("src/lexers/XMLParser");

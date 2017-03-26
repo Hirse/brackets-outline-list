@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function Stylus(require, exports, module) {
     "use strict";
 
     /**

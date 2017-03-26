@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function Ruby(require, exports, module) {
     "use strict";
 
     /**

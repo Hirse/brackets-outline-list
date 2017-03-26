@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function PHPLexer(require, exports, module) {
     "use strict";
 
     var Lexer = require("thirdparty/lexer");

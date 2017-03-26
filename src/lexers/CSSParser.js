@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function CSSParser(require, exports, module) {
     "use strict";
 
     var postcss = require("thirdparty/postcss-safe-parser");

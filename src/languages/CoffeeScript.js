@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function CoffeeScript(require, exports, module) {
     "use strict";
 
     /** @const {string} Placeholder for unnamed functions. */

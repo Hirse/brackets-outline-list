@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function JSParser(require, exports, module) {
     "use strict";
 
     var espree = require("thirdparty/espree");

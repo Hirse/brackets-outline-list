@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function XMLParser(require, exports, module) {
     "use strict";
 
     var htmlparser = require("thirdparty/htmlparser2");

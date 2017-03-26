@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function ToolbarButton(require, exports, module) {
     "use strict";
 
     var Strings = require("strings");

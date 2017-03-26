@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function Jade(require, exports, module) {
     "use strict";
 
     var Editor = brackets.getModule("editor/Editor").Editor;
