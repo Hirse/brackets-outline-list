@@ -140,6 +140,7 @@ define(function JSParser(require, exports, module) {
             ast = espree.parse(source, {
                 loc: true,
                 ecmaVersion: 8,
+                sourceType: "module",
                 ecmaFeatures: {
                     jsx: true
                 }

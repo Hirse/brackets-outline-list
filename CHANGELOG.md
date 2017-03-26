@@ -7,6 +7,9 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 ### Added
 - Arabic translation, thanks to [__@sadik-fattah__](https://github.com/sadik-fattah)
 
+### Fixed
+- Support ES6 Modules (see [#86](https://github.com/Hirse/brackets-outline-list/issues/86))
+
 
 ## 1.0.1 - 2017-03-13
 ### Fixed

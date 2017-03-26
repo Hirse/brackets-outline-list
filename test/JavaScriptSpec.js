@@ -214,6 +214,20 @@ define(function JavaScriptSpec(require) {
             ]);
         });
 
+        it("works with ES6 modules", function () {
+            var test = require("text!example/javascript/es6-modules.js");
+            var result = Parser.parse(test);
+            expect(result).toEqual([
+                {
+                    type: "public",
+                    name: "doStuff",
+                    args: [],
+                    level: 0,
+                    line: 3
+                }
+            ]);
+        });
+
         it("detects comments", function () {
             var test = require("text!example/javascript/comment.js");
             var result = Parser.parse(test);
