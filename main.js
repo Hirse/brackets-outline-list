@@ -63,6 +63,8 @@ define(function (require, exports, module) {
                 OutlineManager.updateOutline(document.getText());
                 if (prefs.get("autohide")) {
                     Autohide.reset(OutlineManager.showOutline());
+                } else {
+                    OutlineManager.showOutline();
                 }
             } else {
                 OutlineManager.hideOutline();
@@ -76,6 +78,9 @@ define(function (require, exports, module) {
      */
     function handleDocumentSave() {
         OutlineManager.updateOutline(DocumentManager.getCurrentDocument().getText());
+        if (prefs.get("autohide")) {
+            Autohide.reset();
+        }
     }
 
     /**
