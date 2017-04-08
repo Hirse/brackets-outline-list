@@ -241,4 +241,20 @@ define(function JavaScriptSpec(require) {
             }).toThrowError("SyntaxError");
         });
     });
+
+    describe("JS Parser", function () {
+        it("88 - destructuring assignments", function () {
+            var test = require("text!example/javascript/88-destructuring.js");
+            var result = Parser.parse(test);
+            expect(result).toEqual([
+                {
+                    type: "public",
+                    name: "testme",
+                    args: ["address"],
+                    level: 0,
+                    line: 4
+                }
+            ]);
+        });
+    });
 });

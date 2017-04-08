@@ -78,7 +78,11 @@ define(function JSParser(require, exports, module) {
                 return node.id.name;
             case "ExpressionStatement":
                 if (node.expression.left) {
-                    return node.expression.left.name || node.expression.left.property.name;
+                    if (node.expression.left.name) {
+                        return node.expression.left.name;
+                    } else if (node.expression.left.property && node.expression.left.property.name) {
+                        return node.expression.left.property.name;
+                    }
                 }
                 return false;
             case "Property":
@@ -149,12 +153,8 @@ define(function JSParser(require, exports, module) {
             throw new Error("SyntaxError");
         }
 
-        try {
-            var result = _traverse(ast, [], "", 0);
-            return result;
-        } catch (error) {
-            throw new Error("ParserError");
-        }
+        var result = _traverse(ast, [], "", 0);
+        return result;
     }
 
     module.exports = {

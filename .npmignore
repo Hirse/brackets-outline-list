@@ -1,7 +1,9 @@
 .github/
+.vscode/
 coverage/
 images/
 test/
+.brackets.json
 .csslintrc
 .eslintignore
 .eslintrc.yml

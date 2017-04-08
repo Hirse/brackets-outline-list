@@ -9,6 +9,8 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Support ES6 Modules (see [#86](https://github.com/Hirse/brackets-outline-list/issues/86))
+- Don't break on destructuring assignments (see [#88](https://github.com/Hirse/brackets-outline-list/issues/88))
+- Support Python parameter default parameters (see [#89](https://github.com/Hirse/brackets-outline-list/issues/89)), thanks to [__@pelatx__](https://github.com/pelatx)
 
 
 ## 1.0.1 - 2017-03-13
