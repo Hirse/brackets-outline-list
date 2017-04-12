@@ -112,8 +112,8 @@
 }
 
 .outline-autohide-content {
-    -webkit-transition: right 0.1s ease-out;
-    transition: right 0.1s ease-out;
+    -webkit-transition: right 0.2s ease-out;
+    transition: right 0.2s ease-out;
 }
 
 /* ==== Outline Entries ==== */

@@ -13,6 +13,7 @@ define(function (require, exports, module) {
     var $content = $(".content");
     var $mainView = $(".main-view");
     var isExposed = false;
+    var sidebarPlusTransitionRemoved = false;
 
 
     /**
@@ -24,15 +25,41 @@ define(function (require, exports, module) {
     }
 
     /**
-     * Enable animation on transition for the content container.
+     * Disable animation on transition for the content container.
      */
     function disableContentTransition() {
-        $mainView.css("background-color", "");
         $content.removeClass("outline-autohide-content");
+        // To compatibilize with Sidebar Plus extension.
+        if ($content.hasClass("sidebarplus-content")) {
+            $mainView.css("background-color", "#47484b");
+        } else {
+            $mainView.css("background-color", "");
+        }
     }
 
     /**
-     * Insert a placeholder beside the toolbar.
+     * Remove class 'sidebarplus-content' from '.content' if necessary.
+     * (To compatibilize with Sidebar Plus extension).
+     */
+    function removeSidebarPlusTransition() {
+        if ($content.hasClass("sidebarplus-content")) {
+            $content.removeClass("sidebarplus-content");
+            sidebarPlusTransitionRemoved = true;
+        }
+    }
+
+    /**
+     * Add class 'sidebarplus-content' to '.content' if previously removed.
+     * (To compatibilize with Sidebar Plus extension).
+     */
+    function addSidebarPlusTransition() {
+        if (sidebarPlusTransitionRemoved) {
+            $content.addClass("sidebarplus-content");
+        }
+    }
+
+    /**
+     * Insert a placeholder on right.
      */
     function showPlaceholder() {
         var toolbarPx = $("#main-toolbar:visible").width() || 0;
@@ -40,6 +67,9 @@ define(function (require, exports, module) {
         $placeholder.css("width", "20px");
         $placeholder.css("right", toolbarPx + "px");
         $content.css("right", ($placeholder.width() || 0) + toolbarPx + "px");
+        $content.bind("transitionend", function () {
+            addSidebarPlusTransition();
+        });
     }
 
     /**
@@ -59,7 +89,9 @@ define(function (require, exports, module) {
             $content.bind("transitionend", function () {
                 var $outline = $("#outline");
                 $outline.css("visibility", "visible");
+                addSidebarPlusTransition();
             });
+            removeSidebarPlusTransition();
             hidePlaceholder();
             OutlineManager.showOutline();
             var $outline = $("#outline");
@@ -73,6 +105,7 @@ define(function (require, exports, module) {
      */
     function coverOutline() {
         if (isExposed) {
+            removeSidebarPlusTransition();
             OutlineManager.hideOutline();
             showPlaceholder();
             $placeholder.on("mouseover", exposeOutline);
@@ -113,7 +146,7 @@ define(function (require, exports, module) {
     }
 
     /**
-     * Disable auto-hide, execute a function and re-enable auto-hide.
+     * Disable auto-hide, execute a function and re-enable it.
      * @param {function} callback To be executed between disable and re-enable.
      */
     function reset(callback) {
