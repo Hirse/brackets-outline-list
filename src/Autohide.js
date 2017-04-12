@@ -29,17 +29,17 @@ define(function (require, exports, module) {
      */
     function disableContentTransition() {
         $content.removeClass("outline-autohide-content");
-        // To compatibilize with Sidebar Plus extension.
-        if ($content.hasClass("sidebarplus-content")) {
-            $mainView.css("background-color", "#47484b");
-        } else {
+        // Hack to compatibilize with Sidebar Plus extension.
+        // The 'if' statement would not be needed if no Sidebar Plus.
+        if (!$content.hasClass("sidebarplus-content")) {
             $mainView.css("background-color", "");
         }
     }
 
     /**
      * Remove class 'sidebarplus-content' from '.content' if necessary.
-     * (To compatibilize with Sidebar Plus extension).
+     * (Hack to compatibilize with Sidebar Plus extension, because the CSS rules
+     * in it override the Outline rules and make it not work correctly).
      */
     function removeSidebarPlusTransition() {
         if ($content.hasClass("sidebarplus-content")) {
@@ -50,7 +50,7 @@ define(function (require, exports, module) {
 
     /**
      * Add class 'sidebarplus-content' to '.content' if previously removed.
-     * (To compatibilize with Sidebar Plus extension).
+     * (Hack to compatibilize with Sidebar Plus extension).
      */
     function addSidebarPlusTransition() {
         if (sidebarPlusTransitionRemoved) {
