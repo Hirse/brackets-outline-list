@@ -67,7 +67,7 @@ define(function (require, exports, module) {
         $placeholder.css("width", "20px");
         $placeholder.css("right", toolbarPx + "px");
         $content.css("right", ($placeholder.width() || 0) + toolbarPx + "px");
-        $content.bind("transitionend", function () {
+        $content.bind("transitionend.outline", function () {
             addSidebarPlusTransition();
         });
     }
@@ -86,7 +86,7 @@ define(function (require, exports, module) {
      */
     function exposeOutline() {
         if (!isExposed) {
-            $content.bind("transitionend", function () {
+            $content.bind("transitionend.outline", function () {
                 var $outline = $("#outline");
                 $outline.css("visibility", "visible");
                 addSidebarPlusTransition();
