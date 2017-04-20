@@ -3,9 +3,10 @@ All notable changes to this project will be documented in this file.
 This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 
-## Unreleased
+## 1.1.0 - 2017-04-20
 ### Added
 - Arabic translation, thanks to [__@sadik-fattah__](https://github.com/sadik-fattah)
+- Autohide Outline (see [#17](https://github.com/Hirse/brackets-outline-list/issues/17)), thanks to [__@pelatx__](https://github.com/pelatx)
 
 ### Fixed
 - Support ES6 Modules (see [#86](https://github.com/Hirse/brackets-outline-list/issues/86))
