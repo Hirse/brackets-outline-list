@@ -65,6 +65,14 @@ define(function Preferences(require, exports, module) {
                 description: Strings.PREF_INDENT_DESC
             },
             inContextMenu: true
+        }, {
+            id: "autohide",
+            type: "boolean",
+            value: false,
+            options: {
+                name: Strings.PREF_AUTOHIDE_NAME,
+                description: Strings.PREF_AUTOHIDE_DESC
+            }
         }
     ];
 

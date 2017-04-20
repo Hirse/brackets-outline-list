@@ -6,10 +6,14 @@ define(function (require, exports, module) {
     var EditorManager      = brackets.getModule("editor/EditorManager");
     var PreferencesManager = brackets.getModule("preferences/PreferencesManager");
     var ExtensionUtils     = brackets.getModule("utils/ExtensionUtils");
+    var CommandManager     = brackets.getModule("command/CommandManager");
+    var Menus              = brackets.getModule("command/Menus");
 
     var prefs              = require("src/Preferences");
     var OutlineManager     = require("src/OutlineManager");
     var ToolbarButton      = require("src/ToolbarButton");
+    var Strings            = require("strings");
+    var Autohide           = require("src/Autohide");
     /* eslint-enable no-multi-spaces *//* beautify preserve:end */
 
     ExtensionUtils.loadStyleSheet(module, "styles/styles.css");
@@ -57,7 +61,11 @@ define(function (require, exports, module) {
             if (isOutlineAvailable(document)) {
                 OutlineManager.setOutlineProvider(languageMapping[document.getLanguage().getName()]);
                 OutlineManager.updateOutline(document.getText());
-                OutlineManager.showOutline();
+                if (prefs.get("autohide")) {
+                    Autohide.reset(OutlineManager.showOutline());
+                } else {
+                    OutlineManager.showOutline();
+                }
             } else {
                 OutlineManager.hideOutline();
             }
@@ -70,6 +78,9 @@ define(function (require, exports, module) {
      */
     function handleDocumentSave() {
         OutlineManager.updateOutline(DocumentManager.getCurrentDocument().getText());
+        if (prefs.get("autohide")) {
+            Autohide.reset();
+        }
     }
 
     /**
@@ -87,10 +98,16 @@ define(function (require, exports, module) {
                 OutlineManager.setOutlineProvider(languageMapping[document.getLanguage().getName()]);
                 OutlineManager.updateOutline(document.getText());
                 OutlineManager.showOutline();
+                if (prefs.get("autohide")) {
+                    Autohide.enable();
+                }
             }
         } else {
             EditorManager.off("activeEditorChange.outline-list", handleEditorChange);
             DocumentManager.off("documentSaved.outline-list", handleDocumentSave);
+            if (prefs.get("autohide")) {
+                Autohide.disable();
+            }
             OutlineManager.hideOutline();
         }
     }
@@ -101,8 +118,14 @@ define(function (require, exports, module) {
     function handleSidebarChange() {
         if (prefs.get("sidebar")) {
             OutlineManager.setPosition(OutlineManager.POSITION_SIDEBAR);
+            if (prefs.get("autohide")) {
+                Autohide.disable();
+            }
         } else {
             OutlineManager.setPosition(OutlineManager.POSITION_TOOLBAR);
+            if (prefs.get("autohide")) {
+                Autohide.enable();
+            }
         }
     }
 
@@ -124,6 +147,21 @@ define(function (require, exports, module) {
         currentEditor.focus();
     }
 
+    function handleAutohideChange() {
+        if (prefs.get("autohide")) {
+            Autohide.enable();
+        } else {
+            Autohide.disable();
+        }
+    }
+
+    function toggleAutohide() {
+        var state = prefs.togglePref("autohide");
+        CommandManager.get("outline.autohide").setChecked(state);
+    }
+
+    prefs.onChange("autohide", handleAutohideChange);
+
     prefs.onChange("enabled", handleEnabledChange);
 
     prefs.onChange("sidebar", handleSidebarChange);
@@ -132,10 +170,18 @@ define(function (require, exports, module) {
     PreferencesManager.on("change", "noDistractions", function () {
         if (!prefs.get("sidebar")) {
             OutlineManager.setPosition(OutlineManager.POSITION_TOOLBAR);
+            if (prefs.get("autohide")) {
+                Autohide.reset();
+            }
         }
     });
 
     ToolbarButton.onClick(handleButtonClick);
 
     OutlineManager.onSelect(handleSelect);
+
+    CommandManager.register(Strings.COMMAND_OUTLINE, "outline.autohide", toggleAutohide);
+    var menu = Menus.getMenu(Menus.AppMenuBar.VIEW_MENU);
+    menu.addMenuItem("outline.autohide");
+    CommandManager.get("outline.autohide").setChecked(prefs.get("autohide"));
 });
