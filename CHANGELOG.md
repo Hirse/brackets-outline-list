@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 
-## Unreleased
+## 1.2.0 - 2017-04-24
 ### Fixed
 - PHP multiline strings (see [#91](https://github.com/Hirse/brackets-outline-list/issues/91))
 
