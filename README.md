@@ -33,7 +33,7 @@
 | Pug (Jade)                         | RegExp       | :no_entry_sign:    | :x:                | :x:                | :no_entry_sign:    |
 | JavaScript, JSX                    | Espree       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | Markdown, GitHub-Flavored-Markdown | RegExp       | :heavy_check_mark: | :no_entry_sign:    | :no_entry_sign:    | :no_entry_sign:    |
-| PHP                                | Lexer        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| PHP                                | php-parser   | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | Python                             | RegExp       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x:                |
 | Ruby                               | RegExp       | :heavy_check_mark: | :x:                | :heavy_check_mark: | :x:                |
 | Stylus                             | RegExp       | :x:                | :x:                | :no_entry_sign:    | :no_entry_sign:    |
@@ -53,11 +53,11 @@ To install the latest _commit_ of this extension use the built-in Brackets [Exte
 Brackets Outline List is licensed under the [MIT license][MIT].  
 
 Used thirdparty software:
-* [Ionicons][Ionicons] is licensed under the [MIT license][MIT]
-* [Lexer][Lexer] is licensed under the [MIT license][MIT]
 * [Espree][Espree] is licensed under the [BSD 2-Clause License][BSD-2-Clause]
+* [Ionicons][Ionicons] is licensed under the [MIT license][MIT]
 * [PostCSS Safe Parser][PostCSS] is licensed under the [MIT license][MIT]
 * [htmlparser2][htmlparser2] is licensed under the [MIT license][MIT]
+* [php-parser][php-parser] is licensed under the [BSD-3-Clause license][BSD-3-Clause]
 
 
 [Brackets]: http://brackets.io
@@ -65,11 +65,12 @@ Used thirdparty software:
 [Brackets Extension Registry]: https://brackets-registry.aboutweb.com
 [Brackets npm Registry]: https://github.com/zaggino/brackets-npm-registry
 
-[Ionicons]: http://ionicons.com
-[Lexer]: https://github.com/aaditmshah/lexer
 [Espree]: https://github.com/eslint/espree
+[Ionicons]: http://ionicons.com
 [PostCSS]: https://github.com/postcss/postcss-safe-parser
 [htmlparser2]: https://github.com/fb55/htmlparser2
+[php-parser]: https://github.com/glayzzle/php-parser
 
-[MIT]: http://opensource.org/licenses/MIT
 [BSD-2-Clause]: https://opensource.org/licenses/BSD-2-Clause
+[BSD-3-Clause]: https://opensource.org/licenses/BSD-3-Clause
+[MIT]: http://opensource.org/licenses/MIT

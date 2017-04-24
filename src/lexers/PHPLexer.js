@@ -1,10 +1,87 @@
 define(function PHPLexer(require, exports, module) {
     "use strict";
 
-    var Lexer = require("thirdparty/lexer");
+    var phpParser = require("thirdparty/php-parser");
 
     /** @const {string} Placeholder for unnamed functions. */
     var UNNAMED_PLACEHOLDER = "function";
+
+    /**
+     * Parse a Parameter node.
+     * @private
+     * @param   {object} argument Parameter node
+     * @returns {string} String representation of the Parameter.
+     */
+    function _parseArg(argument) {
+        return "$" + argument.name;
+    }
+
+    /**
+     * Traverse a subtree recursivly.
+     * @private
+     * @param   {object}   node  AST node
+     * @param   {object[]} list  List of objects for the parsed nodes
+     * @param   {number}   level Indentation level of the function
+     * @returns {object[]} List of objects for the parsed nodes
+     */
+    function _traverse(node, list, level) {
+        if (node.kind === "class") {
+            list.push({
+                type: "class",
+                name: node.name,
+                args: [],
+                modifier: "public",
+                level: level,
+                isStatic: false,
+                line: node.loc.start.line - 1
+            });
+            level++;
+        } else if (node.kind === "function") {
+            list.push({
+                type: "function",
+                name: node.name,
+                args: node.arguments.map(_parseArg),
+                modifier: "public",
+                level: level,
+                isStatic: false,
+                line: node.loc.start.line - 1
+            });
+            level++;
+        } else if (node.kind === "method") {
+            list.push({
+                type: "function",
+                name: node.name,
+                args: node.arguments.map(_parseArg),
+                modifier: node.visibility,
+                level: level,
+                isStatic: node.isStatic,
+                line: node.loc.start.line - 1
+            });
+            level++;
+        } else if (node.kind === "closure") {
+            list.push({
+                type: "function",
+                name: UNNAMED_PLACEHOLDER,
+                args: node.arguments.map(_parseArg),
+                modifier: "unnamed",
+                level: level,
+                isStatic: false,
+                line: node.loc.start.line - 1
+            });
+            level++;
+        }
+        Object.keys(node).forEach(function (prop) {
+            var children = node[prop];
+            if (Array.isArray(children)) {
+                children.forEach(function (child) {
+                    list = _traverse(child, list, level);
+                });
+            } else if (children instanceof Object) {
+                list = _traverse(children, list, level);
+            }
+        });
+        return list;
+    }
 
     /**
      * Parse the source and extract the code structure.
@@ -12,236 +89,23 @@ define(function PHPLexer(require, exports, module) {
      * @returns {object[]} the code structure.
      */
     function parse(source) {
-        var line = 0; // line number.
-        var ns = []; // the namespace array.
-        var literal = true; // check if it's in literal area.
-        var comment = false; // the comment flag.
-        var state = []; // the state array.
-        var modifier = null; // the modifier.
-        var isStatic = false; // static flag.
-        var isAbstract = false; // abstract flag.
-        // saves the results object of the last class that
-        // extends another or implements an interface.
-        var lastChildClass = null;
-        // helper function to peek an item from an array.
-        var peek = function (array) {
-            if (array.length > 0) {
-                return array[array.length - 1];
-            }
-            return null;
-        };
-        var results = [];
-        var ignored = function () { /* noop */ };
-        var lexer = new Lexer();
-        lexer
-            // when it encounters `<?php` structure, turn off literal mode.
-            .addRule(/<\?(php)?/, function () {
-                literal = false;
-            })
-            // when it encounters `?>` structure, turn on literal mode.
-            .addRule(/\?>/, function () {
-                literal = true;
-            })
-            // toggle comment if necessary.
-            .addRule(/\/\*/, function () {
-                comment = true;
-            })
-            .addRule(/\*\//, function () {
-                comment = false;
-            })
-            // ignore the comments.
-            .addRule(/\/\/[^\n]*/, ignored)
-            // ignore strings (double quotes).
-            .addRule(/"((?:\\.|[^"\\])*)"/, ignored)
-            // ignore strings (single quotes).
-            .addRule(/'((?:\\.|[^'\\])*)'/, ignored)
-            // ignore execution operator (backticks).
-            .addRule(/`((?:\\.|[^`\\])*)`/, ignored)
-            // ignore 'class' word in static::class late static binding.
-            .addRule(/static::class/, ignored)
-            // detect abstract modifier, but treat it apart from the visibility modifiers
-            .addRule(/public|protected|private|abstract/, function (w) {
-                if (w === "abstract") {
-                    isAbstract = true;
-                } else {
-                    modifier = w;
+        var ast;
+        try {
+            ast = phpParser.parseCode(source, {
+                parser: {
+                    locations: true,
+                    suppressErrors: true
+                },
+                ast: {
+                    withPositions: true
                 }
-            })
-            .addRule(/static/, function () {
-                isStatic = true;
-            })
-            // when it encounters `function` and literal mode is off,
-            // 1. push 'function' into state array;
-            // 2. push a function structure in result.
-            .addRule(/function/, function () {
-                if (!literal && !comment) {
-                    state.push("function");
-                    results.push({
-                        type: "function",
-                        name: "",
-                        args: [],
-                        modifier: "unnamed",
-                        level: 0,
-                        isStatic: isStatic,
-                        line: line
-                    });
-                }
-            })
-            // when it encounters `class` and literal mode is off.
-            // 1. push "class" into state array.
-            // 2. create a class structure into results array.
-            .addRule(/class/, function () {
-                if (!literal && !comment) {
-                    state.push("class");
-                    results.push({
-                        type: "class",
-                        name: "",
-                        args: [],
-                        modifier: "public",
-                        level: 0,
-                        isStatic: isStatic,
-                        line: line
-                    });
-                }
-            })
-            // support for extended classes and interface implementations
-            .addRule(/extends|implements/, function () {
-                if (!literal && !comment) {
-                    if (peek(state) === "class") {
-                        lastChildClass = results.pop();
-                        state.push("inheriting");
-                    }
-                }
-            })
-            // if it's a variable and it's in function args semantics, push it into args array.
-            .addRule(/\$[0-9a-zA-Z_]+/, function (w) {
-                if (!literal && !comment) {
-                    if (peek(state) === "args") {
-                        peek(results).args.push(w);
-                    }
-                    // reset modifiers when variable is parsed.
-                    modifier = null;
-                    isStatic = false;
-                }
-            })
-            // check if it's an identity term.
-            .addRule(/[0-9a-zA-Z_]+/, function (w) {
-                var ref;
-                if (!literal && !comment) {
-                    switch (peek(state)) {
-                        case "function":
-                            ns.push(w);
-                            ref = peek(results);
-                            ref.name = w;
-                            ref.level = ns.length - 1;
-                            ref.modifier = modifier || "public";
-                            break;
-                        case "class":
-                            ns.push(w);
-                            ref = peek(results);
-                            ref.name = w;
-                            break;
-                        case "inheriting":
-                            state.pop();
-                            results.push(lastChildClass);
-                            break;
-                        default:
-                            break;
-                    }
-                    // reset modifier when identity term is parsed.
-                    modifier = null;
-                    isStatic = false;
-                }
-            })
-            // check if it's in function definition, turn on args mode.
-            .addRule(/\(/, function () {
-                if (!literal && !comment) {
-                    if (peek(state) === "function") {
-                        var ref = peek(results);
-                        if (ref.modifier === "unnamed") {
-                            ns.push(UNNAMED_PLACEHOLDER);
-                            ref.name = UNNAMED_PLACEHOLDER;
-                            ref.level = ns.length - 1;
-                        }
-                        if (!ref || ref.type !== "function") {
-                            ns.push(UNNAMED_PLACEHOLDER);
-                            results.push({
-                                type: "function",
-                                name: "",
-                                args: [],
-                                modifier: "unnamed",
-                                level: 0,
-                                isStatic: false,
-                                line: line
-                            });
-                        }
-                        state.push("args");
-                    }
-                }
-            })
-            // turn off args mode.
-            .addRule(/\)/, function () {
-                if (!literal && !comment) {
-                    if (peek(state) === "args") {
-                        state.pop();
-                    }
-                }
-            })
-            // ignore return types.
-            .addRule(/:\s*[0-9a-zA-Z_]+/, ignored)
-            // start function/class body definition or scoped code structure.
-            .addRule(/{/, function () {
-                if (!literal && !comment) {
-                    var ref;
-                    if ((ref = peek(state)) === "function" || ref === "class") {
-                        var prefix = state.pop();
-                        state.push(prefix + ":start");
-                    } else {
-                        state.push("start");
-                    }
-                }
-            })
-            // pop name from namespace array if it's in a namespace.
-            .addRule(/}/, function () {
-                if (!literal && !comment && state.length > 0) {
-                    var s = state.pop().split(":")[0];
-                    if (s === "class" || s === "function") {
-                        ns.pop();
-                    }
-                }
-            })
-            // support for abstract methods
-            .addRule(/;/, function () {
-                if (!literal && !comment) {
-                    if (peek(state) === "function" && isAbstract) {
-                        state.pop();
-                        ns.pop();
-                        isAbstract = false; // reset abstract flag
-                    } else if (peek(state) === "class") {
-                        ns.pop();
-                    }
-                }
-            })
-            // support for classes implementing multiple interfaces
-            .addRule(/,/, function () {
-                if (!literal && !comment) {
-                    if (peek(state) === "class") {
-                        state.push("inheriting");
-                        results.pop();
-                    }
-                }
-            })
-            // other terms are ignored.
-            .addRule(/./, ignored);
+            });
+        } catch (error) {
+            throw new Error("SyntaxError");
+        }
 
-        // parse the code to the end of the source.
-        source.split(/\r?\n/).forEach(function (sourceLine) {
-            lexer.setInput(sourceLine);
-            lexer.lex();
-            // line number increases.
-            line += 1;
-        });
-        return results;
+        var result = _traverse(ast, [], 0);
+        return result;
     }
 
     module.exports = {

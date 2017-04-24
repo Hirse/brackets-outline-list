@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 
+## Unreleased
+### Fixed
+- PHP multiline strings (see [#91](https://github.com/Hirse/brackets-outline-list/issues/91))
+
+### Changed
+- Use php-parser to parse PHP
+
+
 ## 1.1.0 - 2017-04-20
 ### Added
 - Arabic translation, thanks to [__@sadik-fattah__](https://github.com/sadik-fattah)
