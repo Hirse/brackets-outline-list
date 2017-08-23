@@ -36,7 +36,8 @@
     "en",
     "es",
     "fr",
-    "ja"
+    "ja",
+    "pl"
   ],
   "package-i18n": {
     "ar":{
@@ -53,6 +54,9 @@
     },
     "ja": {
       "description": "現在開いているドキュメントの関数または定義の一覧を表示する。CSS， CoffeeScript， HTML， Haxe， Jade， JavaScript， JSX， LESS， Markdown， PHP， Python， Ruby， SCSS， SVG， Stylus， と XML に対応。"
+    },
+    "pl": {
+      "description": "Wyświetla listę funkcji lub definicji w aktualnie otwartym dokumencie. Działa z CSS, CoffeeScript, HTML, Haxe, Jade, JavaScript, JSX, LESS, Markdown, PHP, Python, Ruby, SCSS, SVG, Stylus, i XML."
     }
   },
   "devDependencies": {
