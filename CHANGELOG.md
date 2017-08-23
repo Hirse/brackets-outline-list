@@ -7,6 +7,9 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 ### Added
 - Polish translation, thanks to [__@MajkelKorczak__](https://github.com/MajkelKorczak)
 
+### Fixed
+- Support Python `**kwargs` (see [#96](https://github.com/Hirse/brackets-outline-list/issues/96))
+
 
 ## 1.2.0 - 2017-04-24
 ### Fixed

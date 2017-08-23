@@ -1,0 +1,2 @@
+def whoami(**kwargs):
+    pass
