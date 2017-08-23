@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 
-## Unreleased
+## 1.3.0 - 2017-08-23
 ### Added
 - Polish translation, thanks to [__@MajkelKorczak__](https://github.com/MajkelKorczak)
 
