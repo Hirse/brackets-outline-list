@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 
+## 1.3.1 - 2017-08-25
+### Fixed
+- Support Python default parameter floats (see [#97](https://github.com/Hirse/brackets-outline-list/issues/97))
+
+
 ## 1.3.0 - 2017-08-23
 ### Added
 - Polish translation, thanks to [__@MajkelKorczak__](https://github.com/MajkelKorczak)

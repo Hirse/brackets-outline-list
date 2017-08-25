@@ -1,5 +1,8 @@
-def whoami(dummy=0):
+def default(dummy=0):
     pass
 
-def whoami(dummy = 0):
+def defaultWithSpaces(dummy = 0):
+    pass
+
+def defaultFloat(dummy=0.1):
     pass
