@@ -20,24 +20,25 @@ define(function (require, exports, module) {
 
     /* beautify preserve:start *//* eslint-disable key-spacing */
     var languageMapping = {
-        JavaScript:          "JavaScript",
-        JSX:                 "JavaScript",
-        Haxe:                "Haxe",
-        CoffeeScript:        "CoffeeScript",
-        CSS:                 "CSS",
-        SCSS:                "CSS",
-        LESS:                "CSS",
-        Stylus:              "Stylus",
-        PHP:                 "PHP",
-        Ruby:                "Ruby",
-        Python:              "Python",
-        Markdown:            "Markdown",
-        "Markdown (GitHub)": "Markdown",
-        XML:                 "XML",
-        HTML:                "XML",
-        "Embedded Ruby":     "XML",
-        SVG:                 "XML",
-        Jade:                "Jade"
+        JavaScript:           "JavaScript",
+        JSX:                  "JavaScript",
+        Haxe:                 "Haxe",
+        CoffeeScript:         "CoffeeScript",
+        CSS:                  "CSS",
+        SCSS:                 "CSS",
+        LESS:                 "CSS",
+        Stylus:               "Stylus",
+        PHP:                  "PHP",
+        Ruby:                 "Ruby",
+        Python:               "Python",
+        Markdown:             "Markdown",
+        "Markdown (GitHub)":  "Markdown",
+        XML:                  "XML",
+        HTML:                 "XML",
+        "Embedded Ruby":      "XML",
+        SVG:                  "XML",
+        "Vue component file": "XML",
+        Jade:                 "Jade"
     };
     /* eslint-enable key-spacing *//* beautify preserve:end */
 

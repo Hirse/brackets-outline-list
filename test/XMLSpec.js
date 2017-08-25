@@ -149,5 +149,32 @@ define(function XMLSpec(require) {
                 done();
             });
         });
+
+
+        it("detects html in vue", function (done) {
+            var test = require("text!example/html/vue.vue");
+            Parser.parse(test).then(function (result) {
+                expect(result).toEqual([
+                    {
+                        name: "template",
+                        namespace: "",
+                        level: 0,
+                        id: "",
+                        class: [],
+                        line: 1,
+                        ch: 0
+                    }, {
+                        name: "div",
+                        namespace: "",
+                        level: 1,
+                        id: "",
+                        class: [],
+                        line: 2,
+                        ch: 4
+                    }
+                ]);
+                done();
+            });
+        });
     });
 });
