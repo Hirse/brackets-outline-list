@@ -62,7 +62,7 @@
   "devDependencies": {
     "codeclimate-test-reporter": "0.x.x",
     "csslint": "1.x.x",
-    "eslint": "3.x.x",
+    "eslint": "4.x.x",
     "grunt": "1.x.x",
     "grunt-contrib-compress": "1.x.x",
     "htmlhint": "0.x.x",
