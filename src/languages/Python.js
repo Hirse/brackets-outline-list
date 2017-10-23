@@ -61,7 +61,7 @@ define(function Python(require, exports, module) {
      */
     function getOutlineList(text) {
         var lines = text.split("\n");
-        var regex = /^([ \t]*)(class|def) +(\w+) *(\([\w, =*.]*\))?:$/g;
+        var regex = /^([ \t]*)(class|def) +(\w+) *(\([\w, =*.]*\))?:[ \t]*(?:#.*)?$/g;
         var result = [];
         lines.forEach(function (line, index) {
             var match = regex.exec(line);
