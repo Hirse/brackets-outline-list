@@ -62,7 +62,7 @@ Used thirdparty software:
 
 [Brackets]: http://brackets.io
 [Brackets Extension Manager]: https://github.com/adobe/brackets/wiki/Brackets-Extensions
-[Brackets Extension Registry]: https://brackets-registry.aboutweb.com
+[Brackets Extension Registry]: https://registry.brackets.io
 [Brackets npm Registry]: https://github.com/zaggino/brackets-npm-registry
 
 [Espree]: https://github.com/eslint/espree
