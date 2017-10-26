@@ -256,5 +256,11 @@ define(function JavaScriptSpec(require) {
                 }
             ]);
         });
+
+        it("103 - object rest/spread", function () {
+            var test = require("text!example/javascript/103-objectSpread.js");
+            var result = Parser.parse(test);
+            expect(result).toEqual([]);
+        });
     });
 });

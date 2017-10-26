@@ -146,7 +146,8 @@ define(function JSParser(require, exports, module) {
                 ecmaVersion: 8,
                 sourceType: "module",
                 ecmaFeatures: {
-                    jsx: true
+                    jsx: true,
+                    experimentalObjectRestSpread: true
                 }
             });
         } catch (error) {
