@@ -14,7 +14,7 @@ define(function (require, exports, module) {
     var $mainView = $(".main-view");
     var isExposed = false;
     var sidebarPlusTransitionRemoved = false;
-    var scrollBackup;
+    var scrollTop;
 
 
     /**
@@ -95,7 +95,9 @@ define(function (require, exports, module) {
             removeSidebarPlusTransition();
             hidePlaceholder();
             OutlineManager.showOutline();
-            $("#outline-list").scrollTop(scrollBackup);
+            if (scrollTop) {
+                $("#outline-list").scrollTop(scrollTop);
+            }
             var $outline = $("#outline");
             $outline.css("visibility", "hidden");
             isExposed = true;
@@ -107,7 +109,7 @@ define(function (require, exports, module) {
      */
     function coverOutline() {
         if (isExposed) {
-            scrollBackup = $("#outline-list").scrollTop();
+            scrollTop = $("#outline-list").scrollTop();
             removeSidebarPlusTransition();
             OutlineManager.hideOutline();
             showPlaceholder();
