@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 
+## 1.4.2 - 2018-10-22
+### Fixed
+- Remember scrollTop of panel when using autohide (see [#106](https://github.com/Hirse/brackets-outline-list/issues/106)), thanks to [__@pelatx__](https://github.com/pelatx)
+
+
 ## 1.4.1 - 2017-10-25
 ### Fixed
 - Support Python comments after function definitions (see [#99](https://github.com/Hirse/brackets-outline-list/issues/99)), thanks to [__@pelatx__](https://github.com/pelatx)
