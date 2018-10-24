@@ -15,6 +15,7 @@ define(function (require, exports, module) {
     var isExposed = false;
     var sidebarPlusTransitionRemoved = false;
     var scrollTop;
+    var exposeDelay = prefs.get("delay");
 
 
     /**
@@ -60,20 +61,6 @@ define(function (require, exports, module) {
     }
 
     /**
-     * Insert a placeholder on right.
-     */
-    function showPlaceholder() {
-        var toolbarPx = $("#main-toolbar:visible").width() || 0;
-        $mainView.append($placeholder);
-        $placeholder.css("width", "20px");
-        $placeholder.css("right", toolbarPx + "px");
-        $content.css("right", ($placeholder.width() || 0) + toolbarPx + "px");
-        $content.bind("transitionend.outline", function () {
-            addSidebarPlusTransition();
-        });
-    }
-
-    /**
      * Remove the placeholder.
      */
     function hidePlaceholder() {
@@ -105,6 +92,36 @@ define(function (require, exports, module) {
     }
 
     /**
+     * Insert a placeholder on right.
+     */
+    function showPlaceholder() {
+        var toolbarPx = $("#main-toolbar:visible").width() || 0;
+        $mainView.append($placeholder);
+        $placeholder.css("width", "20px");
+        $placeholder.css("right", toolbarPx + "px");
+        $content.css("right", ($placeholder.width() || 0) + toolbarPx + "px");
+        $content.bind("transitionend.outline", function () {
+            addSidebarPlusTransition();
+        });
+        $placeholder.hover(function () {
+            var timer = $(this).data("hover");
+            if (!timer) {
+                timer = setTimeout(function () {
+                    exposeOutline();
+                    $(this).data("hover", null);
+                }, exposeDelay);
+                $(this).data("hover", timer);
+            }
+        }, function () {
+            var timer = $(this).data("hover");
+            if (timer) {
+                clearTimeout(timer);
+                $(this).data("hover", null);
+            }
+        });
+    }
+
+    /**
      * Hide the Outline and show the placeholder.
      */
     function coverOutline() {
@@ -113,7 +130,6 @@ define(function (require, exports, module) {
             removeSidebarPlusTransition();
             OutlineManager.hideOutline();
             showPlaceholder();
-            $placeholder.on("mouseover", exposeOutline);
             isExposed = false;
         }
     }

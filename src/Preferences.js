@@ -73,6 +73,10 @@ define(function Preferences(require, exports, module) {
                 name: Strings.PREF_AUTOHIDE_NAME,
                 description: Strings.PREF_AUTOHIDE_DESC
             }
+        }, {
+            id: "delay",
+            type: "number",
+            value: 500
         }
     ];
 
