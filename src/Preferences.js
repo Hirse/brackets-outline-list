@@ -74,9 +74,13 @@ define(function Preferences(require, exports, module) {
                 description: Strings.PREF_AUTOHIDE_DESC
             }
         }, {
-            id: "delay",
+            id: "autohideDelay",
             type: "number",
-            value: 500
+            value: 300,
+            options: {
+                name: Strings.PREF_AUTOHIDE_DELAY_NAME,
+                description: Strings.PREF_AUTOHIDE_DELAY_DESC
+            }
         }
     ];
 

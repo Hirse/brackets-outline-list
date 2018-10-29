@@ -28,5 +28,7 @@ define({
     PREF_INDENT_NAME: "Outline - Indentar",
     PREF_INDENT_DESC: "Verdadero para indentar las entradas en el Outline List",
     PREF_AUTOHIDE_NAME: "Outline - Auto-ocultar",
-    PREF_AUTOHIDE_DESC: "Verdadero para habilitar Auto-ocultar del Outline List"
+    PREF_AUTOHIDE_DESC: "Verdadero para habilitar Auto-ocultar del Outline List",
+    PREF_AUTOHIDE_DELAY_NAME: "Outline - Retardo en Auto-ocultar",
+    PREF_AUTOHIDE_DELAY_DESC: "Milisegundos para que se muestre el Outline List al poner el ratón sobre la zona de despliegue"
 });

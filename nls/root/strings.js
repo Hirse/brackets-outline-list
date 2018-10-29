@@ -28,5 +28,7 @@ define({
     PREF_INDENT_NAME: "Outline - Indent",
     PREF_INDENT_DESC: "True to indent the entries in the Outline List",
     PREF_AUTOHIDE_NAME: "Outline - Autohide",
-    PREF_AUTOHIDE_DESC: "True to enable autohide of the Outline List"
+    PREF_AUTOHIDE_DESC: "True to enable autohide of the Outline List",
+    PREF_AUTOHIDE_DELAY_NAME: "Outline - Autohide Delay",
+    PREF_AUTOHIDE_DELAY_DESC: "Milliseconds of delay for the Outline List to be exposed when the mouse is over the placeholder"
 });
