@@ -11,7 +11,7 @@ define({
     COMMAND_UNNAMED: "Pokaż nienazwane funkcje",
     COMMAND_ARGS: "Pokaż argumenty",
     COMMAND_INDENT: "Wcięcia w wpisach",
-    COMMAND_OUTLINE: "Autoukrywanie listy zarysu",
+    COMMAND_AUTOHIDE: "Autoukrywanie listy zarysu",
 
     MESSAGE_SYNTAX_ERROR: "Napraw błędy składni w pliku, aby pokazać zarys.",
 

@@ -11,7 +11,7 @@ define({
     COMMAND_UNNAMED: "Show Unnamed Functions",
     COMMAND_ARGS: "Show Arguments",
     COMMAND_INDENT: "Indent Entries",
-    COMMAND_OUTLINE: "Outline List Autohide",
+    COMMAND_AUTOHIDE: "Outline List Autohide",
 
     MESSAGE_SYNTAX_ERROR: "Fix the SyntaxErrors in the file to show the Outline.",
 

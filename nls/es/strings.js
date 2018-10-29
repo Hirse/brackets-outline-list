@@ -11,7 +11,7 @@ define({
     COMMAND_UNNAMED: "Mostrar funciones anónimas",
     COMMAND_ARGS: "Mostrar argumentos",
     COMMAND_INDENT: "Indentar Entradas",
-    COMMAND_OUTLINE: "Outline List Auto-ocultar",
+    COMMAND_AUTOHIDE: "Outline List Auto-ocultar",
 
     MESSAGE_SYNTAX_ERROR: "Arregla los errores de sintaxis en el archivo para ver el Outline.",
 

@@ -11,6 +11,7 @@ define({
     COMMAND_UNNAMED: "Anonyme Funktionen anzeigen",
     COMMAND_ARGS: "Argumente anzeigen",
     COMMAND_INDENT: "Einträge einrücken",
+    COMMAND_AUTOHIDE: "Outline automatisch verstecken",
 
     MESSAGE_SYNTAX_ERROR: "Die Outline kann nicht angezeigt werden, solange die Datei Fehler enthält.",
 
@@ -25,5 +26,9 @@ define({
     PREF_SORT_NAME: "Outline - Sortierung",
     PREF_SORT_DESC: "True, um die Einträge in der Outline Liste zu sortieren",
     PREF_INDENT_NAME: "Outline - Einrückung",
-    PREF_INDENT_DESC: "True, um die Einträge in der Outline einzurücken"
+    PREF_INDENT_DESC: "True, um die Einträge in der Outline einzurücken",
+    PREF_AUTOHIDE_NAME: "Outline - Auto-Verstecken",
+    PREF_AUTOHIDE_DESC: "True, um die Outline Liste automatisch zu verstecken",
+    PREF_AUTOHIDE_DELAY_NAME: "Outline - Auto-Verstecken Verzögerung",
+    PREF_AUTOHIDE_DELAY_DESC: "Verzögerung in Millisekunden bevor die Outline Liste angezeigt wird"
 });

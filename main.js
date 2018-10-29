@@ -190,7 +190,7 @@ define(function (require, exports, module) {
 
     OutlineManager.onSelect(handleSelect);
 
-    CommandManager.register(Strings.COMMAND_OUTLINE, "outline.autohide", toggleAutohide);
+    CommandManager.register(Strings.COMMAND_AUTOHIDE, "outline.autohide", toggleAutohide);
     var menu = Menus.getMenu(Menus.AppMenuBar.VIEW_MENU);
     menu.addMenuItem("outline.autohide");
     CommandManager.get("outline.autohide").setChecked(prefs.get("autohide"));
