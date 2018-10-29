@@ -102,6 +102,7 @@
     padding-left: 14px;
 }
 
+
 /* === Outline Autohide === */
 
 #outline-autohide-placeholder {
@@ -109,12 +110,18 @@
     bottom: 0;
     position: absolute;
     top: 0;
+    width: 20px;
+}
+
+#outline-autohide-placeholder:hover {
+    background-color: #858383;
 }
 
 .outline-autohide-content {
     -webkit-transition: right 0.2s ease-out;
     transition: right 0.2s ease-out;
 }
+
 
 /* ==== Outline Entries ==== */
 

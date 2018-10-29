@@ -95,15 +95,12 @@ define(function (require, exports, module) {
     function showPlaceholder() {
         var toolbarPx = $("#main-toolbar:visible").width() || 0;
         $mainView.append($placeholder);
-        $placeholder.css("width", "20px");
         $placeholder.css("right", toolbarPx + "px");
-        $placeholder.css("background-color", "");
         $content.css("right", ($placeholder.width() || 0) + toolbarPx + "px");
         $content.bind("transitionend.outline", function () {
             addSidebarPlusTransition();
         });
         $placeholder.hover(function () {
-            $placeholder.css("background-color", "#858383");
             var timer = $(this).data("expose-delay-timer");
             if (!timer) {
                 timer = setTimeout(function () {
@@ -113,7 +110,6 @@ define(function (require, exports, module) {
                 $(this).data("expose-delay-timer", timer);
             }
         }, function () {
-            $placeholder.css("background-color", "");
             var timer = $(this).data("expose-delay-timer");
             if (timer) {
                 clearTimeout(timer);
