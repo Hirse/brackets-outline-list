@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 
+## Unreleased
+### Added
+- Add a configurable delay on the autohide placeholder (see [#106](https://github.com/Hirse/brackets-outline-list/issues/106)), thanks to [__@pelatx__](https://github.com/pelatx)
+
+
 ## 1.4.2 - 2018-10-22
 ### Fixed
 - Remember scrollTop of panel when using autohide (see [#106](https://github.com/Hirse/brackets-outline-list/issues/106)), thanks to [__@pelatx__](https://github.com/pelatx)
