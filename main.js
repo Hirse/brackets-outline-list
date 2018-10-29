@@ -156,6 +156,13 @@ define(function (require, exports, module) {
         }
     }
 
+    /**
+     * Get the current value of the autohide delay from the preferences.
+     */
+    function handleAutohideDelayChange() {
+        Autohide.setDelay(prefs.get("autohideDelay"));
+    }
+
     function toggleAutohide() {
         var state = prefs.togglePref("autohide");
         CommandManager.get("outline.autohide").setChecked(state);
@@ -163,9 +170,7 @@ define(function (require, exports, module) {
 
     prefs.onChange("autohide", handleAutohideChange);
 
-    prefs.onChange("autohideDelay", function () {
-        Autohide.reset();
-    });
+    prefs.onChange("autohideDelay", handleAutohideDelayChange);
 
     prefs.onChange("enabled", handleEnabledChange);
 

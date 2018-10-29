@@ -139,7 +139,6 @@ define(function (require, exports, module) {
             $content.on("mouseover", coverOutline);
             if (prefs.get("enabled")) {
                 isExposed = true;
-                exposeDelay = prefs.get("autohideDelay");
                 coverOutline();
                 enableContentTransition();
             }
@@ -175,9 +174,18 @@ define(function (require, exports, module) {
         enable();
     }
 
+    /**
+     * Update the autohide delay on the placeholder.
+     * @param {number} delay New delay in ms.
+     */
+    function setDelay(delay) {
+        exposeDelay = delay;
+    }
+
     module.exports = {
         enable: enable,
         disable: disable,
-        reset: reset
+        reset: reset,
+        setDelay: setDelay
     };
 });
