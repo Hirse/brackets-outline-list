@@ -15,6 +15,7 @@ define(function (require, exports, module) {
     var isExposed = false;
     var sidebarPlusTransitionRemoved = false;
     var scrollTop;
+    var exposeDelay;
 
 
     /**
@@ -60,20 +61,6 @@ define(function (require, exports, module) {
     }
 
     /**
-     * Insert a placeholder on right.
-     */
-    function showPlaceholder() {
-        var toolbarPx = $("#main-toolbar:visible").width() || 0;
-        $mainView.append($placeholder);
-        $placeholder.css("width", "20px");
-        $placeholder.css("right", toolbarPx + "px");
-        $content.css("right", ($placeholder.width() || 0) + toolbarPx + "px");
-        $content.bind("transitionend.outline", function () {
-            addSidebarPlusTransition();
-        });
-    }
-
-    /**
      * Remove the placeholder.
      */
     function hidePlaceholder() {
@@ -88,8 +75,7 @@ define(function (require, exports, module) {
     function exposeOutline() {
         if (!isExposed) {
             $content.bind("transitionend.outline", function () {
-                var $outline = $("#outline");
-                $outline.css("visibility", "visible");
+                $("#outline").css("visibility", "visible");
                 addSidebarPlusTransition();
             });
             removeSidebarPlusTransition();
@@ -98,10 +84,42 @@ define(function (require, exports, module) {
             if (scrollTop) {
                 $("#outline-list").scrollTop(scrollTop);
             }
-            var $outline = $("#outline");
-            $outline.css("visibility", "hidden");
+            $("#outline").css("visibility", "hidden");
             isExposed = true;
         }
+    }
+
+    /**
+     * Insert a placeholder on right.
+     */
+    function showPlaceholder() {
+        var toolbarPx = $("#main-toolbar:visible").width() || 0;
+        $mainView.append($placeholder);
+        $placeholder.css("width", "20px");
+        $placeholder.css("right", toolbarPx + "px");
+        $placeholder.css("background-color", "");
+        $content.css("right", ($placeholder.width() || 0) + toolbarPx + "px");
+        $content.bind("transitionend.outline", function () {
+            addSidebarPlusTransition();
+        });
+        $placeholder.hover(function () {
+            $placeholder.css("background-color", "#858383");
+            var timer = $(this).data("expose-delay-timer");
+            if (!timer) {
+                timer = setTimeout(function () {
+                    exposeOutline();
+                    $(this).data("expose-delay-timer", null);
+                }, exposeDelay);
+                $(this).data("expose-delay-timer", timer);
+            }
+        }, function () {
+            $placeholder.css("background-color", "");
+            var timer = $(this).data("expose-delay-timer");
+            if (timer) {
+                clearTimeout(timer);
+                $(this).data("expose-delay-timer", null);
+            }
+        });
     }
 
     /**
@@ -113,7 +131,6 @@ define(function (require, exports, module) {
             removeSidebarPlusTransition();
             OutlineManager.hideOutline();
             showPlaceholder();
-            $placeholder.on("mouseover", exposeOutline);
             isExposed = false;
         }
     }
@@ -126,6 +143,7 @@ define(function (require, exports, module) {
             $content.on("mouseover", coverOutline);
             if (prefs.get("enabled")) {
                 isExposed = true;
+                exposeDelay = prefs.get("autohideDelay");
                 coverOutline();
                 enableContentTransition();
             }
@@ -137,7 +155,6 @@ define(function (require, exports, module) {
      */
     function disable() {
         $content.off("mouseover", coverOutline);
-        $placeholder.off("mouseover", exposeOutline);
         if (prefs.get("enabled") && !isExposed) {
             hidePlaceholder();
             OutlineManager.showOutline();

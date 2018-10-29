@@ -163,6 +163,10 @@ define(function (require, exports, module) {
 
     prefs.onChange("autohide", handleAutohideChange);
 
+    prefs.onChange("autohideDelay", function () {
+        Autohide.reset();
+    });
+
     prefs.onChange("enabled", handleEnabledChange);
 
     prefs.onChange("sidebar", handleSidebarChange);
