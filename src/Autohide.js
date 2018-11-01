@@ -191,7 +191,7 @@ define(function (require, exports, module) {
             brackets.DIALOG_ID_SAVE_CLOSE,
             Strings.AUTOHIDE_DELAY_MODAL_TITLE,
             Mustache.render(sliderTemplate, {
-                exposeDelay: exposeDelay
+                exposeDelay: exposeDelay + Strings.AUTOHIDE_DELAY_MODAL_MS_LABEL
             }),
             [{
                 className: Dialogs.DIALOG_BTN_CLASS_PRIMARY,
