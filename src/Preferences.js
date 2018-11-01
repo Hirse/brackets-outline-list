@@ -127,6 +127,15 @@ define(function Preferences(require, exports, module) {
     }
 
     /**
+     * Set a preference by id.
+     * @param   {string} id Preference id without prefix.
+     * @param   {any} value New value.
+     */
+    function set(id, value) {
+        prefs.set(id, value);
+    }
+
+    /**
      * Set up a listener for the change event on a preference.
      * @param {string}   id      Preference Id.
      * @param {function} handler Handler function.
@@ -137,6 +146,7 @@ define(function Preferences(require, exports, module) {
 
     module.exports = {
         get: get,
+        set: set,
         getSettings: getSettings,
         togglePref: togglePref,
         onChange: onChange

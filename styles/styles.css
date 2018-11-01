@@ -4,9 +4,9 @@
     font-weight: normal;
     src: url("fonts/ionicons.eot?v=2.0.0");
     src: url("fonts/ionicons.eot?v=2.0.0#iefix") format("embedded-opentype"),
-         url("fonts/ionicons.ttf?v=2.0.0") format("truetype"),
-         url("fonts/ionicons.woff?v=2.0.0") format("woff"),
-         url("fonts/ionicons.svg?v=2.0.0#Ionicons") format("svg");
+        url("fonts/ionicons.ttf?v=2.0.0") format("truetype"),
+        url("fonts/ionicons.woff?v=2.0.0") format("woff"),
+        url("fonts/ionicons.svg?v=2.0.0#Ionicons") format("svg");
 }
 
 
@@ -122,6 +122,37 @@
     transition: right 0.2s ease-out;
 }
 
+#outline-delay-slider {
+    -webkit-appearance: none;
+    margin: 18px 0;
+    width: 100%;
+}
+
+#outline-delay-slider:focus {
+  outline: none;
+}
+
+#outline-delay-slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    background: #3071a9;
+    border-radius: 1.3px;
+    border: 0.2px solid #010101;
+}
+
+#outline-delay-slider::-webkit-slider-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 26px;
+    width: 12px;
+    border-radius: 3px;
+    background: #ffffff;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -10px;
+}
 
 /* ==== Outline Entries ==== */
 
