@@ -33,7 +33,7 @@ define({
     PREF_AUTOHIDE_DELAY_NAME: "Outline - Retardo en Auto-ocultar",
     PREF_AUTOHIDE_DELAY_DESC: "Milisegundos para que se muestre el Outline List al poner el ratón sobre la zona de despliegue",
 
-    AUTOHIDE_DELAY_MODAL_TITLE: "Outline - Retardo de Auto-ocultar",
+    AUTOHIDE_DELAY_MODAL_TITLE: "Outline List - Retardo de Auto-ocultar",
     AUTOHIDE_DELAY_MODAL_BUTTON_CANCEL: "Cancelar",
     AUTOHIDE_DELAY_MODAL_BUTTON_PROCEED: "Proceder",
     AUTOHIDE_DELAY_MODAL_MS_LABEL: " milisegundos"
