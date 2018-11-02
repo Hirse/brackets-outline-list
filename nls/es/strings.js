@@ -11,8 +11,8 @@ define({
     COMMAND_UNNAMED: "Mostrar funciones anónimas",
     COMMAND_ARGS: "Mostrar argumentos",
     COMMAND_INDENT: "Indentar Entradas",
-    COMMAND_AUTOHIDE: "Outline List (Activar Auto-ocultar)",
-    COMMAND_AUTOHIDE_DELAY: "Outline List (Retardo Auto-ocultar)",
+    COMMAND_AUTOHIDE: "Auto-ocultar Outline List",
+    COMMAND_AUTOHIDE_DELAY: "Ajustar Retardo de Auto-ocultar de Outline List",
 
     MESSAGE_SYNTAX_ERROR: "Arregla los errores de sintaxis en el archivo para ver el Outline.",
 
@@ -34,7 +34,5 @@ define({
     PREF_AUTOHIDE_DELAY_DESC: "Milisegundos para que se muestre el Outline List al poner el ratón sobre la zona de despliegue",
 
     AUTOHIDE_DELAY_MODAL_TITLE: "Outline List - Retardo de Auto-ocultar",
-    AUTOHIDE_DELAY_MODAL_BUTTON_CANCEL: "Cancelar",
-    AUTOHIDE_DELAY_MODAL_BUTTON_PROCEED: "Proceder",
     AUTOHIDE_DELAY_MODAL_MS_LABEL: " milisegundos"
 });

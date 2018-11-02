@@ -11,8 +11,8 @@ define({
     COMMAND_UNNAMED: "Show Unnamed Functions",
     COMMAND_ARGS: "Show Arguments",
     COMMAND_INDENT: "Indent Entries",
-    COMMAND_AUTOHIDE: "Outline List (Enable Autohide)",
-    COMMAND_AUTOHIDE_DELAY: "Outline List (Autohide delay)",
+    COMMAND_AUTOHIDE: "Autohide Outline List",
+    COMMAND_AUTOHIDE_DELAY: "Set Outline List Autohide Delay",
 
     MESSAGE_SYNTAX_ERROR: "Fix the SyntaxErrors in the file to show the Outline.",
 
@@ -34,7 +34,5 @@ define({
     PREF_AUTOHIDE_DELAY_DESC: "Milliseconds of delay for the Outline List to be exposed when the mouse is over the placeholder",
 
     AUTOHIDE_DELAY_MODAL_TITLE: "Outline List - Autohide Expose Delay",
-    AUTOHIDE_DELAY_MODAL_BUTTON_CANCEL: "Cancel",
-    AUTOHIDE_DELAY_MODAL_BUTTON_PROCEED: "Proceed",
     AUTOHIDE_DELAY_MODAL_MS_LABEL: " milliseconds"
 });

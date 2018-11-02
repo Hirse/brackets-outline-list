@@ -191,38 +191,42 @@ define(function (require, exports, module) {
             brackets.DIALOG_ID_SAVE_CLOSE,
             Strings.AUTOHIDE_DELAY_MODAL_TITLE,
             Mustache.render(sliderTemplate, {
-                exposeDelay: exposeDelay + Strings.AUTOHIDE_DELAY_MODAL_MS_LABEL
-            }),
-            [{
-                className: Dialogs.DIALOG_BTN_CLASS_PRIMARY,
-                id: "outline.cancel",
-                text: Strings.AUTOHIDE_DELAY_MODAL_BUTTON_CANCEL
-            },
-            {
-                className: Dialogs.DIALOG_BTN_CLASS_PRIMARY,
-                id: "outline.proceed",
-                text: Strings.AUTOHIDE_DELAY_MODAL_BUTTON_PROCEED
-            }],
-            false
+                exposeDelay: exposeDelay,
+                millisecondsLabel: Strings.AUTOHIDE_DELAY_MODAL_MS_LABEL
+            })
         );
 
-        // Cancel button handler
-        var $btnCancel = $(".dialog-button").filter('[data-button-id="outline.cancel"]');
-        $btnCancel.click(function () {
-            Dialog.close();
+        var $slider = $("#outline-delay-slider");
+        var $inputbox = $("#outline-delay-inputbox");
+        var inputboxCurrentValue = $inputbox.val();
+
+        Dialog.done(function (buttonId) {
+            if (buttonId === "ok") {
+                prefs.set("autohideDelay", $slider.val());
+            }
         });
 
         // Slider change handler
-        var $slider = $("#outline-delay-slider");
         $slider.on("input", function () {
-            $("#current-selected-delay").text($slider.val() + Strings.AUTOHIDE_DELAY_MODAL_MS_LABEL);
+            inputboxCurrentValue = $slider.val();
+            $inputbox.val(inputboxCurrentValue);
         });
 
-        // Proceed button handler
-        var $btnProceed = $(".dialog-button").filter('[data-button-id="outline.proceed"]');
-        $btnProceed.click(function () {
-            prefs.set("autohideDelay", $slider.val());
-            Dialog.close();
+        // Inputbox handler
+        $inputbox.keyup(function (ev) {
+            if ((ev.keyCode < 48 || ev.keyCode > 57) && ev.keyCode !== 8) {
+                $(this).val(parseInt(inputboxCurrentValue, 10));
+            } else if ($(this).val() < 0 || $(this).val() > 1000) {
+                $(this).val(parseInt(inputboxCurrentValue, 10));
+            } else {
+                if ($(this).val() === "") {
+                    $(this).val(0);
+                }
+                var parsed = parseInt($(this).val(), 10);
+                $(this).val(parsed);
+                inputboxCurrentValue = parsed;
+                $slider.val(inputboxCurrentValue);
+            }
         });
     }
 
