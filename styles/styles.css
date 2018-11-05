@@ -122,6 +122,9 @@
     transition: right 0.2s ease-out;
 }
 
+
+/* ==== Outline Autohide Delay Dialog ==== */
+
 #outline-delay-slider {
     -moz-appearance: none;
     -webkit-appearance: none;
