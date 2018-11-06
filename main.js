@@ -191,7 +191,9 @@ define(function (require, exports, module) {
     OutlineManager.onSelect(handleSelect);
 
     CommandManager.register(Strings.COMMAND_AUTOHIDE, "outline.autohide", toggleAutohide);
+    CommandManager.register(Strings.COMMAND_AUTOHIDE_DELAY, "outline.autohide.delay", Autohide.showDelayDialog);
     var menu = Menus.getMenu(Menus.AppMenuBar.VIEW_MENU);
     menu.addMenuItem("outline.autohide");
+    menu.addMenuItem("outline.autohide.delay");
     CommandManager.get("outline.autohide").setChecked(prefs.get("autohide"));
 });

@@ -123,6 +123,41 @@
 }
 
 
+/* ==== Outline Autohide Delay Dialog ==== */
+
+#outline-delay-slider {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    margin: 18px 0;
+    width: 100%;
+}
+
+#outline-delay-slider::-webkit-slider-runnable-track {
+    background: #47484b;
+    border-radius: 1.3px;
+    box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
+    cursor: grab;
+    height: 4px;
+    width: 100%;
+}
+
+
+#outline-delay-slider::-webkit-slider-thumb {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: #368ac7;
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
+    cursor: grab;
+    height: 22px;
+    margin-top: -8px;
+    width: 10px;
+}
+
+#outline-delay-inputbox {
+    width: 60px;
+}
+
 /* ==== Outline Entries ==== */
 
 .outline-entry {

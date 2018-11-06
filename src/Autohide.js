@@ -3,10 +3,14 @@ define(function (require, exports, module) {
 
     /* beautify preserve:start *//* eslint-disable no-multi-spaces */
     var Mustache            = brackets.getModule("thirdparty/mustache/mustache");
+    var Dialogs             = brackets.getModule("widgets/Dialogs");
 
     var OutlineManager      = require("src/OutlineManager");
     var prefs               = require("src/Preferences");
+    var Strings             = require("strings");
+
     var placeholderTemplate = require("text!templates/placeholder.html");
+    var delayDialogTemplate = require("text!templates/delayDialog.html");
     /* eslint-enable no-multi-spaces *//* beautify preserve:end */
 
     var $placeholder = $(Mustache.render(placeholderTemplate));
@@ -182,10 +186,59 @@ define(function (require, exports, module) {
         exposeDelay = delay;
     }
 
+    function showDelayDialog() {
+        var Dialog = Dialogs.showModalDialog(
+            brackets.DIALOG_ID_SAVE_CLOSE,
+            Strings.AUTOHIDE_DELAY_MODAL_TITLE,
+            Mustache.render(delayDialogTemplate, {
+                description: Strings.PREF_AUTOHIDE_DELAY_DESC,
+                exposeDelay: exposeDelay,
+                millisecondsLabel: Strings.AUTOHIDE_DELAY_MODAL_MS_LABEL
+            })
+        );
+
+        var $slider = $("#outline-delay-slider");
+        var $inputbox = $("#outline-delay-inputbox");
+        var currentValue = exposeDelay;
+
+        Dialog.done(function (buttonId) {
+            if (buttonId === Dialogs.DIALOG_BTN_OK) {
+                prefs.set("autohideDelay", currentValue);
+            }
+        });
+
+        // Slider change handler
+        $slider.on("input", function () {
+            currentValue = parseInt($slider.val(), 10);
+            $inputbox.val(currentValue);
+        });
+
+        // Inputbox focus handler
+        $inputbox.focus(function () {
+            $(this).select();
+        });
+
+        // Inputbox handler to ensure a valid value in any case
+        $inputbox.on("input", function () {
+            var parsed = parseInt($(this).val(), 10);
+            if (!$.isNumeric(parsed)) {
+                parsed = 0;
+            }
+            if (parsed > 1000) {
+                currentValue = 1000;
+                $(this).val(currentValue);
+            } else {
+                currentValue = parsed;
+            }
+            $slider.val(currentValue);
+        });
+    }
+
     module.exports = {
         enable: enable,
         disable: disable,
         reset: reset,
-        setDelay: setDelay
+        setDelay: setDelay,
+        showDelayDialog: showDelayDialog
     };
 });
