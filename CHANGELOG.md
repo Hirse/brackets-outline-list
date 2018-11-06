@@ -6,6 +6,7 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 ### Added
 - Add a configurable delay on the autohide placeholder (see [#106](https://github.com/Hirse/brackets-outline-list/issues/106)), thanks to [__@pelatx__](https://github.com/pelatx)
+- Set the configurable delay on the autohide placeholder in a modal dialog, thanks to [__@pelatx__](https://github.com/pelatx)
 
 
 ## 1.4.2 - 2018-10-22
