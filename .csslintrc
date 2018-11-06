@@ -1,11 +1,11 @@
 --errors=
-    box-model,
     display-property-grouping,
     duplicate-properties,
     empty-rules,
     known-properties
 
 --warnings=
+    box-model,
     compatible-vendor-prefixes,
     gradients,
     text-indent,
