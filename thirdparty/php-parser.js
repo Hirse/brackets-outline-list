@@ -1,216 +1,25 @@
-/*
- * php-parser version 2.0.0
- * (browserified with Browserify version 14.3.0)
- * 
- * Copyright (c) 2014, Glayzzle
- * All rights reserved.
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.phpParser = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+/*!
+ * Determine if an object is a Buffer
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * * Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer.
- *
- * * Redistributions in binary form must reproduce the above copyright notice,
- *   this list of conditions and the following disclaimer in the documentation
- *   and/or other materials provided with the distribution.
- *
- * * Neither the name of test-bsd nor the names of its
- *   contributors may be used to endorse or promote products derived from
- *   this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
  */
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.phpparser = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-// shim for using process in browser
-var process = module.exports = {};
 
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
+// The _isBuffer check is for Safari 5-7 support, because it's missing
+// Object.prototype.constructor. Remove this eventually
+module.exports = function (obj) {
+  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
 }
 
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
+function isBuffer (obj) {
+  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
 }
 
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
+// For Node v0.10 support. Remove this eventually.
+function isSlowBuffer (obj) {
+  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
 
 },{}],2:[function(require,module,exports){
 /*!
@@ -339,6 +148,109 @@ AST.prototype.position = function(parser) {
   );
 };
 
+
+// operators in ascending order of precedence
+AST.precedence = {};
+var binOperatorsPrecedence = [
+  ['or'],
+  ['xor'],
+  ['and'],
+  ['='],
+  ['?'],
+  ['??'],
+  ['||'],
+  ['&&'],
+  ['|'],
+  ['^'],
+  ['&'],
+  ['==', '!=', '===', '!==', /* '<>', */ '<=>'],
+  ['<', '<=', '>', '>='],
+  ['<<', '>>'],
+  ['+', '-', '.'],
+  ['*', '/', '%'],
+  ['!'],
+  ['instanceof'],
+  // TODO: typecasts
+  // TODO: [ (array)
+  // TODO: clone, new
+].forEach(function (list, index) {
+  list.forEach(function (operator) {
+    AST.precedence[operator] = index + 1;
+  });
+});
+
+
+/**
+ * Check and fix precence, by default using right
+ */
+AST.prototype.resolvePrecedence = function(result) {
+  var buffer;
+  // handling precendence
+  if (result.kind === 'bin') {
+    if (result.right) {
+      if (result.right.kind === 'bin') {
+        var lLevel = AST.precedence[result.type];
+        var rLevel = AST.precedence[result.right.type];
+        if (lLevel && rLevel && rLevel <= lLevel) {
+          // https://github.com/glayzzle/php-parser/issues/79
+          // shift precedence
+          buffer = result.right;
+          result.right = result.right.left;
+          buffer.left = this.resolvePrecedence(result);
+          result = buffer;
+        }
+      } else if (result.right.kind === 'retif') {
+        var lLevel = AST.precedence[result.type];
+        var rLevel = AST.precedence['?'];
+        if (lLevel && rLevel && rLevel <= lLevel) {
+          buffer = result.right;
+          result.right = result.right.test;
+          buffer.test = this.resolvePrecedence(result);
+          result = buffer;
+        }
+      }
+    }
+  } else if (result.kind === 'unary') {
+    // https://github.com/glayzzle/php-parser/issues/75
+    if (result.what) {
+      // unary precedence is allways lower
+      if (result.what.kind === 'bin') {
+        buffer = result.what;
+        result.what = result.what.left;
+        buffer.left = this.resolvePrecedence(result);
+        result = buffer;
+      } else if (result.what.kind === 'retif') {
+        buffer = result.what;
+        result.what = result.what.test;
+        buffer.test = this.resolvePrecedence(result);
+        result = buffer;
+      }
+    }
+  } else if (result.kind === 'retif') {
+    // https://github.com/glayzzle/php-parser/issues/77
+    if (result.falseExpr && result.falseExpr.kind === 'retif') {
+      buffer = result.falseExpr;
+      result.falseExpr = buffer.test;
+      buffer.test = this.resolvePrecedence(result);
+      result = buffer;
+    }
+  } else if (result.kind === 'assign') {
+    // https://github.com/glayzzle/php-parser/issues/81
+    if (result.right && result.right.kind === 'bin') {
+      var lLevel = AST.precedence['='];
+      var rLevel = AST.precedence[result.right.type];
+      // only shifts with and, xor, or
+      if (lLevel && rLevel && rLevel < lLevel) {
+        buffer = result.right;
+        result.right = result.right.left;
+        buffer.left = result;
+        result = buffer;
+      }
+    }
+  }
+  return result;
+};
+
 /**
  * Prepares an AST node
  * @param {String|null} kind - Defines the node type
@@ -387,22 +299,7 @@ AST.prototype.prepare = function(kind, parser) {
     }
     var result = Object.create(node.prototype);
     node.apply(result, args);
-    if (
-      result.kind === 'bin' &&
-      result.right &&
-      typeof result.right.precedence === 'function'
-    ) {
-      var out = result.right.precedence(result);
-      if (out) { // shift with precedence
-        result = out;
-      }
-    } else if (result.kind === 'unary') {
-      var out = result.precedence(result.what);
-      if (out) { // shift with precedence
-        result = out;
-      }
-    }
-    return result;
+    return self.resolvePrecedence(result);
   };
 };
 
@@ -515,9 +412,31 @@ var KIND = 'array';
 /**
  * Defines an array structure
  * @constructor Array
+ * @example
+ * // PHP code :
+ * [1, 'foo' => 'bar', 3]
+ *
+ * // AST structure :
+ * {
+ *  "kind": "array",
+ *  "shortForm": true
+ *  "items": [{
+ *    "kind": "entry",
+ *    "key": null,
+ *    "value": {"kind": "number", "value": "1"}
+ *  }, {
+ *    "kind": "entry",
+ *    "key": {"kind": "string", "value": "foo", "isDoubleQuote": false},
+ *    "value": {"kind": "string", "value": "bar", "isDoubleQuote": false}
+ *  }, {
+ *    "kind": "entry",
+ *    "key": null,
+ *    "value": {"kind": "number", "value": "3"}
+ *  }]
+ * }
  * @extends {Expression}
- * @property {Entry[]} items
- * @property {boolean} shortForm
+ * @property {Entry[]} items List of array items
+ * @property {boolean} shortForm Indicate if the short array syntax is used, ex `[]` instead `array()`
  */
 var Array = Expr.extends(function Array(shortForm, items, location) {
   Expr.apply(this, [KIND, location]);
@@ -564,37 +483,6 @@ module.exports = Assign;
 
 var Operation = require('./operation');
 var KIND = 'bin';
-
-// operators in ascending order of precedence
-var binOperatorsPrecedence = [
-  ['or'],
-  ['xor'],
-  ['and'],
-  // TODO: assignment / not sure that PHP allows this with expressions
-  ['retif'],
-  ['??'],
-  ['||'],
-  ['&&'],
-  ['|'],
-  ['^'],
-  ['&'],
-  ['==', '!=', '===', '!==', /* '<>', */ '<=>'],
-  ['<', '<=', '>', '>='],
-  ['<<', '>>'],
-  ['+', '-', '.'],
-  ['*', '/', '%'],
-  ['!'],
-  ['instanceof'],
-  // TODO: typecasts
-  // TODO: [ (array)
-  // TODO: clone, new
-];
-
-/*
-x OP1 (y OP2 z)
-z OP1 (x OP2 y)
-z OP2 (x OP1 y)
-*/
 /**
  * Binary operations
  * @constructor Bin
@@ -608,25 +496,6 @@ var Bin = Operation.extends(function Bin(type, left, right, location) {
   this.type = type;
   this.left = left;
   this.right = right;
-});
-
-Bin.prototype.precedence = function(node) {
-  var lLevel = Bin.precedence[node.type];
-  var rLevel = Bin.precedence[this.type];
-  if (lLevel && rLevel && rLevel < lLevel) {
-    // shift precedence
-    node.right = this.left;
-    this.left = node;
-    return this;
-  }
-};
-
-// define nodes shifting
-Bin.precedence = {};
-binOperatorsPrecedence.forEach(function (list, index) {
-  list.forEach(function (operator) {
-    Bin.precedence[operator] = index + 1;
-  });
 });
 
 module.exports = Bin;
@@ -649,7 +518,7 @@ var KIND = 'block';
  */
 var Block = Statement.extends(function Block(kind, children, location) {
   Statement.apply(this, [kind || KIND, location]);
-  this.children = children;
+  this.children = children.filter(Boolean);
 });
 
 module.exports = Block;
@@ -905,14 +774,16 @@ var KIND = 'closure';
  * @property {boolean} byref
  * @property {boolean} nullable
  * @property {Block|null} body
+ * @property {boolean} isStatic
  */
-var Closure = Statement.extends(function Closure(args, byref, uses, type, nullable, location) {
+var Closure = Statement.extends(function Closure(args, byref, uses, type, nullable, isStatic, location) {
   Statement.apply(this, [KIND, location]);
   this.uses = uses;
   this.arguments = args;
   this.byref = byref;
   this.type = type;
   this.nullable = nullable;
+  this.isStatic = isStatic || false;
   this.body = null;
 });
 
@@ -1273,11 +1144,11 @@ var Node = require('./node');
 var KIND = 'entry';
 
 /**
- * An array entry
+ * An array entry - see [Array](#array)
  * @constructor Entry
  * @extends {Node}
- * @property {Node|null} key
- * @property {Node} value
+ * @property {Node|null} key The entry key/offset
+ * @property {Node} value The entry value
  */
 var Entry = Node.extends(function Entry(key, value, location) {
   Node.apply(this, [KIND, location]);
@@ -2302,8 +2173,6 @@ module.exports = PropertyLookup;
 
 var Statement = require('./statement');
 var KIND = 'retif';
-var Bin = require('./bin');
-var PRECEDENCE = Bin.precedence[KIND];
 
 /**
  * Defines a short if statement that returns a value
@@ -2320,26 +2189,9 @@ var RetIf = Statement.extends(function RetIf(test, trueExpr, falseExpr, location
   this.falseExpr = falseExpr;
 });
 
-/**
- * Handles precedence over items
- */
-RetIf.prototype.precedence = function(node) {
-  var what = node.kind === 'bin' ? node.type : node.kind;
-  var lLevel = Bin.precedence[what];
-  if (lLevel && PRECEDENCE < lLevel) {
-    if (node.kind === 'bin') {
-      node.right = this.test;
-      this.test = node;
-      return this;
-    } else {
-      throw new Error('@todo ' + node.kind);
-    }
-  }
-};
-
 module.exports = RetIf;
 
-},{"./bin":5,"./statement":70}],68:[function(require,module,exports){
+},{"./statement":70}],68:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2725,18 +2577,6 @@ var Unary = Operation.extends(function Unary(type, what, location) {
   this.what = what;
 });
 
-Unary.prototype.precedence = function(node) {
-  if (node.kind === 'bin') {
-    this.what = node.left;
-    node.left = this;
-    return node;
-  } else if (node.kind === 'retif') {
-    this.what = node.test;
-    node.test = this;
-    return node;
-  }
-};
-
 module.exports = Unary;
 
 },{"./operation":57}],83:[function(require,module,exports){
@@ -2846,13 +2686,25 @@ var KIND = 'variable';
  * be any expression in general, an expression can also be a pattern.
  * @constructor Variable
  * @extends {Expression}
- * @property {String|Node} name
- * @property {boolean} byref
+ * @example
+ * // PHP code :
+ * &$foo
+ * // AST output
+ * {
+ *  "kind": "variable",
+ *  "name": "foo",
+ *  "byref": true,
+ *  "curly": false
+ * }
+ * @property {String|Node} name The variable name (can be a complex expression when the name is resolved dynamically)
+ * @property {boolean} byref Indicate if the variable reference is used, ex `&$foo`
+ * @property {boolean} curly Indicate if the name is defined between curlies, ex `${foo}`
  */
-var Variable = Expr.extends(function Variable(name, byref, location) {
+var Variable = Expr.extends(function Variable(name, byref, curly, location) {
   Expr.apply(this, [KIND, location]);
   this.name = name;
   this.byref = byref || false;
+  this.curly = curly || false;
 });
 
 module.exports = Variable;
@@ -2967,195 +2819,6 @@ module.exports = YieldFrom;
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
-
-var lexer = require('./lexer');
-var parser = require('./parser');
-var tokens = require('./tokens');
-var AST = require('./ast');
-
-/**
- * @private combine structures
- */
-function combine(src, to) {
-  var keys = Object.keys(src);
-  var i = keys.length;
-  while (i--) {
-    var k = keys[i];
-    var val = src[k];
-    if (val === null) {
-      delete to[k];
-    } else if (typeof val === 'function') {
-      to[k] = val.bind(to);
-    } else if (Array.isArray(val)) {
-      to[k] = Array.isArray(to[k]) ? to[k].concat(val) : val;
-    } else if (typeof val === 'object') {
-      to[k] = typeof to[k] === 'object' ? combine(val, to[k]) : val;
-    } else {
-      to[k] = val;
-    }
-  }
-  return to;
-}
-
-/**
- * Initialise a new parser instance with the specified options
- *
- * Usage :
- * ```js
- * var parser = require('php-parser');
- * var instance = new parser({
- *   parser: {
- *     extractDoc: true,
- *     suppressErrors: true
- *   },
- *   ast: {
- *     withPositions: true
- *   },
- *   lexer: {
- *     short_tags: true,
- *     asp_tags: true
- *   }
- * });
- *
- * var evalAST = instance.parseEval('some php code');
- * var codeAST = instance.parseCode('<?php some php code', 'foo.php');
- * var tokens = instance.tokenGetAll('<?php some php code');
- * ```
- *
- * @constructor {Engine}
- * @param {Object} options - List of options
- *
- * @property {Lexer} lexer
- * @property {Parser} parser
- * @property {AST} ast
- * @property {Object} tokens
- */
-var engine = function(options) {
-  if (typeof this === 'function') {
-    return new this(options);
-  }
-  this.tokens = tokens;
-  this.lexer = new lexer(this);
-  this.ast = new AST();
-  this.parser = new parser(this.lexer, this.ast);
-  if (options && typeof options === 'object') {
-    combine(options, this);
-  }
-};
-
-/**
- * Creates a new instance (Helper)
- * @param {Object} options
- * @return {Engine}
- * @private
-*/
-engine.create = function(options) {
-  return new engine(options);
-};
-
-/**
- * Evaluate the buffer
- * @private
- */
-engine.parseEval = function(buffer, options) {
-  var self = new engine(options);
-  return self.parseEval(buffer);
-};
-
-/**
- * Parse an evaluating mode string (no need to open php tags)
- * @param {String} buffer
- * @return {Program}
- */
-engine.prototype.parseEval = function(buffer) {
-  this.lexer.mode_eval = true;
-  this.lexer.all_tokens = false;
-  return this.parser.parse(buffer, 'eval');
-};
-
-/**
- * Static function that parse a php code with open/close tags
- * @private
- */
-engine.parseCode = function(buffer, filename, options) {
-  if (typeof filename === 'object') {
-    // retro-compatibility
-    options = filename;
-    filename = 'unknown';
-  }
-  var self = new engine(options);
-  return self.parseCode(buffer, filename);
-};
-
-/**
- * Function that parse a php code with open/close tags
- *
- * Sample code :
- * ```php
- * <?php $x = 1;
- * ```
- *
- * Usage :
- * ```js
- * var parser = require('php-parser');
- * var phpParser = new parser({
- *   // some options
- * });
- * var ast = phpParser.parseCode('...php code...', 'foo.php');
- * ```
- * @param {String} buffer - The code to be parsed
- * @param {String} filename - Filename
- * @return {Program}
- */
-engine.prototype.parseCode = function(buffer, filename) {
-  this.lexer.mode_eval = false;
-  this.lexer.all_tokens = false;
-  return this.parser.parse(buffer, filename);
-};
-
-/**
- * Split the buffer into tokens
- * @private
- */
-engine.tokenGetAll = function(buffer, options) {
-  var self = new engine(options);
-  return self.tokenGetAll(buffer);
-};
-
-/**
- * Extract tokens from the specified buffer.
- * > Note that the output tokens are *STRICLY* similar to PHP function `token_get_all`
- * @param {String} buffer
- * @return {String[]} - Each item can be a string or an array with following informations [token_name, text, line_number]
- */
-engine.prototype.tokenGetAll = function(buffer) {
-  this.lexer.mode_eval = false;
-  this.lexer.all_tokens = true;
-  var EOF = this.lexer.EOF;
-  var names = this.tokens.values;
-  this.lexer.setInput(buffer);
-  var token = this.lexer.lex() || EOF;
-  var result = [];
-  while(token != EOF) {
-    var entry = this.lexer.yytext;
-    if (names.hasOwnProperty(token)) {
-      entry = [names[token], entry, this.lexer.yylloc.first_line];
-    }
-    result.push(entry);
-    token = this.lexer.lex() || EOF;
-  }
-  return result;
-};
-
-// exports the function
-module.exports = engine;
-
-},{"./ast":2,"./lexer":92,"./parser":101,"./tokens":117}],92:[function(require,module,exports){
-/*!
- * Copyright (C) 2017 Glayzzle (BSD3 License)
- * @authors https://github.com/glayzzle/php-parser/graphs/contributors
- * @url http://glayzzle.com
- */
 "use strict";
 /**
  * This is the php lexer. It will tokenize the string for helping the
@@ -3181,6 +2844,7 @@ var lexer = function(engine) {
   this.mode_eval = false;
   this.asp_tags = false;
   this.short_tags = true;
+  this.php7 = true;
   this.yyprevcol = 0;
   this.keywords = {
     "__class__": this.tok.T_CLASS_C,
@@ -3595,7 +3259,7 @@ lexer.prototype.next = function () {
 
 module.exports = lexer;
 
-},{"./lexer/comments.js":93,"./lexer/initial.js":94,"./lexer/numbers.js":95,"./lexer/property.js":96,"./lexer/scripting.js":97,"./lexer/strings.js":98,"./lexer/tokens.js":99,"./lexer/utils.js":100}],93:[function(require,module,exports){
+},{"./lexer/comments.js":92,"./lexer/initial.js":93,"./lexer/numbers.js":94,"./lexer/property.js":95,"./lexer/scripting.js":96,"./lexer/strings.js":97,"./lexer/tokens.js":98,"./lexer/utils.js":99}],92:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -3652,7 +3316,7 @@ module.exports = {
   }
 };
 
-},{}],94:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -3712,7 +3376,7 @@ module.exports = {
   }
 };
 
-},{}],95:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 (function (process){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
@@ -3741,21 +3405,21 @@ module.exports = {
       ch = this.input();
       // check if hexa
       if (ch === 'x' || ch === 'X') {
-        this.input();
+        ch = this.input();
         if (this.is_HEX()) {
           return this.consume_HNUM();
         } else {
-          this.unput(2);
+          this.unput(ch ? 2 : 1);
         }
       } else if (ch === 'b' || ch === 'B') {
         ch = this.input();
         if (ch === '0' || ch === '1') {
           return this.consume_BNUM();
         } else {
-          this.unput(2);
+          this.unput(ch ? 2 : 1);
         }
       } else if (!this.is_NUM()) {
-        this.unput(1);
+        if (ch) this.unput(1);
       }
     }
 
@@ -3772,18 +3436,18 @@ module.exports = {
               this.consume_LNUM();
               return this.tok.T_DNUMBER;
             } else {
-              if (ch) this.unput(3);
+              this.unput(ch ? 3 : 2);
               break;
             }
           } else if (this.is_NUM()) {
             this.consume_LNUM();
             return this.tok.T_DNUMBER;
           } else {
-            if (ch) this.unput(2);
+            this.unput(ch ? 2 : 1);
             break;
           }
         } else {
-          this.unput(1);
+          if (ch) this.unput(1);
           break;
         }
       }
@@ -3807,9 +3471,9 @@ module.exports = {
   // read hexa
   consume_HNUM: function() {
     while(this.offset < this.size) {
-      this.input();
+      var ch = this.input();
       if (!this.is_HEX()) {
-        this.unput(1);
+        if (ch) this.unput(1);
         break;
       }
     }
@@ -3818,9 +3482,9 @@ module.exports = {
   // read a generic number
   consume_LNUM: function() {
     while(this.offset < this.size) {
-      this.input();
+      var ch = this.input();
       if (!this.is_NUM()) {
-        this.unput(1);
+        if (ch) this.unput(1);
         break;
       }
     }
@@ -3841,7 +3505,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"_process":1}],96:[function(require,module,exports){
+},{"_process":118}],95:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -3870,25 +3534,27 @@ module.exports = {
   },
   matchST_LOOKING_FOR_VARNAME: function() {
     var ch = this.input();
+
+    // SHIFT STATE
+    this.popState();
+    this.begin('ST_IN_SCRIPTING');
+
     if (this.is_LABEL_START()) {
       this.consume_LABEL();
       ch = this.input();
-      this.popState();
       if (ch === '[' || ch === '}') {
-        this.begin('ST_IN_SCRIPTING');
         this.unput(1);
         return this.tok.T_STRING_VARNAME;
       } else {
+        // any char (that's started with a label sequence)
         this.unput(this.yytext.length);
-        return false;
       }
     } else {
+      // any char (thats not a label start sequence)
       if (ch) this.unput(1);
-      this.popState();
-      this.begin('ST_IN_SCRIPTING');
-      // console.log(this.yylineno, 'ST_LOOKING_FOR_VARNAME', this._input[this.offset - 1], this.conditionStack);
-      return false;
     }
+    // stops looking for a varname and starts the scripting mode
+    return false;
   },
   matchST_VAR_OFFSET: function() {
     var ch = this.input();
@@ -3919,7 +3585,7 @@ module.exports = {
   }
 };
 
-},{}],97:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -4014,14 +3680,14 @@ module.exports = {
       if (ch === ' ' || ch === '\t' || ch === '\n' || ch === '\r') {
         continue;
       }
-      this.unput(1);
+      if (ch) this.unput(1);
       break;
     }
     return this.tok.T_WHITESPACE;
   }
 };
 
-},{}],98:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -4114,14 +3780,14 @@ module.exports = {
           this.unput(2);
           break;
         }
-        this.unput(1);
+        if (ch) this.unput(1);
       } else if (ch == '{') {
         ch = this.input();
         if (ch == '$') {
           this.unput(2);
           break;
         }
-        this.unput(1);
+        if (ch) this.unput(1);
       }
     }
     if (ch == '"') {
@@ -4276,10 +3942,10 @@ module.exports = {
       } else {
         this.unput(2);
       }
-     } else {
-      this.unput(1);
-     }
-     return this.tok.T_VARIABLE;
+    } else {
+      if (ch) this.unput(1);
+    }
+    return this.tok.T_VARIABLE;
   },
   // HANDLES BACKQUOTES
   matchST_BACKQUOTE: function() {
@@ -4336,7 +4002,7 @@ module.exports = {
             return next;
           }
         }
-        this.unput(1);
+        continue;
       } else if (ch === '{') {
         ch = this.input();
         if (ch === '$') {
@@ -4351,7 +4017,7 @@ module.exports = {
             return this.tok.T_CURLY_OPEN;
           }
         }
-        this.unput(1);
+        continue;
       }
       ch = this.input();
     }
@@ -4413,7 +4079,7 @@ module.exports = {
             return next;
           }
         }
-        this.unput(1);
+        if (ch) this.unput(1);
       } else if (ch === '{') {
         ch = this.input();
         if (ch === '$') {
@@ -4437,7 +4103,7 @@ module.exports = {
   }
 };
 
-},{}],99:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -4447,9 +4113,9 @@ module.exports = {
   T_STRING: function() {
     var token = this.yytext.toLowerCase();
     var id = this.keywords[token];
-    if (!id) {
+    if (typeof id !== 'number') {
       if (token === 'yield') {
-        if (this.tryMatch(' from')) {
+        if (this.php7 && this.tryMatch(' from')) {
           this.consume(5);
           id = this.tok.T_YIELD_FROM;
         } else {
@@ -4537,7 +4203,7 @@ module.exports = {
         this.consume_LABEL();
         var castToken = this.yytext.substring(yylen - 1).toLowerCase();
         var castId = this.castKeywords[castToken];
-        if (castId) {
+        if (typeof castId === 'number') {
           this.input();
           if (this.is_TABSPACE()) {
             this.consume_TABSPACE().input();
@@ -4591,7 +4257,7 @@ module.exports = {
       return '!';
     },
     '?': function() {
-      if (this._input[this.offset] === '?') {
+      if (this.php7 && this._input[this.offset] === '?') {
         this.input();
         return this.tok.T_COALESCE;
       }
@@ -4613,7 +4279,7 @@ module.exports = {
         return this.tok.T_SL;
       } else if (nchar === '=') {
         this.input();
-        if (this._input[this.offset] === '>') {
+        if (this.php7 && this._input[this.offset] === '>') {
           this.input();
           return this.tok.T_SPACESHIP;
         } else {
@@ -4708,7 +4374,7 @@ module.exports = {
   }
 };
 
-},{}],100:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -4749,9 +4415,9 @@ module.exports = {
   // reads each char of the label
   consume_LABEL: function() {
     while(this.offset < this.size) {
-      this.input();
+      var ch = this.input();
       if (!this.is_LABEL()) {
-        this.unput(1);
+        if (ch) this.unput(1);
         break;
       }
     }
@@ -4776,9 +4442,9 @@ module.exports = {
   // consume all whitespaces (excluding newlines)
   consume_TABSPACE: function() {
     while(this.offset < this.size) {
-      this.input();
+      var ch = this.input();
       if (!this.is_TABSPACE()) {
-        this.unput(1);
+        if (ch) this.unput(1);
         break;
       }
     }
@@ -4791,7 +4457,7 @@ module.exports = {
   }
 };
 
-},{}],101:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -4824,18 +4490,96 @@ var parser = function(lexer, ast) {
   this.token = null;
   this.prev = null;
   this.debug = false;
+  this.php7 = true;
   this.extractDoc = false;
   this.suppressErrors = false;
+  var mapIt = function(item) {
+    return [item, null];
+  };
   this.entries = {
-    'VARIABLE': [
+    'IDENTIFIER': new Map([
+      this.tok.T_ABSTRACT,
+      this.tok.T_ARRAY,
+      this.tok.T_AS,
+      this.tok.T_BREAK,
+      this.tok.T_CALLABLE,
+      this.tok.T_CASE,
+      this.tok.T_CATCH,
+      this.tok.T_CLASS,
+      this.tok.T_CLASS_C,
+      this.tok.T_CLONE,
+      this.tok.T_CONST,
+      this.tok.T_CONTINUE,
+      this.tok.T_DECLARE,
+      this.tok.T_DEFAULT,
+      this.tok.T_DIR,
+      this.tok.T_DO,
+      this.tok.T_ECHO,
+      this.tok.T_ELSE,
+      this.tok.T_ELSEIF,
+      this.tok.T_EMPTY,
+      this.tok.T_ENDDECLARE,
+      this.tok.T_ENDFOR,
+      this.tok.T_ENDFOREACH,
+      this.tok.T_ENDIF,
+      this.tok.T_ENDSWITCH,
+      this.tok.T_ENDWHILE,
+      this.tok.T_EVAL,
+      this.tok.T_EXIT,
+      this.tok.T_EXTENDS,
+      this.tok.T_FILE,
+      this.tok.T_FINAL,
+      this.tok.T_FINALLY,
+      this.tok.T_FUNC_C,
+      this.tok.T_FOR,
+      this.tok.T_FOREACH,
+      this.tok.T_FUNCTION,
+      this.tok.T_GLOBAL,
+      this.tok.T_GOTO,
+      this.tok.T_IF,
+      this.tok.T_IMPLEMENTS,
+      this.tok.T_INCLUDE,
+      this.tok.T_INCLUDE_ONCE,
+      this.tok.T_INSTANCEOF,
+      this.tok.T_INSTEADOF,
+      this.tok.T_INTERFACE,
+      this.tok.T_ISSET,
+      this.tok.T_LINE,
+      this.tok.T_LIST,
+      this.tok.T_LOGICAL_AND,
+      this.tok.T_LOGICAL_OR,
+      this.tok.T_LOGICAL_XOR,
+      this.tok.T_METHOD_C,
+      this.tok.T_NAMESPACE,
+      this.tok.T_NEW,
+      this.tok.T_NS_C,
+      this.tok.T_PRINT,
+      this.tok.T_PRIVATE,
+      this.tok.T_PROTECTED,
+      this.tok.T_PUBLIC,
+      this.tok.T_REQUIRE,
+      this.tok.T_REQUIRE_ONCE,
+      this.tok.T_RETURN,
+      this.tok.T_STATIC,
+      this.tok.T_SWITCH,
+      this.tok.T_THROW,
+      this.tok.T_TRAIT,
+      this.tok.T_TRY,
+      this.tok.T_UNSET,
+      this.tok.T_USE,
+      this.tok.T_VAR,
+      this.tok.T_WHILE,
+      this.tok.T_YIELD
+    ].map(mapIt)),
+    'VARIABLE': new Map([
       this.tok.T_VARIABLE,
       '$', '&',
       this.tok.T_NS_SEPARATOR,
       this.tok.T_STRING,
       this.tok.T_NAMESPACE,
       this.tok.T_STATIC
-    ],
-    'SCALAR': [
+    ].map(mapIt)),
+    'SCALAR': new Map([
       this.tok.T_CONSTANT_ENCAPSED_STRING,
       this.tok.T_START_HEREDOC,
       this.tok.T_LNUMBER,
@@ -4854,8 +4598,8 @@ var parser = function(lexer, ast) {
       'B"',
       '-',
       this.tok.T_NS_SEPARATOR
-    ],
-    'T_MAGIC_CONST': [
+    ].map(mapIt)),
+    'T_MAGIC_CONST': new Map([
         this.tok.T_CLASS_C,
         this.tok.T_TRAIT_C,
         this.tok.T_FUNC_C,
@@ -4864,22 +4608,22 @@ var parser = function(lexer, ast) {
         this.tok.T_FILE,
         this.tok.T_DIR,
         this.tok.T_NS_C
-    ],
-    'T_MEMBER_FLAGS': [
+    ].map(mapIt)),
+    'T_MEMBER_FLAGS': new Map([
       this.tok.T_PUBLIC,
       this.tok.T_PRIVATE,
       this.tok.T_PROTECTED,
       this.tok.T_STATIC,
       this.tok.T_ABSTRACT,
       this.tok.T_FINAL
-    ],
-    'EOS': [
+    ].map(mapIt)),
+    'EOS': new Map([
       ';',
       this.tok.T_CLOSE_TAG,
       this.EOF,
       this.tok.T_INLINE_HTML
-    ],
-    'EXPR': [
+    ].map(mapIt)),
+    'EXPR': new Map([
       '@','-','+','!','~','(','`',
       this.tok.T_LIST,
       this.tok.T_CLONE,
@@ -4925,7 +4669,7 @@ var parser = function(lexer, ast) {
       this.tok.T_FILE,
       this.tok.T_DIR,
       this.tok.T_NS_C
-    ]
+    ].map(mapIt))
   };
 };
 
@@ -5154,9 +4898,8 @@ parser.prototype.nextWithComments = function() {
 parser.prototype.is = function(type) {
   if (Array.isArray(type)) {
     return type.indexOf(this.token) !== -1;
-  } else {
-    return this.entries[type].indexOf(this.token) != -1;
   }
+  return this.entries[type].has(this.token);
 };
 
 // extends the parser with syntax files
@@ -5184,7 +4927,7 @@ parser.prototype.is = function(type) {
 
 module.exports = parser;
 
-},{"./parser/array.js":102,"./parser/class.js":103,"./parser/comment.js":104,"./parser/expr.js":105,"./parser/function.js":106,"./parser/if.js":107,"./parser/loops.js":108,"./parser/main.js":109,"./parser/namespace.js":110,"./parser/scalar.js":111,"./parser/statement.js":112,"./parser/switch.js":113,"./parser/try.js":114,"./parser/utils.js":115,"./parser/variable.js":116}],102:[function(require,module,exports){
+},{"./parser/array.js":101,"./parser/class.js":102,"./parser/comment.js":103,"./parser/expr.js":104,"./parser/function.js":105,"./parser/if.js":106,"./parser/loops.js":107,"./parser/main.js":108,"./parser/namespace.js":109,"./parser/scalar.js":110,"./parser/statement.js":111,"./parser/switch.js":112,"./parser/try.js":113,"./parser/utils.js":114,"./parser/variable.js":115}],101:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -5275,7 +5018,7 @@ module.exports = {
   }
 };
 
-},{}],103:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -5455,15 +5198,19 @@ module.exports = {
          * Reads a constant declaration
          *
          * ```ebnf
-         *  constant_declaration ::= T_STRING '=' expr
+         *  constant_declaration ::= (T_STRING | IDENTIFIER) '=' expr
          * ```
          * @return {Constant} [:link:](AST.md#constant)
          */
         function read_constant_declaration() {
-          var result = this.node('classconstant'), name = null, value = null;
-          if (this.expect(this.tok.T_STRING)) {
+          var result = this.node('classconstant'), 
+            name = null, 
+            value = null;
+          if (this.token === this.tok.T_STRING || (this.php7 && this.is('IDENTIFIER'))) {
             name = this.text();
             this.next();
+          } else {
+            this.expect('IDENTIFIER');
           }
           if (this.expect('=')) {
             value =  this.next().read_expr();
@@ -5669,21 +5416,34 @@ module.exports = {
    * ```ebnf
    * trait_use_alias ::= namespace_name ( T_DOUBLE_COLON T_STRING )? (T_INSTEADOF namespace_name) | (T_AS member_flags? T_STRING)
    * ```
+   * name list : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L303
+   * trait adaptation : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L742
    */
   ,read_trait_use_alias: function() {
     var node = this.node();
     var trait = null;
-    var method = this.read_namespace_name();
+    var method;
 
-    if (this.token === this.tok.T_DOUBLE_COLON) {
-      if (this.next().expect(this.tok.T_STRING)) {
-        trait = method;
-        method = this.text();
-        this.next();
-      }
+    if(this.is('IDENTIFIER')) {
+      method = this.text();
+      this.next();
     } else {
-      // convert identifier as string
-      method = method.name;
+      method = this.read_namespace_name();
+
+      if (this.token === this.tok.T_DOUBLE_COLON) {
+        this.next();
+
+        if (this.token === this.tok.T_STRING || (this.php7 && this.is('IDENTIFIER'))) {
+          trait = method;
+          method = this.text();
+          this.next();
+        } else {
+          this.expect(this.tok.T_STRING);
+        }
+      } else {
+        // convert identifier as string
+        method = method.name;
+      }
     }
 
     // handle trait precedence
@@ -5702,8 +5462,8 @@ module.exports = {
       if (this.next().is('T_MEMBER_FLAGS')) {
         flags = this.read_member_flags();
       }
-
-      if (this.token === this.tok.T_STRING) {
+      
+      if (this.token === this.tok.T_STRING || (this.php7 && this.is('IDENTIFIER'))) {
         alias = this.text();
         this.next();
       } else if (flags === false) {
@@ -5720,7 +5480,7 @@ module.exports = {
   }
 };
 
-},{}],104:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -5767,7 +5527,7 @@ module.exports = {
   }
 };
 
-},{}],105:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -6042,7 +5802,7 @@ module.exports = {
         return this.node('cast')('int', this.next().read_expr());
 
       case this.tok.T_DOUBLE_CAST:
-        return this.node('cast')('double', this.next().read_expr());
+        return this.node('cast')('float', this.next().read_expr());
 
       case this.tok.T_STRING_CAST:
         return this.node('cast')('string', this.next().read_expr());
@@ -6054,12 +5814,10 @@ module.exports = {
         return this.node('cast')('object', this.next().read_expr());
 
       case this.tok.T_BOOL_CAST:
-        return this.node('cast')('boolean', this.next().read_expr());
+        return this.node('cast')('bool', this.next().read_expr());
 
       case this.tok.T_UNSET_CAST:
-        return this.node('unset')(
-          this.next().read_expr()
-        );
+        return this.node('cast')('unset', this.next().read_expr());
 
       case this.tok.T_EXIT:
         var result = this.node('exit');
@@ -6102,8 +5860,19 @@ module.exports = {
         return result(expr);
 
       case this.tok.T_FUNCTION:
-        // @fixme later - removed static lambda function declarations (colides with static keyword usage)
         return this.read_function(true);
+
+      case this.tok.T_STATIC:
+        var backup = [this.token, this.lexer.getState()];
+        if (this.next().token === this.tok.T_FUNCTION) {
+          // handles static function
+          return this.read_function(true, [0, 1, 0]);
+        } else {
+          // rollback
+          this.lexer.tokens.push(backup);
+          this.next();
+        }
+
 
     }
 
@@ -6112,9 +5881,20 @@ module.exports = {
     if (this.is('VARIABLE')) {
       var result = this.node();
       expr = this.read_variable(false, false, false);
+
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L877
+      // should accept only a variable
+      var isConst = (
+        expr.kind === 'constref' || (
+          expr.kind === 'staticlookup' &&
+          expr.offset.kind === 'constref'
+        )
+      );
+
       // VARIABLES SPECIFIC OPERATIONS
       switch(this.token) {
         case '=':
+          if (isConst) this.error('VARIABLE');
           var right;
           if (this.next().token == '&') {
             if (this.next().token === this.tok.T_NEW) {
@@ -6129,45 +5909,59 @@ module.exports = {
 
         // operations :
         case this.tok.T_PLUS_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '+=');
 
         case this.tok.T_MINUS_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '-=');
 
         case this.tok.T_MUL_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '*=');
 
         case this.tok.T_POW_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '**=');
 
         case this.tok.T_DIV_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '/=');
 
         case this.tok.T_CONCAT_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '.=');
 
         case this.tok.T_MOD_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '%=');
 
         case this.tok.T_AND_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '&=');
 
         case this.tok.T_OR_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '|=');
 
         case this.tok.T_XOR_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '^=');
 
         case this.tok.T_SL_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '<<=');
 
         case this.tok.T_SR_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign',expr, this.next().read_expr(), '>>=');
 
         case this.tok.T_INC:
+          if (isConst) this.error('VARIABLE');
           this.next();
           return result('post', '+', expr);
         case this.tok.T_DEC:
+          if (isConst) this.error('VARIABLE');
           this.next();
           return result('post', '-', expr);
       }
@@ -6291,7 +6085,7 @@ module.exports = {
   }
 };
 
-},{}],106:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -6304,7 +6098,7 @@ module.exports = {
    */
   is_reference: function() {
     if (this.token == '&') {
-      this.next();
+      this.next().ignoreComments();
       return true;
     }
     return false;
@@ -6314,7 +6108,7 @@ module.exports = {
    */
   ,is_variadic: function() {
     if (this.token === this.tok.T_ELLIPSIS) {
-      this.next();
+      this.next().ignoreComments();
       return true;
     }
     return false;
@@ -6327,7 +6121,8 @@ module.exports = {
    */
   ,read_function: function(closure, flag) {
     var result = this.read_function_declaration(
-      closure ? 1 : (flag ? 2 : 0)
+      closure ? 1 : (flag ? 2 : 0),
+      flag && flag[1] === 1
     );
     if (flag && flag[2] == 1) {
       // abstract function :
@@ -6342,7 +6137,7 @@ module.exports = {
           result.loc.end = result.body.loc.end;
         }
       }
-      if (flag) {
+      if (!closure && flag) {
         result.parseFlags(flag);
       }
     }
@@ -6354,7 +6149,7 @@ module.exports = {
    * function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'
    * ```
    */
-  ,read_function_declaration: function(type) {
+  ,read_function_declaration: function(type, isStatic) {
     var nodeName = 'function';
     if (type === 1) {
       nodeName = 'closure';
@@ -6362,15 +6157,25 @@ module.exports = {
       nodeName = 'method';
     }
     var result = this.node(nodeName);
+
     if (this.expect(this.tok.T_FUNCTION)) {
-      this.next();
+      this.next().ignoreComments();
     }
     var isRef = this.is_reference();
     var name = false, use = [], returnType = null, nullable = false;
     if (type !== 1) {
-      if (this.expect(this.tok.T_STRING)) {
-        name = this.text();
-        this.next();
+      if (type === 2) {
+        if (this.token === this.tok.T_STRING || (this.php7 && this.is('IDENTIFIER'))) {
+          name = this.text();
+          this.next();
+        } else {
+          this.error('IDENTIFIER');
+        }
+      } else {
+        if (this.expect(this.tok.T_STRING)) {
+          name = this.text();
+        }
+        this.next();  
       }
     }
     if (this.expect('(')) this.next();
@@ -6390,7 +6195,7 @@ module.exports = {
     }
     if (type === 1) {
       // closure
-      return result(params, isRef, use, returnType, nullable);
+      return result(params, isRef, use, returnType, nullable, isStatic);
     }
     return result(name, params, isRef, returnType, nullable);
   }
@@ -6409,7 +6214,7 @@ module.exports = {
     this.expect(this.tok.T_VARIABLE);
     var name = this.text().substring(1);
     this.next();
-    return result(name, isRef);
+    return result(name, isRef, false);
   }
   /**
    * reads a list of parameters
@@ -6478,11 +6283,13 @@ module.exports = {
     if (this.token !== ')') {
       while(this.token != this.EOF) {
         var argument = this.read_argument_list();
-        result.push(argument);
-        if (argument.kind === 'variadic') {
-          wasVariadic = true;
-        } else if (wasVariadic) {
-          this.raiseError('Unexpected argument after a variadic argument');
+        if (argument) {
+          result.push(argument);
+          if (argument.kind === 'variadic') {
+            wasVariadic = true;
+          } else if (wasVariadic) {
+            this.raiseError('Unexpected argument after a variadic argument');
+          }
         }
         if (this.token === ',') {
           this.next();
@@ -6528,7 +6335,7 @@ module.exports = {
   }
 };
 
-},{}],107:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -6630,7 +6437,7 @@ module.exports = {
   }
 };
 
-},{}],108:[function(require,module,exports){
+},{}],107:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -6790,7 +6597,7 @@ module.exports = {
   }
 };
 
-},{}],109:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -6812,7 +6619,7 @@ module.exports = {
   }
 };
 
-},{}],110:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -6912,7 +6719,7 @@ module.exports = {
     if (this.token === ',') {
       items = items.concat(this.next().read_use_declarations(false));
     } else if (this.token === '{') {
-      name = items[0].name.name;
+      name = items[0].name;
       items = this.next().read_use_declarations(type === null);
       this.expect('}') && this.next();
     }
@@ -6986,7 +6793,7 @@ module.exports = {
   }
 };
 
-},{}],111:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -7159,20 +6966,22 @@ module.exports = {
         var varName = this.text();
         name = this.node('variable');
         this.next();
-        name = name(varName, false);
         // check if lookup an offset
         // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1243
         if (this.token === '[') {
+          name = name(varName, false);
           var node = this.node('offsetlookup');
           var offset = this.next().read_expr();
           this.expect(']') && this.next();
           name = node(name, offset);
+        } else {
+          name = varName;
         }
       } else {
         name = this.read_expr();
       }
       this.expect('}') && this.next();
-      result = result('variable', name, false);
+      result = result('variable', name, false, true);
     }
 
     // expression
@@ -7254,7 +7063,7 @@ module.exports = {
   }
 };
 
-},{}],112:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -7501,6 +7310,9 @@ module.exports = {
           this.expect(';') && this.nextWithComments();
           return expr;
         }
+        if (this.token === this.tok.T_FUNCTION) {
+          return this.read_function(true, [0, 1, 0]);
+        }
         var items = this.read_variable_declarations();
         this.expectEndOfStatement();
         return result(items);
@@ -7576,17 +7388,18 @@ module.exports = {
       case this.tok.T_STRING:
         var current = [this.token, this.lexer.getState()];
         var label = this.text();
+        // AST : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L457
         if (this.next().token === ':') {
           var result = this.node('label');
           this.next();
           return result(label);
-        } else {
-          // default fallback expr
-          this.lexer.tokens.push(current);
-          var expr = this.next().read_expr();
-          this.expect([';', this.tok.T_CLOSE_TAG]) && this.nextWithComments();
-          return expr;
         }
+
+        // default fallback expr / T_STRING '::' (etc...)
+        this.lexer.tokens.push(current);
+        var expr = this.next().read_expr();
+        this.expectEndOfStatement();
+        return expr;
 
       case this.tok.T_GOTO:
         var result = this.node('goto'), label = null;
@@ -7619,7 +7432,7 @@ module.exports = {
   }
 };
 
-},{}],113:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -7715,7 +7528,7 @@ module.exports = {
   }
 };
 
-},{}],114:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -7761,7 +7574,7 @@ module.exports = {
   }
 };
 
-},{}],115:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 /*!
  * Defines a list of helper functions for parsing
  * Copyright (C) 2017 Glayzzle (BSD3 License)
@@ -7869,9 +7682,9 @@ module.exports = {
       if (this.expect(this.tok.T_VARIABLE)) {
         var name = this.text().substring(1);
         this.next();
-        variable = variable(name, false);
+        variable = variable(name, false, false);
       } else {
-        variable = variable('#ERR', false);
+        variable = variable('#ERR', false, false);
       }
       if (this.token === '=') {
         return node(variable, this.next().read_expr());
@@ -7883,7 +7696,7 @@ module.exports = {
 
 };
 
-},{}],116:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -7963,7 +7776,8 @@ module.exports = {
       offset = this.read_reference_variable(encapsed, false);
     } else if (
       this.token === this.tok.T_STRING
-      || this.token === this.tok.T_CLASS
+      || this.token === this.tok.T_CLASS 
+      || (this.php7 && this.is('IDENTIFIER'))
     ) {
       offset = this.node('constref');
       var name = this.text();
@@ -8012,6 +7826,30 @@ module.exports = {
           }
           result = node(result, offset);
           break;
+        case this.tok.T_DOUBLE_COLON:
+
+          // @see https://github.com/glayzzle/php-parser/issues/107#issuecomment-354104574
+          if(result.kind === 'staticlookup') {
+            this.error();
+          }
+
+          var node = this.node('staticlookup');
+          if(this.next().token === this.tok.T_STRING || (this.php7 && this.is('IDENTIFIER'))) {
+            var offset = this.node('constref');
+            var name = this.text();
+            this.next();
+            offset = offset(name);
+            if(this.token === this.tok.T_OBJECT_OPERATOR) {
+              this.error();
+            }
+          } else {
+            this.error(this.tok.T_STRING);
+            // fallback on a constref node
+            var offset = this.node('constref')(this.text());
+            this.next();
+          }
+          result = node(result, offset);
+          break;
         case this.tok.T_OBJECT_OPERATOR:
           var node = this.node('propertylookup');
           var what = null;
@@ -8026,7 +7864,7 @@ module.exports = {
                 name = this.text().substring(1);
                 this.next();
                 what = this.node('encapsed')(
-                  [what, inner(name, false)],
+                  [what, inner(name, false, false)],
                   'offset'
                 );
                 if (what.loc && what.value[0].loc) {
@@ -8048,7 +7886,7 @@ module.exports = {
               what = this.node('variable');
               var name = this.text().substring(1);
               this.next();
-              what = what(name, false);
+              what = what(name, false, false);
               break;
             case '$':
               this.next().expect(['{', this.tok.T_VARIABLE]);
@@ -8102,7 +7940,7 @@ module.exports = {
     } else if (this.token === this.tok.T_VARIABLE) {
       var name = this.text().substring(1);
       this.next();
-      offset = offset('variable', name, false);
+      offset = offset('variable', name, false, false);
     } else {
       this.expect([
         this.tok.T_STRING,
@@ -8159,7 +7997,7 @@ module.exports = {
       // plain variable name
       var name = this.text().substring(1);
       this.next();
-      result = result(name, byref);
+      result = result(name, byref, false);
     } else {
       if (this.token === '$') this.next();
       // dynamic variable name
@@ -8167,7 +8005,7 @@ module.exports = {
         case '{':
           var expr = this.next().read_expr();
           this.expect('}') && this.next();
-          result = result(expr, byref);
+          result = result(expr, byref, true);
           break;
         case '$': // $$$var
           result = result(this.read_simple_variable(false), byref);
@@ -8176,21 +8014,21 @@ module.exports = {
           var name = this.text().substring(1);
           var node = this.node('variable');
           this.next();
-          result = result(node(name, false), byref);
+          result = result(node(name, false, false), byref, false);
           break;
         default:
           this.error(['{', '$', this.tok.T_VARIABLE]);
           // graceful mode
           var name = this.text();
           this.next();
-          result = result(name, byref);
+          result = result(name, byref, false);
       }
     }
     return result;
   }
 };
 
-},{}],117:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -8471,5 +8309,402 @@ module.exports = {
   }
 };
 
-},{}]},{},[91])(91)
+},{}],117:[function(require,module,exports){
+(function (Buffer){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var lexer = require('./lexer');
+var parser = require('./parser');
+var tokens = require('./tokens');
+var AST = require('./ast');
+
+/**
+ * @private combine structures
+ */
+function combine(src, to) {
+  var keys = Object.keys(src);
+  var i = keys.length;
+  while (i--) {
+    var k = keys[i];
+    var val = src[k];
+    if (val === null) {
+      delete to[k];
+    } else if (typeof val === 'function') {
+      to[k] = val.bind(to);
+    } else if (Array.isArray(val)) {
+      to[k] = Array.isArray(to[k]) ? to[k].concat(val) : val;
+    } else if (typeof val === 'object') {
+      to[k] = typeof to[k] === 'object' ? combine(val, to[k]) : val;
+    } else {
+      to[k] = val;
+    }
+  }
+  return to;
+}
+
+/**
+ * Initialise a new parser instance with the specified options
+ *
+ * Usage :
+ * ```js
+ * var parser = require('php-parser');
+ * var instance = new parser({
+ *   parser: {
+ *     extractDoc: true,
+ *     suppressErrors: true,
+ *     php7: true
+ *   },
+ *   ast: {
+ *     withPositions: true
+ *   },
+ *   lexer: {
+ *     short_tags: true,
+ *     asp_tags: true
+ *   }
+ * });
+ *
+ * var evalAST = instance.parseEval('some php code');
+ * var codeAST = instance.parseCode('<?php some php code', 'foo.php');
+ * var tokens = instance.tokenGetAll('<?php some php code');
+ * ```
+ *
+ * @constructor {Engine}
+ * @param {Object} options - List of options
+ *
+ * @property {Lexer} lexer
+ * @property {Parser} parser
+ * @property {AST} ast
+ * @property {Object} tokens
+ */
+var engine = function(options) {
+  if (typeof this === 'function') {
+    return new this(options);
+  }
+  this.tokens = tokens;
+  this.lexer = new lexer(this);
+  this.ast = new AST();
+  this.parser = new parser(this.lexer, this.ast);
+  if (options && typeof options === 'object') {
+    // disable php7 from lexer if already disabled from parser
+    if (options.parser && options.parser.php7 === false) {
+      if (!options.lexer) {
+        options.lexer = {};
+      }
+      options.lexer.php7 = false;
+    }
+    combine(options, this);
+  }
+};
+
+/**
+ * Check if the inpyt is a buffer or a string
+ * @param  {Buffer|String} buffer Input value that can be either a buffer or a string
+ * @return {String}   Returns the string from input
+ */
+var getStringBuffer = function(buffer) {
+  return Buffer.isBuffer(buffer) ? buffer.toString() : buffer;
+};
+
+/**
+ * Creates a new instance (Helper)
+ * @param {Object} options
+ * @return {Engine}
+ * @private
+*/
+engine.create = function(options) {
+  return new engine(options);
+};
+
+/**
+ * Evaluate the buffer
+ * @private
+ */
+engine.parseEval = function(buffer, options) {
+  var self = new engine(options);
+  return self.parseEval(buffer);
+};
+
+/**
+ * Parse an evaluating mode string (no need to open php tags)
+ * @param {String} buffer
+ * @return {Program}
+ */
+engine.prototype.parseEval = function(buffer) {
+  this.lexer.mode_eval = true;
+  this.lexer.all_tokens = false;
+  buffer = getStringBuffer(buffer);
+  return this.parser.parse(buffer, 'eval');
+};
+
+/**
+ * Static function that parse a php code with open/close tags
+ * @private
+ */
+engine.parseCode = function(buffer, filename, options) {
+  if (typeof filename === 'object') {
+    // retro-compatibility
+    options = filename;
+    filename = 'unknown';
+  }
+  var self = new engine(options);
+  return self.parseCode(buffer, filename);
+};
+
+/**
+ * Function that parse a php code with open/close tags
+ *
+ * Sample code :
+ * ```php
+ * <?php $x = 1;
+ * ```
+ *
+ * Usage :
+ * ```js
+ * var parser = require('php-parser');
+ * var phpParser = new parser({
+ *   // some options
+ * });
+ * var ast = phpParser.parseCode('...php code...', 'foo.php');
+ * ```
+ * @param {String} buffer - The code to be parsed
+ * @param {String} filename - Filename
+ * @return {Program}
+ */
+engine.prototype.parseCode = function(buffer, filename) {
+  this.lexer.mode_eval = false;
+  this.lexer.all_tokens = false;
+  buffer = getStringBuffer(buffer);
+  return this.parser.parse(buffer, filename);
+};
+
+/**
+ * Split the buffer into tokens
+ * @private
+ */
+engine.tokenGetAll = function(buffer, options) {
+  var self = new engine(options);
+  return self.tokenGetAll(buffer);
+};
+
+/**
+ * Extract tokens from the specified buffer.
+ * > Note that the output tokens are *STRICLY* similar to PHP function `token_get_all`
+ * @param {String} buffer
+ * @return {String[]} - Each item can be a string or an array with following informations [token_name, text, line_number]
+ */
+engine.prototype.tokenGetAll = function(buffer) {
+  this.lexer.mode_eval = false;
+  this.lexer.all_tokens = true;
+  buffer = getStringBuffer(buffer);
+  var EOF = this.lexer.EOF;
+  var names = this.tokens.values;
+  this.lexer.setInput(buffer);
+  var token = this.lexer.lex() || EOF;
+  var result = [];
+  while(token != EOF) {
+    var entry = this.lexer.yytext;
+    if (names.hasOwnProperty(token)) {
+      entry = [names[token], entry, this.lexer.yylloc.first_line];
+    }
+    result.push(entry);
+    token = this.lexer.lex() || EOF;
+  }
+  return result;
+};
+
+// exports the function
+module.exports = engine;
+
+}).call(this,{"isBuffer":require("../../is-buffer/index.js")})
+},{"../../is-buffer/index.js":1,"./ast":2,"./lexer":91,"./parser":100,"./tokens":116}],118:[function(require,module,exports){
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+},{}]},{},[117])(117)
 });

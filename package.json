@@ -60,12 +60,15 @@
     }
   },
   "devDependencies": {
+    "browserify": "16.2.3",
     "codeclimate-test-reporter": "0.x.x",
     "csslint": "1.x.x",
     "eslint": "5.5.x",
+    "espree": "4.1.0",
     "grunt": "1.x.x",
     "grunt-contrib-compress": "1.x.x",
     "htmlhint": "0.x.x",
+    "htmlparser2": "3.10.0",
     "jasmine-core": "3.x.x",
     "karma": "3.x.x",
     "karma-chrome-launcher": "2.x.x",
@@ -74,6 +77,8 @@
     "karma-phantomjs-launcher": "1.x.x",
     "karma-requirejs": "1.x.x",
     "phantomjs-prebuilt": "2.x.x",
+    "php-parser": "2.2.0",
+    "postcss-safe-parser": "4.0.1",
     "requirejs": "2.x.x",
     "requirejs-text": "2.x.x"
   },
@@ -82,6 +87,11 @@
     "pretest": "npm run lint",
     "test": "karma start --browsers PhantomJS --single-run",
     "codeClimate": "codeclimate-test-reporter < coverage/lcov/lcov.info",
-    "bundle": "grunt"
+    "b_espree": "browserify node_modules/espree -s espree -o thirdparty/espree.js",
+    "b_htmlparser2": "browserify node_modules/htmlparser2 -s htmlparser2 -o thirdparty/htmlparser2.js",
+    "b_php-parser": "browserify node_modules/php-parser -s php-parser -o thirdparty/php-parser.js",
+    "b_postcss-safe-parser": "browserify node_modules/postcss-safe-parser -s postcss-safe-parser -o thirdparty/postcss-safe-parser.js",
+    "browserify": "npm run b_espree && npm run b_htmlparser2 && npm run b_php-parser && npm run b_postcss-safe-parser",
+    "bundle": "grunt compress"
   }
 }
