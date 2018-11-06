@@ -34,5 +34,5 @@ define({
     PREF_AUTOHIDE_DELAY_DESC: "Milliseconds of delay for the Outline List to be exposed when the mouse is over the placeholder",
 
     AUTOHIDE_DELAY_MODAL_TITLE: "Outline List - Autohide Expose Delay",
-    AUTOHIDE_DELAY_MODAL_MS_LABEL: " milliseconds"
+    AUTOHIDE_DELAY_MODAL_MS_LABEL: "milliseconds"
 });

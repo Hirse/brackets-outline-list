@@ -10,7 +10,7 @@ define(function (require, exports, module) {
     var Strings             = require("strings");
 
     var placeholderTemplate = require("text!templates/placeholder.html");
-    var sliderTemplate      = require("text!templates/delaySlider.html");
+    var delayDialogTemplate = require("text!templates/delayDialog.html");
     /* eslint-enable no-multi-spaces *//* beautify preserve:end */
 
     var $placeholder = $(Mustache.render(placeholderTemplate));
@@ -190,7 +190,8 @@ define(function (require, exports, module) {
         var Dialog = Dialogs.showModalDialog(
             brackets.DIALOG_ID_SAVE_CLOSE,
             Strings.AUTOHIDE_DELAY_MODAL_TITLE,
-            Mustache.render(sliderTemplate, {
+            Mustache.render(delayDialogTemplate, {
+                description: Strings.PREF_AUTOHIDE_DELAY_DESC,
                 exposeDelay: exposeDelay,
                 millisecondsLabel: Strings.AUTOHIDE_DELAY_MODAL_MS_LABEL
             })
@@ -198,35 +199,38 @@ define(function (require, exports, module) {
 
         var $slider = $("#outline-delay-slider");
         var $inputbox = $("#outline-delay-inputbox");
-        var inputboxCurrentValue = $inputbox.val();
+        var currentValue = exposeDelay;
 
         Dialog.done(function (buttonId) {
-            if (buttonId === "ok") {
-                prefs.set("autohideDelay", $slider.val());
+            if (buttonId === Dialogs.DIALOG_BTN_OK) {
+                prefs.set("autohideDelay", currentValue);
             }
         });
 
         // Slider change handler
         $slider.on("input", function () {
-            inputboxCurrentValue = $slider.val();
-            $inputbox.val(inputboxCurrentValue);
+            currentValue = parseInt($slider.val(), 10);
+            $inputbox.val(currentValue);
         });
 
-        // Inputbox handler
-        $inputbox.keyup(function (ev) {
-            if ((ev.keyCode < 48 || ev.keyCode > 57) && ev.keyCode !== 8) {
-                $(this).val(parseInt(inputboxCurrentValue, 10));
-            } else if ($(this).val() < 0 || $(this).val() > 1000) {
-                $(this).val(parseInt(inputboxCurrentValue, 10));
-            } else {
-                if ($(this).val() === "") {
-                    $(this).val(0);
-                }
-                var parsed = parseInt($(this).val(), 10);
-                $(this).val(parsed);
-                inputboxCurrentValue = parsed;
-                $slider.val(inputboxCurrentValue);
+        // Inputbox focus handler
+        $inputbox.focus(function () {
+            $(this).select();
+        });
+
+        // Inputbox handler to ensure a valid value in any case
+        $inputbox.on("input", function () {
+            var parsed = parseInt($(this).val(), 10);
+            if (!$.isNumeric(parsed)) {
+                parsed = 0;
             }
+            if (parsed > 1000) {
+                currentValue = 1000;
+                $(this).val(currentValue);
+            } else {
+                currentValue = parsed;
+            }
+            $slider.val(currentValue);
         });
     }
 
