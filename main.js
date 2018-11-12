@@ -155,9 +155,10 @@ define(function (require, exports, module) {
         var document = DocumentManager.getCurrentDocument();
         if (prefs.get("autohide") && isOutlineAvailable(document)) {
             Autohide.enable();
-        } else if (prefs.get("autohide") && !isOutlineAvailable(document)) {
+        } else if (!prefs.get("autohide") && !isOutlineAvailable(document)) {
+            Autohide.disable();
             OutlineManager.hideOutline();
-        } else {
+        } else if (!prefs.get("autohide") && isOutlineAvailable(document)) {
             Autohide.disable();
         }
     }
