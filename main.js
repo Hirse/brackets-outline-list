@@ -68,6 +68,9 @@ define(function (require, exports, module) {
                     OutlineManager.showOutline();
                 }
             } else {
+                if (prefs.get("autohide")) {
+                    Autohide.disable();
+                }
                 OutlineManager.hideOutline();
             }
         }, 100);
@@ -149,9 +152,13 @@ define(function (require, exports, module) {
     }
 
     function handleAutohideChange() {
-        if (prefs.get("autohide")) {
+        var document = DocumentManager.getCurrentDocument();
+        if (prefs.get("autohide") && isOutlineAvailable(document)) {
             Autohide.enable();
-        } else {
+        } else if (!prefs.get("autohide") && !isOutlineAvailable(document)) {
+            Autohide.disable();
+            OutlineManager.hideOutline();
+        } else if (!prefs.get("autohide") && isOutlineAvailable(document)) {
             Autohide.disable();
         }
     }
