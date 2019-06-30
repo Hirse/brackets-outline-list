@@ -1,19 +1,17 @@
-engines:
+version: "2"
+checks:
+  file-lines:
+    enabled: false
+plugins:
   csslint:
     enabled: true
-  duplication:
-    enabled: true
-    config:
-      languages:
-        javascript:
   eslint:
     enabled: true
-    channel: "eslint-3"
+    channel: eslint-5
   fixme:
     enabled: true
-ratings:
-   paths:
-     - "**/*.js"
-exclude_paths:
-  - thirdparty/
-  - test/example
+  nodesecurity:
+    enabled: true
+exclude_patterns:
+- "thirdparty/"
+- "test/example/"
