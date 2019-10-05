@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "csslint": "1.x.x",
-    "eslint": "6.0.x",
+    "eslint": "6.x.x",
     "grunt": "1.x.x",
     "grunt-contrib-compress": "1.x.x",
     "htmlhint": "0.x.x",
