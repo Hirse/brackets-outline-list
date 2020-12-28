@@ -4,12 +4,13 @@ coverage/
 images/
 test/
 .brackets.json
+.codeclimate.yml
 .csslintrc
 .eslintignore
 .eslintrc.yml
 .gitignore
 .htmlhintrc
 .travis.yml
-Gruntfile.js
-hirse.outline-list.zip
 karma.conf.js
+*.tgz
+*.zip

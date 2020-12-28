@@ -1,4 +1,5 @@
 .vscode/
 coverage/
 node_modules/
-hirse.outline-list.zip
+*.tgz
+*.zip
