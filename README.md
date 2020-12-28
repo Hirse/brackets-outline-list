@@ -1,6 +1,4 @@
 [![npm](https://img.shields.io/npm/v/hirse.outline-list.svg)](https://www.npmjs.com/package/hirse.outline-list)
-[![Version in Brackets](https://badges.ml/v/hirse.outline-list)](https://badges.ml/#hirse.outline-list)
-[![Downloads](https://badges.ml/dt/hirse.outline-list)](https://badges.ml/#hirse.outline-list)
 
 [![Build Status](https://travis-ci.org/Hirse/brackets-outline-list.svg?branch=master)](https://travis-ci.org/Hirse/brackets-outline-list)
 [![Code Climate](https://codeclimate.com/github/Hirse/brackets-outline-list/badges/gpa.svg)](https://codeclimate.com/github/Hirse/brackets-outline-list)
