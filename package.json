@@ -61,16 +61,16 @@
   },
   "devDependencies": {
     "csslint": "1.x.x",
-    "eslint": "7.x.x",
-    "htmlhint": "0.x.x",
-    "jasmine-core": "3.x.x",
+    "eslint": "8.x.x",
+    "htmlhint": "1.x.x",
+    "jasmine-core": "5.x.x",
+    "jsdom": "22.x.x",
     "karma": "6.x.x",
     "karma-chrome-launcher": "3.x.x",
     "karma-coverage": "2.x.x",
-    "karma-jasmine": "4.x.x",
-    "karma-phantomjs-launcher": "1.x.x",
+    "karma-jasmine": "5.x.x",
+    "karma-jsdom-launcher": "15.x.x",
     "karma-requirejs": "1.x.x",
-    "phantomjs-prebuilt": "2.x.x",
     "requirejs": "2.x.x",
     "requirejs-text": "2.x.x",
     "tar-to-zip": "3.x.x"
@@ -78,7 +78,7 @@
   "scripts": {
     "lint": "eslint . && htmlhint -c .htmlhintrc templates && csslint --config=.csslintrc styles",
     "pretest": "npm run lint",
-    "test": "karma start --browsers PhantomJS --single-run",
+    "test": "karma start --browsers jsdom --single-run",
     "bundle": "npm pack && tar2zip hirse.outline-list-%npm_package_version%.tgz"
   }
 }

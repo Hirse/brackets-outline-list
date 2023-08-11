@@ -7,7 +7,8 @@ module.exports = function (config) {
         basePath: "",
         singleRun: false,
         frameworks: ["jasmine", "requirejs"],
-        browsers: ["Chrome", "PhantomJS"],
+        hostname: "127.0.0.1",
+        browsers: ["Chrome", "jsdom"],
         reporters: ["progress", "coverage"],
         preprocessors: {
             "src/**/*.js": ["coverage"]
