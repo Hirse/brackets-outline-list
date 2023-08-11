@@ -18,3 +18,13 @@ jobs:
       - uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - id: check
+        if: success()
+        uses: EndBug/version-check@v1
+        with:
+          diff-search: true
+      - if: steps.check.outputs.changed == 'true'
+        run: yarn run bundle
+      - uses: actions/upload-artifact@v3
+        with:
+          path: hirse.outline-list-*.zip
