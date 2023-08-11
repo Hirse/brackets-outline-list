@@ -1,8 +1,6 @@
 [![npm](https://img.shields.io/npm/v/hirse.outline-list.svg)](https://www.npmjs.com/package/hirse.outline-list)
-
-[![Build Status](https://travis-ci.org/Hirse/brackets-outline-list.svg?branch=master)](https://travis-ci.org/Hirse/brackets-outline-list)
-[![Code Climate](https://codeclimate.com/github/Hirse/brackets-outline-list/badges/gpa.svg)](https://codeclimate.com/github/Hirse/brackets-outline-list)
-[![Test Coverage](https://codeclimate.com/github/Hirse/brackets-outline-list/badges/coverage.svg)](https://codeclimate.com/github/Hirse/brackets-outline-list/coverage)
+[![Build Status](https://github.com/Hirse/brackets-outline-list/actions/workflows/master.yml/badge.svg)](https://github.com/Hirse/brackets-outline-list/actions/workflows/master.yml)
+[![Test Coverage](https://codecov.io/github/Hirse/brackets-outline-list/branch/master/graph/badge.svg?token=nGQjyBTrVh)](https://codecov.io/github/Hirse/brackets-outline-list)
 
 <a href="http://brackets.io/"><img src="https://raw.githubusercontent.com/Hirse/brackets-outline-list/master/images/brackets.png" alt="Brackets" align="left" /></a>
 
