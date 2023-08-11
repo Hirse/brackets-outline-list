@@ -10,7 +10,6 @@ test/
 .eslintrc.yml
 .gitignore
 .htmlhintrc
-.travis.yml
 karma.conf.js
 *.tgz
 *.zip
