@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 
+## 1.6.0 - 2023-08-12
+### Added
+- Support for [Phoenix](https://phcode.dev)
+
+### Changed
+- Upgrade parser dependencies
+
+
 ## 1.5.0 - 2018-11-06
 ### Added
 - Add a configurable delay on the autohide placeholder (see [#106](https://github.com/Hirse/brackets-outline-list/issues/106)), thanks to [__@pelatx__](https://github.com/pelatx)
