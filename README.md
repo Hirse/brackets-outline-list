@@ -2,8 +2,8 @@
 [![Build Status](https://github.com/Hirse/brackets-outline-list/actions/workflows/master.yml/badge.svg)](https://github.com/Hirse/brackets-outline-list/actions/workflows/master.yml)
 [![Test Coverage](https://codecov.io/github/Hirse/brackets-outline-list/branch/master/graph/badge.svg?token=nGQjyBTrVh)](https://codecov.io/github/Hirse/brackets-outline-list)
 
-<a href="https://brackets.io"><img src="https://raw.githubusercontent.com/Hirse/brackets-outline-list/master/images/brackets.png" alt="Brackets" align="left" /></a>
-<a href="https://phcode.dev"><img src="https://raw.githubusercontent.com/Hirse/brackets-outline-list/master/images/phoenix.png" alt="Phoenix" align="left" /></a>
+<a href="https://brackets.io"><img src="https://raw.githubusercontent.com/Hirse/brackets-outline-list/master/images/brackets.png" alt="Brackets" title="Brackets" align="left" /></a>
+<a href="https://phcode.dev"><img src="https://raw.githubusercontent.com/Hirse/brackets-outline-list/master/images/phoenix.png" alt="Phoenix" title="Phoenix" align="left" /></a>
 
 # Outline List
 Extension for [Brackets][Brackets] and [Phoenix][Phoenix] to display a list of the functions or definitions in the currently opened document. Settings for parameters and anonymous functions. See [features](#features) for a list of supported languages.
@@ -51,10 +51,11 @@ Outline List is licensed under the [MIT license][MIT].
 
 Used thirdparty software:
 * [Espree][Espree] is licensed under the [BSD 2-Clause License][BSD-2-Clause]
-* [Ionicons][Ionicons] is licensed under the [MIT license][MIT]
-* [PostCSS Safe Parser][PostCSS] is licensed under the [MIT license][MIT]
 * [htmlparser2][htmlparser2] is licensed under the [MIT license][MIT]
+* [Ionicons][Ionicons] is licensed under the [MIT license][MIT]
+* [PostCSS Safe Parser][postcss-safe-parser] is licensed under the [MIT license][MIT]
 * [php-parser][php-parser] is licensed under the [BSD-3-Clause license][BSD-3-Clause]
+* [Promise Polyfill][promise-polyfill] is licensed under the [MIT license][MIT]
 
 
 [Brackets]: https://brackets.io
@@ -63,10 +64,11 @@ Used thirdparty software:
 [Brackets Extension Registry]: https://registry.brackets.io
 
 [Espree]: https://github.com/eslint/espree
-[Ionicons]: http://ionicons.com
-[PostCSS]: https://github.com/postcss/postcss-safe-parser
 [htmlparser2]: https://github.com/fb55/htmlparser2
+[Ionicons]: http://ionicons.com
+[postcss-safe-parser]: https://github.com/postcss/postcss-safe-parser
 [php-parser]: https://github.com/glayzzle/php-parser
+[promise-polyfill]: https://github.com/taylorhakes/promise-polyfill
 
 [BSD-2-Clause]: https://opensource.org/licenses/BSD-2-Clause
 [BSD-3-Clause]: https://opensource.org/licenses/BSD-3-Clause

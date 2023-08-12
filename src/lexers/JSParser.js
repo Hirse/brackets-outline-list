@@ -143,11 +143,10 @@ define(function JSParser(require, exports, module) {
         try {
             ast = espree.parse(source, {
                 loc: true,
-                ecmaVersion: 8,
+                ecmaVersion: "latest",
                 sourceType: "module",
                 ecmaFeatures: {
-                    jsx: true,
-                    experimentalObjectRestSpread: true
+                    jsx: true
                 }
             });
         } catch (error) {
