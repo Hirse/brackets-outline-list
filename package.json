@@ -79,6 +79,7 @@
     "lint": "eslint . && htmlhint -c .htmlhintrc templates && csslint --config=.csslintrc styles",
     "pretest": "npm run lint",
     "test": "karma start --browsers jsdom --single-run",
-    "bundle": "npm pack && tar2zip hirse.outline-list-%npm_package_version%.tgz"
+    "bundle": "npm pack && tar2zip hirse.outline-list-%npm_package_version%.tgz",
+    "bundleBuild": "npm pack && tar2zip hirse.outline-list-$npm_package_version.tgz"
   }
 }
